@@ -5,14 +5,16 @@ public class Team {
 
     private int id;
     private String name;
+    private String teamCaptainName;
     private String gameName;
     private List<User> members;
     private boolean acceptingMembers;
     private List<Tournament> enrolledTournaments;
 
-    public Team(int id, String name, String gameName, List<User> members, boolean acceptingMembers, List<Tournament> enrolledTournaments) {
+    public Team(int id, String name, String teamCaptainName, String gameName, List<User> members, boolean acceptingMembers, List<Tournament> enrolledTournaments) {
         this.id = id;
         this.name = name;
+        this.teamCaptainName = teamCaptainName;
         this.gameName = gameName;
         this.members = members;
         this.acceptingMembers = acceptingMembers;
@@ -65,5 +67,13 @@ public class Team {
 
     public void setEnrolledTournaments(List<Tournament> enrolledTournaments) {
         this.enrolledTournaments = enrolledTournaments;
+    }
+
+    public String getTeamCaptainName() {
+        return teamCaptainName;
+    }
+
+    public void setTeamCaptainName(String teamCaptainName) {
+        this.teamCaptainName = teamCaptainName;
     }
 }
