@@ -1,6 +1,6 @@
 BEGIN TRANSACTION;
 
-DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS users, team, tournament, game, team_user, team_tournament;
 
 CREATE TABLE users (
 	user_id SERIAL,
@@ -10,6 +10,13 @@ CREATE TABLE users (
 	CONSTRAINT PK_user PRIMARY KEY (user_id)
 );
 
+CREATE TABLE game (
+   -- game_id SERIAL,
+    game_name varchar(50) NOT NULL,
+    max_players integer,
+    CONSTRAINT PK_game PRIMARY KEY (game_name)
+);
+
 CREATE TABLE team (
     team_id SERIAL,
     team_name varchar(50) NOT NULL UNIQUE,
@@ -17,11 +24,10 @@ CREATE TABLE team (
     game_name varchar(50) NOT NULL,
     member_id integer[],
     accepting_members boolean,
-    enrolled_tournaments int[],
+    enrolled_tournaments integer[],
     CONSTRAINT PK_team PRIMARY KEY (team_id),
-    CONSTRAINT FK_team_user FOREIGN KEY (team_captain_name) REFERENCES user(user_id)
+    CONSTRAINT FK_team_users FOREIGN KEY (team_captain_name) REFERENCES users(username),
     CONSTRAINT FK_team_game FOREIGN KEY (game_name) REFERENCES game(game_name)
-
 );
 
 CREATE TABLE tournament (
@@ -31,22 +37,17 @@ CREATE TABLE tournament (
     entry_fee decimal(5,2),
     game_name varchar(50) NOT NULL,
     CONSTRAINT PK_tournament PRIMARY KEY (tournament_id),
-    CONSTRAINT FK_tournament_user FOREIGN KEY (host_id) REFERENCES user(user_id),
-    CONSTRAINT FK_tournament_game FOREIGN KEY (game_name) REFERENCE game(game_name)
+    CONSTRAINT FK_tournament_users FOREIGN KEY (host_id) REFERENCES users(user_id),
+    CONSTRAINT FK_tournament_game FOREIGN KEY (game_name) REFERENCES game(game_name)
 );
 
-CREATE TABLE game (
-    game_id SERIAL,
-    game_name varchar(50) NOT NULL,
-    max_players integer,
-    CONSTRAINT PK_game PRIMARY KEY (game_id),
-);
+
 
 CREATE TABLE team_user (
     user_id integer NOT NULL,
     team_id integer NOT NULL,
     CONSTRAINT PK_team_user PRIMARY KEY (user_id, team_id),
-    CONSTRAINT FK_team_user_user FOREIGN KEY (user_id) REFERENCES user(user_id),
+    CONSTRAINT FK_team_user_users FOREIGN KEY (user_id) REFERENCES users(user_id),
     CONSTRAINT FK_team_user_team FOREIGN KEY (team_id) REFERENCES team(team_id)
 );
 
