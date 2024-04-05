@@ -14,22 +14,19 @@ public class Team {
 
     @NotEmpty
     private String gameName;
-    private List<User> members;
 
     @NotEmpty
     private boolean acceptingMembers;
-    private List<Tournament> enrolledTournaments;
 
     public Team() { }
 
-    public Team(int id, String name, int teamCaptainId, String gameName, List<User> members, boolean acceptingMembers, List<Tournament> enrolledTournaments) {
+    public Team(int id, String name, int teamCaptainId, String gameName, boolean acceptingMembers) {
         this.id = id;
         this.name = name;
         this.teamCaptainId = teamCaptainId;
         this.gameName = gameName;
-        this.members = members;
         this.acceptingMembers = acceptingMembers;
-        this.enrolledTournaments = enrolledTournaments;
+
     }
 
     public int getId() {
@@ -56,14 +53,6 @@ public class Team {
         this.gameName = gameName;
     }
 
-    public List<User> getMembers() {
-        return members;
-    }
-
-    public void setMembers(List<User> members) {
-        this.members = members;
-    }
-
     public boolean isAcceptingMembers() {
         return acceptingMembers;
     }
@@ -72,19 +61,12 @@ public class Team {
         this.acceptingMembers = acceptingMembers;
     }
 
-    public List<Tournament> getEnrolledTournaments() {
-        return enrolledTournaments;
-    }
-
-    public void setEnrolledTournaments(List<Tournament> enrolledTournaments) {
-        this.enrolledTournaments = enrolledTournaments;
-    }
 
     public int getTeamCaptainId() {
         return teamCaptainId;
     }
 
-    public void setTeamCaptainName(int teamCaptainId) {
+    public void setTeamCaptainId(int teamCaptainId) {
         this.teamCaptainId = teamCaptainId;
     }
 }

@@ -6,7 +6,7 @@ public interface TeamDao {
 
     public Team createTeam(Team newTeam);
 
-
+    public Team getTeamById(int id);
 
 
 
