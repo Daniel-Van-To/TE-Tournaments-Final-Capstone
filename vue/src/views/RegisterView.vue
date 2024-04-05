@@ -50,9 +50,7 @@ export default {
         this.registrationErrors = true;
         this.registrationErrorMsg = 'Password & Confirm Password do not match.';
       } else {
-        authService
-          .register(this.user)
-          .then((response) => {
+        authService.register(this.user).then((response) => {
             if (response.status == 201) {
               this.$router.push({
                 path: '/login',
