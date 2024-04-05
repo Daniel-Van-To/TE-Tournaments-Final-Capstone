@@ -20,13 +20,11 @@ CREATE TABLE game (
 CREATE TABLE team (
     team_id SERIAL,
     team_name varchar(50) NOT NULL UNIQUE,
-    team_captain_name varchar(50) NOT NULL,
+    team_captain_id integer NOT NULL,
     game_name varchar(50) NOT NULL,
-    member_id integer[],
-    accepting_members boolean,
-    enrolled_tournaments integer[],
+    accepting_members boolean NOT NULL,
     CONSTRAINT PK_team PRIMARY KEY (team_id),
-    CONSTRAINT FK_team_users FOREIGN KEY (team_captain_name) REFERENCES users(username),
+    CONSTRAINT FK_team_users FOREIGN KEY (team_captain_id) REFERENCES users(user_id),
     CONSTRAINT FK_team_game FOREIGN KEY (game_name) REFERENCES game(game_name)
 );
 
@@ -37,7 +35,7 @@ CREATE TABLE tournament (
     entry_fee decimal(5,2),
     game_name varchar(50) NOT NULL,
     CONSTRAINT PK_tournament PRIMARY KEY (tournament_id),
-    CONSTRAINT FK_tournament_users FOREIGN KEY (host_id) REFERENCES users(user_id),
+    CONSTRAINT FK_tournament_host_user_id FOREIGN KEY (host_id) REFERENCES users(user_id),
     CONSTRAINT FK_tournament_game FOREIGN KEY (game_name) REFERENCES game(game_name)
 );
 
