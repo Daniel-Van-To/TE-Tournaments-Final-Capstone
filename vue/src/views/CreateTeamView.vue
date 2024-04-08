@@ -8,11 +8,11 @@
       <form v-on:submit.prevent="submitForm" class="createTeamForm">
         <div class="teamFormField">
             <label for="teamName">Team name: </label>
-            <input id="teamName" type="text" class="formControl" v-model="team.team_name"/>
+            <input id="teamName" type="text" class="formControl" v-model="team.teamName"/>
         </div> 
         <div class="teamFormField">
             <label for="gameName">Game name: </label>
-            <input id="gameName" type="text" class="formControl" v-model="team.game_name"/>
+            <input id="gameName" type="text" class="formControl" v-model="team.gameName"/>
         </div> 
         <button class="btn btn-submit" type="submit">Submit</button>
         <button class="btn btn-cancel" v-on:click="cancelForm" type="button">Cancel</button>
@@ -32,10 +32,10 @@
     data() {
       return {
         team: {
-            team_name: "",
-            game_name: "",
-            current_user: this.$store.state.user.username,
-            is_accepting_members: true
+            teamName: "",
+            gameName: "",
+            username: this.$store.state.user.username,
+            acceptingMembers: true
         }
       }
     },
@@ -72,13 +72,13 @@
             } else {
               this.$store.commit('SET_NOTIFICATION', "Error " + verb + " team. Request could not be created.");
             }
-          },
+        },
         validateForm() {
             let msg = '';
-            if (this.team.team_name.length === 0) {
+            if (this.team.teamName.length === 0) {
               msg += 'The new team must have a team name. ';
             }
-            if (this.team.game_name.length === 0) {
+            if (this.team.gameName.length === 0) {
               msg += 'The new game must have a game name.';
             }
             if (msg.length > 0) {
@@ -86,7 +86,7 @@
               return false;
             }
             return true;
-    }
+        }
     },
     created() {
   
