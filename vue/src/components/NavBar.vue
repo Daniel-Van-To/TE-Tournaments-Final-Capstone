@@ -4,6 +4,7 @@
         <div class="nav-links-bttns">
             <a class="links"><router-link v-bind:to="{name: 'home'}">Home</router-link></a>
             <a class="links"><router-link v-bind:to="{name: 'browse-tournaments'}">Browse Tournaments</router-link> </a>
+            <a class="links"><router-link v-bind:to="{name: 'create-team'}">Create a team</router-link> </a>
             <a class="links"><router-link v-bind:to="{name: 'about-us'}">About Us</router-link></a>
             <a class="links"><router-link v-bind:to="{name: 'faq'}">FAQ</router-link></a>
             <input type="button" value="Register" v-on:click.prevent="register">

@@ -9,6 +9,7 @@ import RegisterView from '../views/RegisterView.vue';
 import AboutUsView from '../views/AboutUsView.vue';
 import FAQView from '../views/FAQView.vue';
 import BrowseTournamentsView from '../views/BrowseTournamentsView.vue';
+import CreateTeamView from '../views/CreateTeamView.vue';
 
 
 /**
@@ -75,6 +76,15 @@ const routes = [
     path: "/browse-tournaments",
     name: "browse-tournaments",
     component: BrowseTournamentsView,
+    meta: {
+      requiresAuth: true
+    }
+  },
+
+  {
+    path: "/create-team",
+    name: "create-team",
+    component: CreateTeamView,
     meta: {
       requiresAuth: true
     }
