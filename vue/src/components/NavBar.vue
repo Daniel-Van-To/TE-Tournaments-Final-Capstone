@@ -7,10 +7,17 @@
             <a class="links"><router-link v-bind:to="{name: 'create-team'}">Create a team</router-link> </a>
             <a class="links"><router-link v-bind:to="{name: 'about-us'}">About Us</router-link></a>
             <a class="links"><router-link v-bind:to="{name: 'faq'}">FAQ</router-link></a>
-            <input type="button" value="Register" v-on:click.prevent="register">
-            <input type="button" value="Log In" v-on:click.prevent="logIn">
+            <span v-if="isLoggedIn" class="nav-bar-buttons">
+                <input type="button" value="Logout" v-on:click.prevent="logout">
+                <h4>Hello, {{this.$store.state.user.username}}</h4>
+            </span>
+            <span v-else class="nav-bar-buttons">
+                <input type="button" value="Register" v-on:click.prevent="register">
+                <input type="button" value="Log In" v-on:click.prevent="logIn">
+            </span>
         </div>
     </div>
+    
 </template>
 
 
@@ -18,6 +25,12 @@
 export default {
     data() {
         return { };
+    },
+
+    computed : {
+        isLoggedIn() {
+            return this.$store.state.token;
+        }
     },
     methods: {
         register() {
@@ -28,6 +41,9 @@ export default {
         },
         home() {
             this.$router.push({name:'home'});
+        },
+        logout() {
+            this.$store.commit('LOGOUT');
         }
     }
 }
@@ -63,6 +79,12 @@ export default {
     display:flex;
     font-size: 15px;
 
+}
+
+.nav-bar-buttons {
+    display:flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 
