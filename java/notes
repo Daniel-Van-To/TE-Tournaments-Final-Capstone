@@ -1,0 +1,16 @@
+
+
+for accepting_members in team -
+
+    back end needs to handle logic of accepting new members
+        - true if current players is lower than max players false otherwise
+
+
+
+
+
+    HTTP REQUEST paths and methods:
+
+    TeamController:
+        /create-team, POST
+

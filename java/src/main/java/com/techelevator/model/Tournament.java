@@ -2,26 +2,26 @@ package com.techelevator.model;
 
 public class Tournament {
 
-    private int id;
+    private int tournamentId;
     private int hostId;
-    private String name;
+    private String tournamentName;
     private double entry_fee;
     private String gameName;
 
-    public Tournament(int id, int hostId, String name, double entry_fee, String gameName) {
-        this.id = id;
+    public Tournament(int tournamentId, int hostId, String tournamentName, double entry_fee, String gameName) {
+        this.tournamentId = tournamentId;
         this.hostId = hostId;
-        this.name = name;
+        this.tournamentName = tournamentName;
         this.entry_fee = entry_fee;
         this.gameName = gameName;
     }
 
-    public int getId() {
-        return id;
+    public int getTournamentId() {
+        return tournamentId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setTournamentId(int tournamentId) {
+        this.tournamentId = tournamentId;
     }
 
     public int getHostId() {
@@ -32,12 +32,12 @@ public class Tournament {
         this.hostId = hostId;
     }
 
-    public String getName() {
-        return name;
+    public String getTournamentName() {
+        return tournamentName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTournamentName(String tournamentName) {
+        this.tournamentName = tournamentName;
     }
 
     public double getEntry_fee() {
