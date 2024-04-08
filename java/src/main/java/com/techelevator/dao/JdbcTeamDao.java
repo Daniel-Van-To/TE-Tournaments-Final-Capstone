@@ -72,13 +72,16 @@ public class JdbcTeamDao implements TeamDao {
                 "VALUES (?, ?, ?, ?) RETURNING team_id;";
 
         if (gameDao.getGameByGameName(newTeam.getGameName()) == null) {
-            //TODO decide if we want this to just automatically add the game (how do we get max_p
+            //TODO decide if we want this to just automatically add the game (how do we get max_players from here)
             throw new DaoException("Team cannot be added since the game is not in the system.");
         }
 
         Team firstNameHolder = getTeamByTeamName(newTeam.getTeamName());
         boolean teamNameAlreadyExists = firstNameHolder != null;
-        boolean sameNameAndSameGame = firstNameHolder.getGameName().equalsIgnoreCase(newTeam.getGameName());
+        boolean sameNameAndSameGame = false;
+        if (teamNameAlreadyExists) {
+            sameNameAndSameGame = firstNameHolder.getGameName().equalsIgnoreCase(newTeam.getGameName());
+        }
         if (teamNameAlreadyExists && sameNameAndSameGame) {
             throw new DaoException("Team already exists.");
         }
