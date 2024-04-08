@@ -2,30 +2,36 @@ package com.techelevator.model;
 
 import javax.validation.constraints.NotEmpty;
 
-public class Team {
+public class TeamDto {
 
     @NotEmpty
+    private String username;
     private int teamId;
-
     @NotEmpty
     private String teamName;
     private int teamCaptainId;
-
     @NotEmpty
     private String gameName;
-
-    @NotEmpty
     private boolean acceptingMembers;
 
-    public Team() { }
+    public TeamDto() { }
 
-    public Team(int teamId, String teamName, int teamCaptainId, String gameName, boolean acceptingMembers) {
+    public TeamDto(int teamId, String teamName, int teamCaptainId, String gameName, boolean acceptingMembers, String username) {
         this.teamId = teamId;
         this.teamName = teamName;
         this.teamCaptainId = teamCaptainId;
         this.gameName = gameName;
         this.acceptingMembers = acceptingMembers;
+        this.username = username;
 
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public int getTeamId() {
@@ -68,4 +74,7 @@ public class Team {
     public void setTeamCaptainId(int teamCaptainId) {
         this.teamCaptainId = teamCaptainId;
     }
+
+
+
 }

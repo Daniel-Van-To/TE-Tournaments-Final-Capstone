@@ -4,8 +4,11 @@ INSERT INTO users (username,password_hash,role) VALUES ('user','$2a$08$UkVvwpULi
 INSERT INTO users (username,password_hash,role) VALUES ('admin','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_ADMIN');
 
 INSERT INTO users (username,password_hash,role) VALUES ('harry_simpson','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER');
+--Harry is user 3
 INSERT INTO users (username,password_hash,role) VALUES ('daniel_to','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER');
+--Daniel is user 4
 INSERT INTO users (username,password_hash,role) VALUES ('revathi_ajjarapu','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER');
+--Reva is user 5
 
 INSERT INTO game (game_name,max_players)
 VALUES ('running', 1), ('valorant', 5), ('cricket', 11);
