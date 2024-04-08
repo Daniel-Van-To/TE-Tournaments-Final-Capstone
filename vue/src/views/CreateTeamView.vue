@@ -14,7 +14,7 @@
             <label for="gameName">Game name: </label>
             <input id="gameName" type="text" class="formControl" v-model="team.game_name"/>
         </div> 
-        <button class="btn btn-submit">Submit</button>
+        <button class="btn btn-submit" type="submit">Submit</button>
         <button class="btn btn-cancel" v-on:click="cancelForm" type="button">Cancel</button>
      </form>
       <p></p>
@@ -64,28 +64,28 @@
             this.$router.push({name:'home'})
         },
         handleErrorResponse(error, verb) {
-      if (error.response) {
-        this.$store.commit('SET_NOTIFICATION',
-          "Error " + verb + " team. Response received was '" + error.response.statusText + "'.");
-      } else if (error.request) {
-        this.$store.commit('SET_NOTIFICATION', "Error " + verb + " team. Server could not be reached.");
-      } else {
-        this.$store.commit('SET_NOTIFICATION', "Error " + verb + " team. Request could not be created.");
-      }
-    },
+            if (error.response) {
+              this.$store.commit('SET_NOTIFICATION',
+                "Error " + verb + " team. Response received was '" + error.response.statusText + "'.");
+            } else if (error.request) {
+              this.$store.commit('SET_NOTIFICATION', "Error " + verb + " team. Server could not be reached.");
+            } else {
+              this.$store.commit('SET_NOTIFICATION', "Error " + verb + " team. Request could not be created.");
+            }
+          },
         validateForm() {
-      let msg = '';
-      if (this.team.team_name.length === 0) {
-        msg += 'The new team must have a team name. ';
-      }
-      if (this.team.game_name.length === 0) {
-        msg += 'The new game must have a game name.';
-      }
-      if (msg.length > 0) {
-        this.$store.commit('SET_NOTIFICATION', msg);
-        return false;
-      }
-      return true;
+            let msg = '';
+            if (this.team.team_name.length === 0) {
+              msg += 'The new team must have a team name. ';
+            }
+            if (this.team.game_name.length === 0) {
+              msg += 'The new game must have a game name.';
+            }
+            if (msg.length > 0) {
+              this.$store.commit('SET_NOTIFICATION', msg);
+              return false;
+            }
+            return true;
     }
     },
     created() {
