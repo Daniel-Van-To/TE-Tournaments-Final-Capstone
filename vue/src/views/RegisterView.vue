@@ -1,5 +1,6 @@
 <template>
   <div id="register" class="text-center">
+    <NavBar/>
     <form v-on:submit.prevent="register">
       <h1>Create Account</h1>
       <div role="alert" v-if="registrationErrors">
@@ -25,8 +26,12 @@
 
 <script>
 import authService from '../services/AuthService';
+import NavBar from '../components/NavBar.vue';
 
 export default {
+  components: {
+    NavBar
+  },
   data() {
     return {
       user: {
@@ -45,9 +50,7 @@ export default {
         this.registrationErrors = true;
         this.registrationErrorMsg = 'Password & Confirm Password do not match.';
       } else {
-        authService
-          .register(this.user)
-          .then((response) => {
+        authService.register(this.user).then((response) => {
             if (response.status == 201) {
               this.$router.push({
                 path: '/login',
