@@ -7,11 +7,11 @@ import com.techelevator.exception.DaoException;
 import com.techelevator.model.Team;
 import com.techelevator.model.TeamDto;
 import org.springframework.http.HttpStatus;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @CrossOrigin
@@ -51,6 +51,17 @@ public class TeamController {
             else {
                 throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
             }
+        }
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(path = "/teams", method = RequestMethod.GET)
+    public List<Team> getJoinableTeams() {
+        try {
+            return teamDao.getTeamsByAcceptingMembers();
+        }
+        catch (DaoException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
         }
     }
 
