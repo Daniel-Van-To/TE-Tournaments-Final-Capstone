@@ -85,7 +85,7 @@ public class JdbcTeamDao implements TeamDao {
 
         try{
             User teamCaptain = userDao.getUserByUsername(newTeam.getUsername());
-            int newTeamId = jdbcTemplate.queryForObject(sql, int.class, (newTeam.getTeamName()), teamCaptain.getId(),
+            int newTeamId = jdbcTemplate.queryForObject(sql, int.class, newTeam.getTeamName(), teamCaptain.getId(),
                     newTeam.getGameName(), newTeam.isAcceptingMembers());
 
             createdTeam = getTeamById(newTeamId);
