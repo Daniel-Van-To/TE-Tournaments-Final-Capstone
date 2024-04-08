@@ -76,7 +76,7 @@ const routes = [
     name: "browse-tournaments",
     component: BrowseTournamentsView,
     meta: {
-      requiresAuth: false
+      requiresAuth: true
     }
   }
 ];
