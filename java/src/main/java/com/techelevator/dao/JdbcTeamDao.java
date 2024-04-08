@@ -72,7 +72,7 @@ public class JdbcTeamDao implements TeamDao {
                 "VALUES (?, ?, ?, ?) RETURNING team_id;";
 
         if (gameDao.getGameByGameName(newTeam.getGameName()) == null) {
-            //TODO decide if we want this to just automatically add the game (how do we get max_players from here)
+            //TODO decide if we want this to just automatically add the game (how do we get max_p
             throw new DaoException("Team cannot be added since the game is not in the system.");
         }
 

@@ -39,6 +39,7 @@ public class TeamController {
 
         } catch(DaoException e) {
 
+            //Precondition Required
             if (e.getMessage().equals("Team cannot be added since the game is not in the system.")) {
                 throw new ResponseStatusException(HttpStatus.PRECONDITION_REQUIRED,
                         "That game is not in the system. Please add it and try again.");
@@ -51,7 +52,6 @@ public class TeamController {
                 throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
             }
         }
-
     }
 
 
