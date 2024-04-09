@@ -164,10 +164,43 @@ public class JdbcTeamDao implements TeamDao {
 
         return users;
     }
+    @Override
+    public int unlinkUserFromTeam(int userId, int teamId) {
+        int numRows = 0;
+        String sql = "DELETE FROM team_user WHERE user_id = ? AND team_id = ?;";
+        try{
+            numRows = jdbcTemplate.update(sql, userId, teamId);
+        }
+        catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data integrity violation", e);
+        }
 
-    public boolean unlinkUserFromTeam(int userId, int teamId) {
+        return numRows;
+    }
 
-      return false;
+    @Override
+    public Team updateTeam(TeamDto team, int teamId) {
+        //TODO have a meeting about if changing a game is ok
+        Team updatedTeam = null;
+        String sql = "UPDATE team SET team_name = ?, team_captain_id = ?, accepting_members = ? " +
+                "WHERE team_id = ?;";
+        try{
+           int numberOfRows = jdbcTemplate.update(sql, team.getTeamName(), team.getTeamCaptainId(), team.isAcceptingMembers(), teamId);
+            if(numberOfRows == 0) {
+                throw new DaoException("Zero rows effected, expected atleast one");
+            }
+            else {
+                updatedTeam = getTeamById(teamId);
+            }
+        }
+        catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data integrity violation", e);
+        }
+        return updatedTeam;
     }
 
     public Team mapRowToTeam(SqlRowSet rowSet){
