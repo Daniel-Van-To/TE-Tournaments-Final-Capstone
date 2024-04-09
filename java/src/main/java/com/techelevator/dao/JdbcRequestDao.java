@@ -20,7 +20,7 @@ public class JdbcRequestDao implements RequestDao{
     @Override
     public Request getRequestByRequestId(int requestId) {
         Request request = null;
-        String sql = "SELECT request_id, tournament_id, team_id, game_name, request_status, requester_id FROM request" +
+        String sql = "SELECT request_id, tournament_id, team_id, game_name, request_status, requester_id FROM request " +
                 "WHERE request_id = ?;";
         try{
            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, requestId );

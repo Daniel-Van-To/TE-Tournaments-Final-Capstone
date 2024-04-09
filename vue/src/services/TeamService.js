@@ -12,5 +12,9 @@ export default {
 
     getTeam(teamId) {
         return axios.get(`/teams/${teamId}`);
+    },
+
+    sendJoinRequest(request) {
+        return axios.post(`/teams/${request.teamId}`, request);
     }
 }
