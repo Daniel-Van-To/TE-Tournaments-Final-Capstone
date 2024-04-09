@@ -20,10 +20,11 @@ INSERT INTO tournament (host_id,tournament_name,entry_fee,game_name)
 VALUES (2, 'test tournament', 0, 'running');
 
 INSERT INTO team_user (user_id, team_id)
-VALUES (3, 1), (5, 3), (4, 2);
+VALUES (3, 1), (5, 3), (4, 2), (3, 2);
 --links harry to 'find pearls'
 --links revathi to 'raystar'
 --links daniel to 'pho 95'
+--links harry to 'pho 95'
 
 INSERT INTO team_tournament (team_id, tournament_id)
 VALUES (3, 1), (1, 1);
