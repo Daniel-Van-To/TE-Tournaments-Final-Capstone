@@ -23,7 +23,7 @@
   
   <script>
   import NavBar from '../components/NavBar.vue';
-  import CreateTeamService from '../services/CreateTeamService.js';
+  import TeamService from '../services/TeamService.js';
   
   export default {
     components: {
@@ -46,7 +46,7 @@
             if(!this.validateForm()){
                 return ;
             }
-            CreateTeamService.createTeam(this.team).then((response)=> {
+            TeamService.createTeam(this.team).then((response)=> {
                 if(response.status === 201) {
                     this.$store.commit('SET_NOTIFICATION',
                     {
@@ -135,4 +135,4 @@ select.form-control {
   margin: 10px 20px 10px 10px;
 }
 
-</style>
+</style>../services/TeamService.js

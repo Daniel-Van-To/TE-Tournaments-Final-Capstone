@@ -11,6 +11,7 @@ import FAQView from '../views/FAQView.vue';
 import BrowseTournamentsView from '../views/BrowseTournamentsView.vue';
 import CreateTeamView from '../views/CreateTeamView.vue';
 import BrowseTeamsView from '../views/BrowseTeamsView.vue';
+import TeamView from '../views/TeamView.vue';
 
 
 /**
@@ -98,7 +99,15 @@ const routes = [
     meta: {
       requiresAuth: true
     }
+  },
 
+  {
+    path: '/teams/:id',
+    name: 'team-view',
+    component: TeamView,
+    meta: {
+      requiresAuth: true
+    }
   }
 ];
 
