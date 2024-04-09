@@ -24,3 +24,19 @@ export default {
 };
 
 </script>
+
+<style scoped>
+table {
+  margin: auto;
+}
+
+th, td {
+  text-align: left;
+  padding: 10px;
+  vertical-align: top;
+}
+
+tr:nth-child(even) {
+  background-color: rgb(238, 238, 238);
+}
+</style>

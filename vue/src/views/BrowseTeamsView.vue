@@ -24,7 +24,7 @@
     },
   
     methods: {
-
+      
       getTeams() {
         TeamService.getTeams().then((response) => {
           this.teams = response.data;
