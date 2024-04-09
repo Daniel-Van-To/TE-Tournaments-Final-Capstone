@@ -123,6 +123,7 @@ public class JdbcTeamDao implements TeamDao {
         }
         return teams;
     }
+
     @Override
     public Request addTeamJoinRequest(RequestDto request) {
         Request joinTeam = null;
@@ -139,6 +140,18 @@ public class JdbcTeamDao implements TeamDao {
             throw new DaoException("Data integrity violation", e);
         }
         return joinTeam;
+    }
+
+    public List<User> getUsersOnTeam() {
+        List<User> users = new ArrayList<>();
+        String sql = "SELECT team.team_id, team.team_name, users.user_id, users.username" +
+                "FROM team" +
+                "JOIN team_user ON team.team_id = team_user.team_id" +
+                "JOIN users ON team_user.user_id = users.user_id" +
+                "WHERE team.team_id = 2;";
+
+
+        return users;
     }
 
     public Team mapRowToTeam(SqlRowSet rowSet){
