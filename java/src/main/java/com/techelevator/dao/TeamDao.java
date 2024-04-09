@@ -1,9 +1,6 @@
 package com.techelevator.dao;
 
-import com.techelevator.model.Request;
-import com.techelevator.model.RequestDto;
-import com.techelevator.model.Team;
-import com.techelevator.model.TeamDto;
+import com.techelevator.model.*;
 
 import java.util.List;
 
@@ -18,5 +15,6 @@ public interface TeamDao {
 
     public List<Team> getTeamsByAcceptingMembers();
     public Request addTeamJoinRequest(RequestDto request);
+    public List<User> getUsersOnTeam(int teamId);
 
 }

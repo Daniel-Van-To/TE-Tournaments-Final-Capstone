@@ -4,8 +4,7 @@ package com.techelevator.controller;
 import com.techelevator.dao.TeamDao;
 import com.techelevator.dao.UserDao;
 import com.techelevator.exception.DaoException;
-import com.techelevator.model.Team;
-import com.techelevator.model.TeamDto;
+import com.techelevator.model.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -65,5 +64,36 @@ public class TeamController {
         }
     }
 
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(path = "/teams/{teamId}", method = RequestMethod.POST)
+    public Request handleTeamJoinRequest(@Valid @RequestBody RequestDto requestDto, @PathVariable int teamId) {
+        try {
+           return teamDao.addTeamJoinRequest(requestDto);
+        }
+        catch (DaoException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+        }
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(path = "/teams/{teamId}", method = RequestMethod.GET)
+    public List<User> getUsersForTeam(@PathVariable int teamId) {
+
+        try {
+            return teamDao.getUsersOnTeam(teamId);
+        }
+        catch (DaoException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+        }
+        catch (NullPointerException e) {
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());
+        }
+    }
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(path = "/teams/{teamId}", method = RequestMethod.DELETE)
+    public void removeUserFromTeam(@RequestBody User user) {
+
+
+    }
 
 }

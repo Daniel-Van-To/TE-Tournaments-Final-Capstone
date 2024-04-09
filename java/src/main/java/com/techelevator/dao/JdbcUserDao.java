@@ -87,8 +87,8 @@ public class JdbcUserDao implements UserDao {
         }
         return newUser;
     }
-
-    private User mapRowToUser(SqlRowSet rs) {
+    @Override
+    public User mapRowToUser(SqlRowSet rs) {
         User user = new User();
         user.setId(rs.getInt("user_id"));
         user.setUsername(rs.getString("username"));
