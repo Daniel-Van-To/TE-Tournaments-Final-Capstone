@@ -141,17 +141,32 @@ public class JdbcTeamDao implements TeamDao {
         }
         return joinTeam;
     }
-
-    public List<User> getUsersOnTeam() {
+    @Override
+    public List<User> getUsersOnTeam(int teamId) {
         List<User> users = new ArrayList<>();
-        String sql = "SELECT team.team_id, team.team_name, users.user_id, users.username" +
+        String sql = "SELECT users.user_id, users.username, users.role" +
                 "FROM team" +
                 "JOIN team_user ON team.team_id = team_user.team_id" +
                 "JOIN users ON team_user.user_id = users.user_id" +
-                "WHERE team.team_id = 2;";
-
+                "WHERE team.team_id = ?;";
+        try{
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, teamId);
+            while(results.next()){
+                users.add(userDao.mapRowToUser(results));
+            }
+        }
+        catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data integrity violation", e);
+        }
 
         return users;
+    }
+
+    public boolean unlinkUserFromTeam(int userId, int teamId) {
+
+      return false;
     }
 
     public Team mapRowToTeam(SqlRowSet rowSet){
