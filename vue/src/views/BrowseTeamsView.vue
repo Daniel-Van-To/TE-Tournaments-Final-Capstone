@@ -20,8 +20,6 @@
     data() {
       return {
         teams: [],
-
-  
       }
     },
   

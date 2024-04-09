@@ -1,30 +1,51 @@
 <template>
     <div class="home">
       <NavBar/>
-      <h1>About Us</h1>
+      <h1>BrowseTeams</h1>
+      <TeamDisplay v-bind:teamMembers="teamMembers"/>
       <p></p>
     </div>
   </template>
   
   <script>
   import NavBar from '../components/NavBar.vue';
+  import TeamDisplay from '../components/TeamDisplay.vue';
+  import TeamService from '../services/TeamService.js';
   
   export default {
     components: {
-      NavBar
+      NavBar,
+      TeamDisplay
     },
     data() {
       return {
-  
+        teamMembers: [],
       }
     },
   
-  
     methods: {
+
+      getTeams() {
+        TeamService.getTeams().then((response) => {
+          this.teams = response.data;
+        }).catch(error => {
+          if (error.response) {
+            this.$store.commit('SET_NOTIFICATION',
+              "Error getting teams list. Response received was '" + error.response.statusText + "'.");
+          } else if (error.request) {
+            this.$store.commit('SET_NOTIFICATION', "Error getting teams list. Server could not be reached.");
+          } else {
+            this.$store.commit('SET_NOTIFICATION', "Error getting teams list. Request could not be created.");
+          }
+        });
+      }
   
     },
     created() {
-  
+      let teamId = parseInt(this.$route.params.id);
+      TeamService.getTeam(teamId).then((response) => {
+        this.teamMembers = response.data;
+      })
     }
   };
   </script>
