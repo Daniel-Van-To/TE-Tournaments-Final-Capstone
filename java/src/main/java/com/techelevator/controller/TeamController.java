@@ -91,9 +91,14 @@ public class TeamController {
     }
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(path = "/teams/{teamId}", method = RequestMethod.DELETE)
-    public void removeUserFromTeam(@RequestBody User user) {
+    public void removeUserFromTeam(@RequestBody User user,@PathVariable int teamId) {
+        teamDao.unlinkUserFromTeam(user.getId(), teamId);
+    }
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(path = "/teams/{teamId}", method = RequestMethod.PUT)
+    public Team editTeam(TeamDto team, @PathVariable int teamId) {
 
-
+        return teamDao.updateTeam(team, teamId);
     }
 
 }
