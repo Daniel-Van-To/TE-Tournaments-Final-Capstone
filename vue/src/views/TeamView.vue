@@ -24,23 +24,8 @@
     },
   
     methods: {
-
-      getTeams() {
-        TeamService.getTeams().then((response) => {
-          this.teams = response.data;
-        }).catch(error => {
-          if (error.response) {
-            this.$store.commit('SET_NOTIFICATION',
-              "Error getting teams list. Response received was '" + error.response.statusText + "'.");
-          } else if (error.request) {
-            this.$store.commit('SET_NOTIFICATION', "Error getting teams list. Server could not be reached.");
-          } else {
-            this.$store.commit('SET_NOTIFICATION', "Error getting teams list. Request could not be created.");
-          }
-        });
-      }
-  
     },
+    
     created() {
       let teamId = parseInt(this.$route.params.id);
       TeamService.getTeam(teamId).then((response) => {
