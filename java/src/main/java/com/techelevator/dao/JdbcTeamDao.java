@@ -10,6 +10,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class JdbcTeamDao implements TeamDao {
 
@@ -78,7 +81,10 @@ public class JdbcTeamDao implements TeamDao {
 
         Team firstNameHolder = getTeamByTeamName(newTeam.getTeamName());
         boolean teamNameAlreadyExists = firstNameHolder != null;
-        boolean sameNameAndSameGame = firstNameHolder.getGameName().equalsIgnoreCase(newTeam.getGameName());
+        boolean sameNameAndSameGame = false;
+        if (teamNameAlreadyExists) {
+            sameNameAndSameGame = firstNameHolder.getGameName().equalsIgnoreCase(newTeam.getGameName());
+        }
         if (teamNameAlreadyExists && sameNameAndSameGame) {
             throw new DaoException("Team already exists.");
         }
@@ -97,6 +103,27 @@ public class JdbcTeamDao implements TeamDao {
         }
 
         return createdTeam;
+    }
+
+    @Override
+    public List<Team> getTeamsByAcceptingMembers() {
+        List<Team> teams = new ArrayList<>();
+        String sql = "SELECT team_id, team_name, team_captain_id, game_name, accepting_members FROM team WHERE accepting_members = true ORDER BY team_id ASC;";
+
+        try {
+
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
+            while (results.next()) {
+                teams.add(mapRowToTeam(results));
+            }
+
+        }
+        catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data integrity violation", e);
+        }
+        return teams;
     }
 
 
