@@ -10,6 +10,7 @@ import AboutUsView from '../views/AboutUsView.vue';
 import FAQView from '../views/FAQView.vue';
 import BrowseTournamentsView from '../views/BrowseTournamentsView.vue';
 import CreateTeamView from '../views/CreateTeamView.vue';
+import BrowseTeamsView from '../views/BrowseTeamsView.vue';
 
 
 /**
@@ -88,6 +89,16 @@ const routes = [
     meta: {
       requiresAuth: true
     }
+  },
+
+  {
+    path: "/teams",
+    name: "teams",
+    component: BrowseTeamsView,
+    meta: {
+      requiresAuth: true
+    }
+
   }
 ];
 

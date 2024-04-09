@@ -1,7 +1,7 @@
 import { createStore as _createStore } from 'vuex';
 import axios from 'axios';
 const NOTIFICATION_TIMEOUT = 6000;
-
+ 
 export function createStore(currentToken, currentUser) {
   let store = _createStore({
     state: {
@@ -61,6 +61,10 @@ export function createStore(currentToken, currentUser) {
         state.notification = null;
       },
     },
+
+    getters:{
+      isAuthenticated: state => !!state.user
+    }
   });
   return store;
 }
