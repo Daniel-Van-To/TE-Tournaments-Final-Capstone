@@ -16,6 +16,6 @@ public interface UserDao {
 
     User createUser(RegisterUserDto user);
 
-    User mapRowToUser(SqlRowSet rs);
+    User mapRowToUserNoPassword(SqlRowSet rs);
 
 }

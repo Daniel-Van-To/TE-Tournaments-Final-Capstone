@@ -141,6 +141,7 @@ public class JdbcTeamDao implements TeamDao {
         }
         return joinTeam;
     }
+
     @Override
     public List<User> getUsersOnTeam(int teamId) {
         List<User> users = new ArrayList<>();
@@ -152,7 +153,7 @@ public class JdbcTeamDao implements TeamDao {
         try{
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, teamId);
             while(results.next()){
-                users.add(userDao.mapRowToUser(results));
+                users.add(userDao.mapRowToUserNoPassword(results));
             }
         }
         catch (CannotGetJdbcConnectionException e) {
