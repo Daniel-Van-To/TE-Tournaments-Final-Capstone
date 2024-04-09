@@ -1,9 +1,7 @@
 package com.techelevator.dao;
 
 import com.techelevator.exception.DaoException;
-import com.techelevator.model.Team;
-import com.techelevator.model.TeamDto;
-import com.techelevator.model.User;
+import com.techelevator.model.*;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -19,13 +17,14 @@ public class JdbcTeamDao implements TeamDao {
     private JdbcTemplate jdbcTemplate;
     private GameDao gameDao;
     private UserDao userDao;
+    private RequestDao requestDao;
 
     public JdbcTeamDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
         gameDao = new JdbcGameDao(jdbcTemplate);
         userDao = new JdbcUserDao(jdbcTemplate);
+        requestDao = new JdbcRequestDao(jdbcTemplate);
     }
-
 
     @Override
     public Team getTeamById(int id){
@@ -65,7 +64,6 @@ public class JdbcTeamDao implements TeamDao {
 
         return team;
     }
-
 
     @Override
     public Team createTeam(TeamDto newTeam) {
@@ -125,7 +123,23 @@ public class JdbcTeamDao implements TeamDao {
         }
         return teams;
     }
-
+    @Override
+    public Request addTeamJoinRequest(RequestDto request) {
+        Request joinTeam = null;
+        User requester = userDao.getUserByUsername(request.getUserName());
+        String sql = "INSERT INTO request (team_id, request_status, requester_id)" +
+                "VALUES (?, ?, ?) RETURNING request_id;";
+        try{
+            int request_id = jdbcTemplate.queryForObject(sql, int.class, request.getTeamId(), 'p', requester.getId());
+            joinTeam = requestDao.getRequestByRequestId(request_id);
+        }
+        catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data integrity violation", e);
+        }
+        return joinTeam;
+    }
 
     public Team mapRowToTeam(SqlRowSet rowSet){
         Team team = new Team();
@@ -137,8 +151,6 @@ public class JdbcTeamDao implements TeamDao {
 
         return team;
     }
-
-
 
 
 }
