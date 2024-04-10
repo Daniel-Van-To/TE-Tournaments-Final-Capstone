@@ -1,6 +1,5 @@
 <template>
     <div class="home">
-      <NavBar/>
       <h1>BrowseTeams</h1>
       <TeamsList v-bind:teams="teams"/>
       <p></p>
@@ -8,13 +7,11 @@
   </template>
   
   <script>
-  import NavBar from '../components/NavBar.vue';
   import TeamsList from '../components/TeamsList.vue';
   import TeamService from '../services/TeamService.js';
   
   export default {
     components: {
-      NavBar,
       TeamsList
     },
     data() {
