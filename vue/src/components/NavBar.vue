@@ -9,8 +9,8 @@
             <a class="links"><router-link v-bind:to="{name: 'about-us'}">About Us</router-link></a>
             <a class="links"><router-link v-bind:to="{name: 'faq'}">FAQ</router-link></a>
             <span v-if="isLoggedIn" class="nav-bar-buttons">
-                <input type="button" value="Logout" v-on:click.prevent="logout">
-                <h4>Hello, {{this.$store.state.user.username}}</h4>
+                <input class="loggedIn" type="button" value="Logout" v-on:click.prevent="logout">
+                <h4 class="loggedIn">Hello, {{this.$store.state.user.username}}</h4>
             </span>
             <span v-else class="nav-bar-buttons">
                 <input type="button" value="Register" v-on:click.prevent="register">
@@ -52,18 +52,21 @@ export default {
 </script>
 
 
-<style>
+<style scoped>
 
 .nav-bar {
+    margin: none;
+    padding: none;
     display: flex;
     background-color: rgb(171, 174, 177);
     /* justify-content: space-between; */
+    height: fit-content;
 
 }
 
 .nav-links-bttns {
     display:flex;
-    justify-content:space-around;
+    justify-content:right;
     align-items:center;
     flex-grow: 1;
 }
@@ -73,13 +76,15 @@ export default {
     max-width: 10%;
     max-height: 10%;
     flex-grow: 2;
-
-    
+    height: fit-content;
+    align-self: center;
+    margin: 0.5rem;
 }
 
 .links {
     display:flex;
     font-size: 15px;
+
 
 }
 
@@ -87,6 +92,27 @@ export default {
     display:flex;
     align-items: center;
     justify-content: space-between;
+
+}
+
+.loggedIn {
+    margin-left: 0.25rem;
+    margin-right: 0.25rem;
+}
+
+a {
+    text-decoration: none;
+    color:black;
+    background-color: white;
+    align-self: center;
+    padding-top: 0.4rem;
+    padding-bottom: 0.4rem; 
+    padding-left: 0.1rem;
+    padding-right: 0.1rem;
+}
+
+.links:hover {
+    background-color: gray;
 }
 
 

@@ -33,16 +33,16 @@ export default {
     methods: {
         submitRequest() {
             TeamService.sendJoinRequest(this.request).then((response) => {
-                // if (response.status === 201) {
-                //     this.$store.commit(
-                //         'SET_NOTIFICATION',
-                //         {
-                //         message: 'A new card was added.',
-                //         type: 'success'
-                //         }
-                //     );
-                //     this.$router.push({name: 'home'});
-                //     }
+                if (response.status === 200) {
+                    this.$store.commit(
+                        'SET_NOTIFICATION',
+                        {
+                        message: 'A new card was added.',
+                        type: 'success'
+                        }
+                    );
+                    this.$router.push({name: 'home'});
+                    }
                 this.$router.push({name: 'teams'});
             });
         }
