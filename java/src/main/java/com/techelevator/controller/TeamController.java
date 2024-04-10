@@ -64,10 +64,11 @@ public class TeamController {
         }
     }
 
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(path = "/teams/{teamId}", method = RequestMethod.POST)
     public Request handleTeamJoinRequest(@Valid @RequestBody RequestDto requestDto, @PathVariable int teamId) {
         try {
+            //TODO Add Conditional checking if the user making the request has already sent a request or is already on the team
            return teamDao.addTeamJoinRequest(requestDto);
         }
         catch (DaoException e) {
@@ -80,6 +81,7 @@ public class TeamController {
     public List<User> getUsersForTeam(@PathVariable int teamId) {
 
         try {
+            //TODO with the new TeamDto, send just the team as the team will have a list of team members (users)
             return teamDao.getUsersOnTeam(teamId);
         }
         catch (DaoException e) {
