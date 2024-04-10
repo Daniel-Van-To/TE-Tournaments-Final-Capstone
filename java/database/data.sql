@@ -11,7 +11,7 @@ INSERT INTO users (username,password_hash,role) VALUES ('revathi_ajjarapu','$2a$
 --Reva is user 5
 
 INSERT INTO game (game_name,max_players)
-VALUES ('running', 1), ('valorant', 5), ('cricket', 11);
+VALUES ('running', 1), ('valorant', 5), ('cricket', 11), ('soccer', 11), ('football', 11), ('baseball', 26), ('basketball', 13) ('tennis', 2), ('dancesport', 2), ('parkour', 1), ('pole sports', 1), ('canoeing', 2), ('water polo', 7), ('swimming', 1);
 
 INSERT INTO team (team_captain_id, team_name, game_name, accepting_members)
 VALUES (3, 'find pearls', 'running', false), (4, 'pho 95', 'valorant', true), (5, 'raystar', 'running', false);
