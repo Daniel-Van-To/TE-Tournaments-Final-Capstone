@@ -16,6 +16,7 @@ public interface TeamDao {
     public List<Team> getTeamsByAcceptingMembers();
     public Request addTeamJoinRequest(RequestDto request);
     public List<User> getUsersOnTeam(int teamId);
+    public int linkUserToTeam(int userId, int teamId);
     public int unlinkUserFromTeam(int userId, int teamId);
     public Team updateTeam(TeamDto team, int teamId);
 

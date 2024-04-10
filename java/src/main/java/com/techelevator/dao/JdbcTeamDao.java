@@ -68,7 +68,7 @@ public class JdbcTeamDao implements TeamDao {
     @Override
     public Team createTeam(TeamDto newTeam) {
 
-        //TODO Make sure at add the Team Captain as you create a team
+       
 
         Team createdTeam = null;
         String sql = "INSERT INTO team (team_name, team_captain_id, game_name, accepting_members)" +
@@ -93,6 +93,7 @@ public class JdbcTeamDao implements TeamDao {
             User teamCaptain = userDao.getUserByUsername(newTeam.getUsername());
             int newTeamId = jdbcTemplate.queryForObject(sql, int.class, newTeam.getTeamName(), teamCaptain.getId(),
                     newTeam.getGameName(), newTeam.isAcceptingMembers());
+            linkUserToTeam(teamCaptain.getId(), newTeamId);
 
             createdTeam = getTeamById(newTeamId);
         }
@@ -152,6 +153,7 @@ public class JdbcTeamDao implements TeamDao {
                 "JOIN team_user ON team.team_id = team_user.team_id " +
                 "JOIN users ON team_user.user_id = users.user_id " +
                 "WHERE team.team_id = ?;";
+
         try{
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, teamId);
             while(results.next()){
@@ -165,6 +167,23 @@ public class JdbcTeamDao implements TeamDao {
         }
 
         return users;
+    }
+
+    @Override
+    public int linkUserToTeam(int userId, int teamId) {
+        int numRows = 0;
+        String sql = "INSERT INTO team_user(user_id,team_id) " +
+                     "VALUES (?,?) ";
+        try{
+            numRows = jdbcTemplate.update(sql, userId, teamId);
+        }
+        catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data integrity violation", e);
+        }
+
+        return numRows;
     }
     @Override
     public int unlinkUserFromTeam(int userId, int teamId) {
@@ -204,6 +223,8 @@ public class JdbcTeamDao implements TeamDao {
         }
         return updatedTeam;
     }
+
+
 
     public Team mapRowToTeam(SqlRowSet rowSet){
         Team team = new Team();

@@ -1,6 +1,7 @@
 package com.techelevator.model;
 
 import javax.validation.constraints.NotEmpty;
+import java.util.*;
 
 public class TeamDto {
 
@@ -14,17 +15,27 @@ public class TeamDto {
     private String gameName;
     private boolean acceptingMembers;
     //TODO add a list of members on the team
+    private List<User> members;
 
     public TeamDto() { }
 
-    public TeamDto(int teamId, String teamName, int teamCaptainId, String gameName, boolean acceptingMembers, String username) {
+    public TeamDto(int teamId, String teamName, int teamCaptainId, String gameName, boolean acceptingMembers, String username, List<User> members) {
         this.teamId = teamId;
         this.teamName = teamName;
         this.teamCaptainId = teamCaptainId;
         this.gameName = gameName;
         this.acceptingMembers = acceptingMembers;
         this.username = username;
+        this.members = members;
 
+    }
+
+    public List<User> getMembers() {
+        return members;
+    }
+
+    public void setMembers(List<User> members) {
+        this.members = members;
     }
 
     public String getUsername() {
