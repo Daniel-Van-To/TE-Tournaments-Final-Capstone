@@ -1,6 +1,5 @@
 <template>
     <div class="home">
-      <NavBar/>
       <!-- team requirements:
             team_name, game_name, current_user, is_accepting_members, 
               -->
@@ -22,12 +21,10 @@
   </template>
   
   <script>
-  import NavBar from '../components/NavBar.vue';
   import TeamService from '../services/TeamService.js';
   
   export default {
     components: {
-      NavBar
     },
     data() {
       return {

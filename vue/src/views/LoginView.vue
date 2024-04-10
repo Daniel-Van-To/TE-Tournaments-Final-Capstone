@@ -1,6 +1,5 @@
 <template>
   <div id="login">
-    <NavBar/>
     <form v-on:submit.prevent="login">
       <h1 >Please Sign In</h1>
       <div role="alert" v-if="invalidCredentials">
@@ -26,10 +25,10 @@
 
 <script>
 import authService from "../services/AuthService";
-import NavBar from '../components/NavBar.vue';
 
 export default {
-  components: {NavBar},
+  components: {
+  },
   data() {
     return {
       user: {
