@@ -105,7 +105,7 @@ public class TeamController {
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(path = "/teams/{teamId}/captain-view", method = RequestMethod.GET)
-    public boolean checkIfUserIsCaptain(@Valid @RequestBody TeamDto team) {
+    public boolean checkIfUserIsCaptain(@RequestBody TeamDto team) {
         try {
             //TODO requires unit tests
             return teamDao.checkIfUserIsTeamCaptain(team);
