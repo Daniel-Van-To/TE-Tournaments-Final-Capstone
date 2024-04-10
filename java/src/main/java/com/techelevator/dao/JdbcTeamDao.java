@@ -68,6 +68,8 @@ public class JdbcTeamDao implements TeamDao {
     @Override
     public Team createTeam(TeamDto newTeam) {
 
+        //TODO Make sure at add the Team Captain as you create a team
+
         Team createdTeam = null;
         String sql = "INSERT INTO team (team_name, team_captain_id, game_name, accepting_members)" +
                 "VALUES (?, ?, ?, ?) RETURNING team_id;";

@@ -13,6 +13,7 @@ public class TeamDto {
     @NotEmpty
     private String gameName;
     private boolean acceptingMembers;
+    //TODO add a list of members on the team
 
     public TeamDto() { }
 
