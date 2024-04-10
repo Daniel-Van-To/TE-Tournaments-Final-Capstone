@@ -36,7 +36,7 @@ public class RequestController {
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(path = "/teams/{teamId}/requests/{requestId}", method = RequestMethod.PUT)
-    public Request updateRequestById(@RequestBody RequestDto request, int requestId) {
+    public Request updateRequestById(@RequestBody RequestDto request, @PathVariable int requestId) {
         return requestDao.updateRequestByRequestId(request, requestId);
     }
 

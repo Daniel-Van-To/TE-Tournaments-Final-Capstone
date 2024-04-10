@@ -61,11 +61,10 @@ public class JdbcRequestDao implements RequestDao{
     @Override
     public Request updateRequestByRequestId(RequestDto request, int requestId) {
         Request updatedRequest = null;
-        String sql = "UPDATE request SET tournament_id = ?, team_id = ?, game_name = ?, request_status = ?, requester_id = ? " +
+        String sql = "UPDATE request SET request_status = ? " +
                      "WHERE request_id = ?; ";
         try{
-            int numberOfRows = jdbcTemplate.update(sql, request.getTournamentId(), request.getTeamId(),
-                                        request.getGameName(), requestId);
+            int numberOfRows = jdbcTemplate.update(sql, request.getRequestStatus(),  requestId);
             if(numberOfRows == 0) {
                 throw new DaoException("Zero rows effected, expected atleast one");
             }
