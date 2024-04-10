@@ -9,6 +9,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class JdbcRequestDao implements RequestDao{
 
@@ -33,8 +36,25 @@ public class JdbcRequestDao implements RequestDao{
         } catch (DataIntegrityViolationException e) {
             throw new DaoException("Data integrity violation", e);
         }
-
         return request;
+    }
+    @Override
+    public List<Request> getPendingRequestsByTeamId(int teamId) {
+        List<Request> requests = new ArrayList<>();
+
+        String sql = "SELECT * FROM request WHERE team_id = ? AND request_status = ?;";
+        try{
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, teamId, 'p');
+            while(results.next()){
+                requests.add(mapRowToRequest(results));
+            }
+        }
+        catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data integrity violation", e);
+        }
+        return requests;
     }
     public Request mapRowToRequest(SqlRowSet rowSet){
         Request request = new Request();
