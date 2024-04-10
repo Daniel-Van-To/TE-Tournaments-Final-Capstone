@@ -22,7 +22,7 @@ public class RequestController {
     public List<Request> getPendingRequests(@PathVariable int teamId) {
 
         try {
-            //TODO with the new TeamDto, send just the team as the team will have a list of team members (users)
+            //TODO method requires tests
             return requestDao.getPendingRequestsByTeamId(teamId);
         }
         catch (DaoException e) {
