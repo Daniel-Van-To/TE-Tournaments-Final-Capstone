@@ -3,6 +3,7 @@ package com.techelevator.controller;
 import com.techelevator.dao.RequestDao;
 import com.techelevator.exception.DaoException;
 import com.techelevator.model.Request;
+import com.techelevator.model.RequestDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -32,5 +33,12 @@ public class RequestController {
             throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());
         }
     }
+
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(path = "/teams/{teamId}/requests", method = RequestMethod.PUT)
+    public Request updateRequestById(@RequestBody RequestDto request, int requestId) {
+        return requestDao.updateRequestByRequestId(request, requestId);
+    }
+
 
 }
