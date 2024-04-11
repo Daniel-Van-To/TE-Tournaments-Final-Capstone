@@ -9,6 +9,7 @@ import com.techelevator.model.RequestDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import com.techelevator.model.User;
 
 import java.util.List;
 
@@ -45,6 +46,7 @@ public class RequestController {
     @RequestMapping(path = "/teams/{teamId}/requests/{requestId}", method = RequestMethod.PUT)
     public Request updateRequestById(@RequestBody RequestDto request, @PathVariable int requestId) {
         Request updatedRequest = requestDao.updateRequestByRequestId(request, requestId);
+
 
         if(updatedRequest.getRequestStatus() == 'a') {
             teamDao.linkUserToTeam(updatedRequest.getRequesterId(), updatedRequest.getTeamId());
