@@ -97,21 +97,7 @@ public class TeamController {
         }
     }
 
-    @ResponseStatus(HttpStatus.OK)
-    @RequestMapping(path = "/users/{teamId}", method = RequestMethod.GET)
-    public List<User> getUsersForTeam(@PathVariable int teamId) {
 
-        try {
-            //TODO with the new TeamDto, send just the team as the team will have a list of team members (users)
-            return teamDao.getUsersOnTeam(teamId);
-        }
-        catch (DaoException e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
-        }
-        catch (NullPointerException e) {
-            throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());
-        }
-    }
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(path = "/teams/{teamId}", method = RequestMethod.DELETE)
     public void removeUserFromTeam(@RequestBody User user,@PathVariable int teamId) {
