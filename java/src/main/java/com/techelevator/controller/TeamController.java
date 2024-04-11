@@ -125,6 +125,22 @@ public class TeamController {
         }
     }
 
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(path = "/teams/{userId}/captain", method = RequestMethod.GET)
+    public List<Team> getListOfTeamsUserIsCaptainOf(@RequestBody UserDto user) {
+
+        try {
+            //TODO requires unit tests
+            return teamDao.getTeamsUserIsCaptain(user);
+        }
+        catch (DaoException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+        }
+        catch (NullPointerException e) {
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());
+        }
+    }
+
 
 
 }

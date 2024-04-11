@@ -66,6 +66,70 @@ public class JdbcTeamDao implements TeamDao {
     }
 
     @Override
+    public List<Team> getTeamsByAcceptingMembers() {
+        List<Team> teams = new ArrayList<>();
+        String sql = "SELECT team_id, team_name, team_captain_id, game_name, accepting_members FROM team WHERE accepting_members = true ORDER BY team_id ASC;";
+
+        try {
+
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
+            while (results.next()) {
+                teams.add(mapRowToTeam(results));
+            }
+
+        }
+        catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data integrity violation", e);
+        }
+        return teams;
+    }
+
+    @Override
+    public List<Team> getTeamsUserIsCaptain(UserDto user) {
+        List<Team> teamsUserIsCaptain = new ArrayList<>();
+        String sql = "SELECT team_id, team_name, team_captain_id, game_name, accepting_members FROM team WHERE team_captain_id = ? ORDER BY team_id ASC;";
+
+        try {
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, user.getId());
+            while (results.next()) {
+                teamsUserIsCaptain.add(mapRowToTeam(results));
+            }
+        }
+        catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data integrity violation", e);
+        }
+        return teamsUserIsCaptain;
+    }
+
+    @Override
+    public List<User> getUsersOnTeam(int teamId) {
+        List<User> users = new ArrayList<>();
+        String sql = "SELECT users.user_id, users.username, users.role " +
+                "FROM team " +
+                "JOIN team_user ON team.team_id = team_user.team_id " +
+                "JOIN users ON team_user.user_id = users.user_id " +
+                "WHERE team.team_id = ?;";
+
+        try{
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, teamId);
+            while(results.next()){
+                users.add(userDao.mapRowToUserNoPassword(results));
+            }
+        }
+        catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data integrity violation", e);
+        }
+
+        return users;
+    }
+
+    @Override
     public Team createTeam(TeamDto newTeam) {
 
         Team createdTeam = null;
@@ -104,26 +168,7 @@ public class JdbcTeamDao implements TeamDao {
         return createdTeam;
     }
 
-    @Override
-    public List<Team> getTeamsByAcceptingMembers() {
-        List<Team> teams = new ArrayList<>();
-        String sql = "SELECT team_id, team_name, team_captain_id, game_name, accepting_members FROM team WHERE accepting_members = true ORDER BY team_id ASC;";
 
-        try {
-
-            SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
-            while (results.next()) {
-                teams.add(mapRowToTeam(results));
-            }
-
-        }
-        catch (CannotGetJdbcConnectionException e) {
-            throw new DaoException("Unable to connect to server or database", e);
-        } catch (DataIntegrityViolationException e) {
-            throw new DaoException("Data integrity violation", e);
-        }
-        return teams;
-    }
 
     @Override
     public Request addTeamJoinRequest(RequestDto request) {
@@ -143,29 +188,7 @@ public class JdbcTeamDao implements TeamDao {
         return joinTeam;
     }
 
-    @Override
-    public List<User> getUsersOnTeam(int teamId) {
-        List<User> users = new ArrayList<>();
-        String sql = "SELECT users.user_id, users.username, users.role " +
-                "FROM team " +
-                "JOIN team_user ON team.team_id = team_user.team_id " +
-                "JOIN users ON team_user.user_id = users.user_id " +
-                "WHERE team.team_id = ?;";
 
-        try{
-            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, teamId);
-            while(results.next()){
-                users.add(userDao.mapRowToUserNoPassword(results));
-            }
-        }
-        catch (CannotGetJdbcConnectionException e) {
-            throw new DaoException("Unable to connect to server or database", e);
-        } catch (DataIntegrityViolationException e) {
-            throw new DaoException("Data integrity violation", e);
-        }
-
-        return users;
-    }
 
     @Override
     public int linkUserToTeam(int userId, int teamId) {
