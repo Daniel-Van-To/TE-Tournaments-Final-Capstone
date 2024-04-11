@@ -169,21 +169,22 @@ public class JdbcTournamentDao implements TournamentDao{
         Tournament updatedTournament = null;
         String sql = "UPDATE tournament SET tournament_name = ?, entry_fee = ?, accepting_teams = ? " +
                 "WHERE tournament_id = ?;";
-//        try{
-//            int numberOfRows = jdbcTemplate.update(sql, team.getTeamName(), team.getTeamCaptainId(), team.isAcceptingMembers(), teamId);
-//            if(numberOfRows == 0) {
-//                throw new DaoException("Zero rows effected, expected atleast one");
-//            }
-//            else {
-//                updatedTeam = getTeamById(teamId);
-//            }
-//        }
-//        catch (CannotGetJdbcConnectionException e) {
-//            throw new DaoException("Unable to connect to server or database", e);
-//        } catch (DataIntegrityViolationException e) {
-//            throw new DaoException("Data integrity violation", e);
-//        }
-        return null;
+        try{
+            int numberOfRows = jdbcTemplate.update(sql, tournament.getTournamentName(), tournament.getEntry_fee(),
+                    tournament.getAcceptingTeams(), tournamentId);
+            if(numberOfRows == 0) {
+                throw new DaoException("Zero rows effected, expected atleast one");
+            }
+            else {
+                updatedTournament = getTournamentById(tournamentId);
+            }
+        }
+        catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data integrity violation", e);
+        }
+        return updatedTournament;
     }
     @Override
     public boolean checkIfUserIsTournamentHost(TournamentDto tournament) {
