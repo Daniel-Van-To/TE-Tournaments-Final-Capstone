@@ -1,6 +1,6 @@
 package com.techelevator.model;
 
-public class Tournament {
+public class TournamentDto {
 
     private int tournamentId;
     private int hostId;
@@ -8,9 +8,8 @@ public class Tournament {
     private double entry_fee;
     private String gameName;
 
-    public Tournament() { }
 
-    public Tournament(int tournamentId, int hostId, String tournamentName, double entry_fee, String gameName) {
+    public TournamentDto(int tournamentId, int hostId, String tournamentName, double entry_fee, String gameName) {
         this.tournamentId = tournamentId;
         this.hostId = hostId;
         this.tournamentName = tournamentName;

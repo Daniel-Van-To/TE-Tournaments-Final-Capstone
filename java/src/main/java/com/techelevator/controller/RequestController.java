@@ -47,11 +47,19 @@ public class RequestController {
     public Request updateRequestById(@RequestBody RequestDto request, @PathVariable int requestId) {
         Request updatedRequest = requestDao.updateRequestByRequestId(request, requestId);
 
-
-        if(updatedRequest.getRequestStatus() == 'a') {
-            teamDao.linkUserToTeam(updatedRequest.getRequesterId(), updatedRequest.getTeamId());
+        try {
+            //TODO method requires tests
+            if(updatedRequest.getRequestStatus() == 'a') {
+                teamDao.linkUserToTeam(updatedRequest.getRequesterId(), updatedRequest.getTeamId());
+            }
+            return updatedRequest;
         }
-        return updatedRequest;
+        catch (DaoException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+        }
+        catch (NullPointerException e) {
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());
+        }
     }
 
 

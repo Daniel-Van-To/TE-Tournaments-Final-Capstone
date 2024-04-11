@@ -27,6 +27,45 @@ public class JdbcTeamDao implements TeamDao {
     }
 
     @Override
+    public Team createTeam(TeamDto newTeam) {
+
+        Team createdTeam = null;
+        String sql = "INSERT INTO team (team_name, team_captain_id, game_name, accepting_members)" +
+                "VALUES (?, ?, ?, ?) RETURNING team_id;";
+
+        if (gameDao.getGameByGameName(newTeam.getGameName()) == null) {
+            //TODO decide if we want this to just automatically add the game (how do we get max_players from here)
+            throw new DaoException("Team cannot be added since the game is not in the system.");
+        }
+
+        Team firstNameHolder = getTeamByTeamName(newTeam.getTeamName());
+        boolean teamNameAlreadyExists = firstNameHolder != null;
+        boolean sameNameAndSameGame = false;
+        if (teamNameAlreadyExists) {
+            sameNameAndSameGame = firstNameHolder.getGameName().equalsIgnoreCase(newTeam.getGameName());
+        }
+        if (teamNameAlreadyExists && sameNameAndSameGame) {
+            throw new DaoException("Team already exists.");
+        }
+
+        try{
+            User teamCaptain = userDao.getUserByUsername(newTeam.getUsername());
+            int newTeamId = jdbcTemplate.queryForObject(sql, int.class, newTeam.getTeamName(), teamCaptain.getId(),
+                    newTeam.getGameName(), newTeam.isAcceptingMembers());
+            linkUserToTeam(teamCaptain.getId(), newTeamId);
+
+            createdTeam = getTeamById(newTeamId);
+        }
+        catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data integrity violation", e);
+        }
+
+        return createdTeam;
+    }
+
+    @Override
     public Team getTeamById(int id){
         Team team = null;
         String sql = "SELECT team_id, team_name, team_captain_id, game_name, accepting_members FROM team WHERE team_id = ?;";
@@ -128,47 +167,6 @@ public class JdbcTeamDao implements TeamDao {
 
         return users;
     }
-
-    @Override
-    public Team createTeam(TeamDto newTeam) {
-
-        Team createdTeam = null;
-        String sql = "INSERT INTO team (team_name, team_captain_id, game_name, accepting_members)" +
-                "VALUES (?, ?, ?, ?) RETURNING team_id;";
-
-        if (gameDao.getGameByGameName(newTeam.getGameName()) == null) {
-            //TODO decide if we want this to just automatically add the game (how do we get max_players from here)
-            throw new DaoException("Team cannot be added since the game is not in the system.");
-        }
-
-        Team firstNameHolder = getTeamByTeamName(newTeam.getTeamName());
-        boolean teamNameAlreadyExists = firstNameHolder != null;
-        boolean sameNameAndSameGame = false;
-        if (teamNameAlreadyExists) {
-            sameNameAndSameGame = firstNameHolder.getGameName().equalsIgnoreCase(newTeam.getGameName());
-        }
-        if (teamNameAlreadyExists && sameNameAndSameGame) {
-            throw new DaoException("Team already exists.");
-        }
-
-        try{
-            User teamCaptain = userDao.getUserByUsername(newTeam.getUsername());
-            int newTeamId = jdbcTemplate.queryForObject(sql, int.class, newTeam.getTeamName(), teamCaptain.getId(),
-                    newTeam.getGameName(), newTeam.isAcceptingMembers());
-            linkUserToTeam(teamCaptain.getId(), newTeamId);
-
-            createdTeam = getTeamById(newTeamId);
-        }
-        catch (CannotGetJdbcConnectionException e) {
-            throw new DaoException("Unable to connect to server or database", e);
-        } catch (DataIntegrityViolationException e) {
-            throw new DaoException("Data integrity violation", e);
-        }
-
-        return createdTeam;
-    }
-
-
 
     @Override
     public Request addTeamJoinRequest(RequestDto request) {
