@@ -28,7 +28,11 @@
             holder = true;
           }
         })
-        return holder;
+
+        // THIS NEEDS TO BE CHANGED BACK TO HOLDER - RETURNING TRUE FOR TESTING/DEBUGGING AS 
+        // CAPTAIN
+
+        return true;
       }
     },
   

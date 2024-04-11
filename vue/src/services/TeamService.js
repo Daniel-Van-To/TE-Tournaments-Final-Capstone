@@ -11,7 +11,7 @@ export default {
     },
 
     getUsersOnTeam(teamId) {
-        return axios.get(`/teams/${teamId}`);
+        return axios.get(`/users/${teamId}`);
     },
 
     sendJoinRequest(request) {
@@ -21,5 +21,10 @@ export default {
     isCurrentUserCaptain(teamId) {
         return axios.get(`/teams/${teamId}/captain-view`, this.$store.state.user.username);
     },
+
+    getPendingJoinRequests(teamId) {
+        return axios.get(`/teams/${teamId}/requests`);
+    },
+    
 
 }
