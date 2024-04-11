@@ -7,6 +7,7 @@ public class Tournament {
     private String tournamentName;
     private double entry_fee;
     private String gameName;
+    //TODO Change acceptingTeams to a boolean
     private String acceptingTeams;
 
     public Tournament() { }
