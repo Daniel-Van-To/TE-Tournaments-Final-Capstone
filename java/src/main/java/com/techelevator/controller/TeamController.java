@@ -1,6 +1,7 @@
 package com.techelevator.controller;
 
 
+import com.techelevator.dao.RequestDao;
 import com.techelevator.dao.TeamDao;
 import com.techelevator.dao.UserDao;
 import com.techelevator.exception.DaoException;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -18,10 +20,13 @@ public class TeamController {
 
     private UserDao userDao;
     private TeamDao teamDao;
+    private RequestDao requestDao;
 
-    public TeamController(UserDao userDao, TeamDao teamDao) {
+
+    public TeamController(UserDao userDao, TeamDao teamDao, RequestDao requestDao) {
         this.userDao = userDao;
         this.teamDao = teamDao;
+        this.requestDao = requestDao;
     }
 
 
@@ -68,8 +73,24 @@ public class TeamController {
     @RequestMapping(path = "/teams/{teamId}", method = RequestMethod.POST)
     public Request handleTeamJoinRequest(@Valid @RequestBody RequestDto requestDto, @PathVariable int teamId) {
         try {
-            //TODO Add Conditional checking if the user making the request has already sent a request or is already on the team
-           return teamDao.addTeamJoinRequest(requestDto);
+            List<User> requestTeamMembers = teamDao.getUsersOnTeam(requestDto.getTeamId());
+            List<Request> teamPendingRequests = requestDao.getPendingRequestsByTeamId(requestDto.getTeamId());
+            User requester = userDao.getUserById(requestDto.getRequesterId());
+
+            if(requestTeamMembers.contains(requester)) {
+                throw new ResponseStatusException(HttpStatus.ALREADY_REPORTED,
+                        "You are already a member of this team.");
+            }
+
+            for(Request request: teamPendingRequests) {
+                if(request.getRequesterId() == requestDto.getRequesterId()) {
+                    throw new ResponseStatusException(HttpStatus.ALREADY_REPORTED,
+                            "You already have a pending request to join this team");
+                }
+            }
+
+                return teamDao.addTeamJoinRequest(requestDto);
+
         }
         catch (DaoException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
