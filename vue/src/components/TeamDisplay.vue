@@ -66,7 +66,7 @@ export default {
         },
 
         pushToSeeTeamJoinRequestsView() {
-
+            this.$router.push({name: 'see-team-join-requests-view', params: {teamId: this.$route.params.teamId}})
         }
     }
 };
