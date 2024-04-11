@@ -28,7 +28,7 @@ public class UserController {
 
 
     @ResponseStatus(HttpStatus.OK)
-    @RequestMapping(path = "/users/{teamId}", method = RequestMethod.GET)
+    @RequestMapping(path = "/users/{teamId}/list", method = RequestMethod.GET)
     public List<User> getUsersForTeam(@PathVariable int teamId) {
 
         try {
