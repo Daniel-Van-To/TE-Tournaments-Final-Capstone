@@ -2,6 +2,7 @@ package com.techelevator.dao;
 
 import com.techelevator.exception.DaoException;
 import com.techelevator.model.Request;
+import com.techelevator.model.RequestDto;
 import com.techelevator.model.Team;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
@@ -55,6 +56,28 @@ public class JdbcRequestDao implements RequestDao{
             throw new DaoException("Data integrity violation", e);
         }
         return requests;
+    }
+
+    @Override
+    public Request updateRequestByRequestId(RequestDto request, int requestId) {
+        Request updatedRequest = null;
+        String sql = "UPDATE request SET request_status = ? " +
+                     "WHERE request_id = ?; ";
+        try{
+            int numberOfRows = jdbcTemplate.update(sql, request.getRequestStatus(),  requestId);
+            if(numberOfRows == 0) {
+                throw new DaoException("Zero rows effected, expected atleast one");
+            }
+            else {
+                updatedRequest = getRequestByRequestId(requestId);
+            }
+        }
+        catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data integrity violation", e);
+        }
+        return updatedRequest;
     }
     public Request mapRowToRequest(SqlRowSet rowSet){
         Request request = new Request();

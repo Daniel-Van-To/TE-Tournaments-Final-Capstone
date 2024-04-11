@@ -18,4 +18,5 @@ public interface UserDao {
 
     User mapRowToUserNoPassword(SqlRowSet rs);
 
+
 }
