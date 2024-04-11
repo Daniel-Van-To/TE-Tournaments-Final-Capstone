@@ -7,15 +7,25 @@ public class Tournament {
     private String tournamentName;
     private double entry_fee;
     private String gameName;
+    private String acceptingTeams;
 
     public Tournament() { }
 
-    public Tournament(int tournamentId, int hostId, String tournamentName, double entry_fee, String gameName) {
+    public Tournament(int tournamentId, int hostId, String tournamentName, double entry_fee, String gameName, String acceptingTeams) {
         this.tournamentId = tournamentId;
         this.hostId = hostId;
         this.tournamentName = tournamentName;
         this.entry_fee = entry_fee;
         this.gameName = gameName;
+        this.acceptingTeams = acceptingTeams;
+    }
+
+    public String getAcceptingTeams() {
+        return acceptingTeams;
+    }
+
+    public void setAcceptingTeams(String acceptingTeams) {
+        this.acceptingTeams = acceptingTeams;
     }
 
     public int getTournamentId() {

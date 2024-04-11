@@ -7,14 +7,27 @@ public class TournamentDto {
     private String tournamentName;
     private double entry_fee;
     private String gameName;
+    private String acceptingTeams;
+    //UserId is the current user; This variable is used to check if the current user is the host
+    private int userId;
 
+    public TournamentDto() { }
 
-    public TournamentDto(int tournamentId, int hostId, String tournamentName, double entry_fee, String gameName) {
+    public TournamentDto(int tournamentId, int hostId, String tournamentName, double entry_fee, String gameName, String acceptingTeams) {
         this.tournamentId = tournamentId;
         this.hostId = hostId;
         this.tournamentName = tournamentName;
         this.entry_fee = entry_fee;
         this.gameName = gameName;
+        this.acceptingTeams = acceptingTeams;
+    }
+
+    public String getAcceptingTeams() {
+        return acceptingTeams;
+    }
+
+    public void setAcceptingTeams(String acceptingTeams) {
+        this.acceptingTeams = acceptingTeams;
     }
 
     public int getTournamentId() {
@@ -51,6 +64,14 @@ public class TournamentDto {
 
     public String getGameName() {
         return gameName;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public void setGameName(String gameName) {

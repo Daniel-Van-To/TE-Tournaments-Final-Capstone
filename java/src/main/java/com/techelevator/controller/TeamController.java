@@ -124,7 +124,7 @@ public class TeamController {
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(path = "/teams/{userId}/captain", method = RequestMethod.GET)
-    public List<Team> getListOfTeamsUserIsCaptainOf(@RequestBody UserDto user) {
+    public List<Team> getListOfTeamsUserIsCaptainOf(@RequestBody User user) {
 
         try {
             //TODO requires unit tests

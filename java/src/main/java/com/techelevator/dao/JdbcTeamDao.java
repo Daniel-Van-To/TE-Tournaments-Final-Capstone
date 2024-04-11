@@ -126,9 +126,10 @@ public class JdbcTeamDao implements TeamDao {
     }
 
     @Override
-    public List<Team> getTeamsUserIsCaptain(UserDto user) {
+    public List<Team> getTeamsUserIsCaptain(User user) {
         List<Team> teamsUserIsCaptain = new ArrayList<>();
-        String sql = "SELECT team_id, team_name, team_captain_id, game_name, accepting_members FROM team WHERE team_captain_id = ? ORDER BY team_id ASC;";
+        String sql = "SELECT team_id, team_name, team_captain_id, game_name, accepting_members " +
+                "FROM team WHERE team_captain_id = ? ORDER BY team_id ASC;";
 
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, user.getId());

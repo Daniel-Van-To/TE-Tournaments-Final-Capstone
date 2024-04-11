@@ -15,7 +15,7 @@ public interface TournamentDao {
     public List<Tournament> getTournamentsUserIsHost(UserDto user);
     public int linkTeamToTournament(int team_id, int tournament_id);
     public int unlinkTeamFromTournament(int team_id, int tournament_id);
-    public Tournament updateTournament(TournamentDto tournament);
+    public Tournament updateTournament(TournamentDto tournament, int tournamentId);
     public boolean checkIfUserIsTournamentHost(TournamentDto tournament);
 
 
