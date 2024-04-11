@@ -1,7 +1,8 @@
 <template>
     <table>
         <thead>
-            <button class="btn btn-join-request" v-on:click="submitRequest">Submit a Join Request</button>
+            <button class="btn btn-join-request" v-if=isNotCaptain v-on:click="submitRequest">Submit a Join Request</button>
+            <button class="btn btn-see-requests" v-else v-on:click="pushToSeeTeamJoinRequestsView">See Join Requests</button>
             <tr>
                 <th>ID</th>
                 <th>Name</th>
@@ -20,24 +21,38 @@
 <script>
 import TeamService from '../services/TeamService';
 export default {
-    props: ["teamMembers"],
+
+    props: ["teamMembers", "isCaptain"],
+
     data() {
         return {
             request: {
-                teamId: this.$route.params.id,
+                teamId: this.$route.params.teamId,
                 userName: this.$store.state.user.username,      
             }
         }
     },
+
+    computed : {
+
+        isNotCaptain() {
+            if(this.isCaptain) {
+                return false;
+            }
+            return true;
+        }
+
+    },
     
     methods: {
         submitRequest() {
-            TeamService.sendJoinRequest(this.request).then((response) => {
-                if (response.status === 200) {
+            TeamService.sendJoinRequest(this.request)
+            .then((response) => {
+                if (response.status === 201) {
                     this.$store.commit(
                         'SET_NOTIFICATION',
                         {
-                        message: 'A new card was added.',
+                        message: 'Request sent.',
                         type: 'success'
                         }
                     );
@@ -45,6 +60,13 @@ export default {
                     }
                 this.$router.push({name: 'teams'});
             });
+            // .catch((error) => {
+            //     if(error.response.status === 'something')
+            // })
+        },
+
+        pushToSeeTeamJoinRequestsView() {
+
         }
     }
 };

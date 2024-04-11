@@ -8,8 +8,15 @@ export function createStore(currentToken, currentUser) {
       token: currentToken || '',
       user: currentUser || {},
       notification: null,
+      userPackage: {
+        myTeams: [],
+        myTournaments: [],
+      }
     },
+
     mutations: {
+
+      //Authentication
       SET_AUTH_TOKEN(state, token) {
         state.token = token;
         localStorage.setItem('token', token);
@@ -27,6 +34,7 @@ export function createStore(currentToken, currentUser) {
         axios.defaults.headers.common = {};
       },
 
+      //Notification
       SET_NOTIFICATION(state, notification) {
         // Clear the current notification if one exists
         if (state.notification) {
@@ -61,6 +69,17 @@ export function createStore(currentToken, currentUser) {
         }
         state.notification = null;
       },
+
+      //User data
+      UPDATE_MY_TEAMS(state, teams) {
+
+      },
+
+      UPDATE_MY_TOURNAMENTS(state, tournaments) {
+
+      }
+
+
     },
 
     // getters:{
