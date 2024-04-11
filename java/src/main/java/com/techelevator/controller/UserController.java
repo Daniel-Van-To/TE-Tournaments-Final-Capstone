@@ -44,7 +44,7 @@ public class UserController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @RequestMapping(path = "/users/{userId", method = RequestMethod.GET)
+    @RequestMapping(path = "/users/{userId}", method = RequestMethod.GET)
     public User getUserByUserId(@PathVariable int userId) {
 
         try {
