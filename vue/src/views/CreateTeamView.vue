@@ -43,13 +43,16 @@
             if(!this.validateForm()){
                 return ;
             }
-            TeamService.createTeam(this.team).then((response)=> {
+            TeamService.createTeam(this.team)
+            .then((response)=> {
                 if(response.status === 201) {
                     this.$store.commit('SET_NOTIFICATION',
                     {
                         message: 'Team was created',
                         type:'SUCCESS'
                     });
+                    // - we have already created a team in the server
+                    // - we need to either refresh the store completely OR ALSO create the team in the store
                     this.$router.push({name: 'home'});
                 }
             })

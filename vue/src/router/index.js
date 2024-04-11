@@ -12,6 +12,7 @@ import BrowseTournamentsView from '../views/BrowseTournamentsView.vue';
 import CreateTeamView from '../views/CreateTeamView.vue';
 import BrowseTeamsView from '../views/BrowseTeamsView.vue';
 import TeamView from '../views/TeamView.vue';
+import SeeTeamJoinRequestsView from '../views/SeeTeamJoinRequestsView.vue';
 
 
 /**
@@ -102,9 +103,19 @@ const routes = [
   },
 
   {
-    path: '/teams/:id',
+    path: '/teams/:teamId',
     name: 'team-view',
     component: TeamView,
+    props: true,
+    meta: {
+      requiresAuth: true
+    }
+  },
+
+  {
+    path: '/teams/:teamId/captain',
+    name: 'see-team-join-requests-view',
+    component: SeeTeamJoinRequestsView,
     meta: {
       requiresAuth: true
     }

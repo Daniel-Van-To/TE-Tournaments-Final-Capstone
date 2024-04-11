@@ -10,11 +10,16 @@ export default {
         return axios.get('/teams');
     },
 
-    getTeam(teamId) {
+    getUsersOnTeam(teamId) {
         return axios.get(`/teams/${teamId}`);
     },
 
     sendJoinRequest(request) {
         return axios.post(`/teams/${request.teamId}`, request);
-    }
+    },
+
+    isCurrentUserCaptain(teamId) {
+        return axios.get(`/teams/${teamId}/captain-view`, this.$store.state.user.username);
+    },
+
 }

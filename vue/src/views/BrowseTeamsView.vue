@@ -1,13 +1,14 @@
 <template>
     <div class="home">
-      <h1>BrowseTeams</h1>
+      <h1>Browse Teams</h1>
       <TeamsList v-bind:teams="teams"/>
       <p></p>
     </div>
   </template>
   
   <script>
-  import TeamsList from '../components/TeamsList.vue';
+
+  import TeamsList from '../components/TeamsList.vue'
   import TeamService from '../services/TeamService.js';
   
   export default {
@@ -23,9 +24,11 @@
     methods: {
       
       getTeams() {
-        TeamService.getTeams().then((response) => {
+        TeamService.getTeams()
+        .then((response) => {
           this.teams = response.data;
-        }).catch(error => {
+        })
+        .catch((error) => {
           if (error.response) {
             this.$store.commit('SET_NOTIFICATION',
               "Error getting teams list. Response received was '" + error.response.statusText + "'.");

@@ -25,6 +25,7 @@
 
 <script>
 import authService from "../services/AuthService";
+import teamService from "../services/TeamService";
 
 export default {
   components: {
@@ -44,6 +45,10 @@ export default {
           if (response.status == 200) {
             this.$store.commit("SET_AUTH_TOKEN", response.data.token);
             this.$store.commit("SET_USER", response.data.user);
+
+            // this.$store.commit("UPDATE_MY_TEAMS", this.teamService.)
+            // this.$store.commit("UPDATE_MY_TOURNAMENTS", this.)
+
             this.$router.push("/");
           }
         })

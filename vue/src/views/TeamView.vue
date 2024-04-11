@@ -1,7 +1,7 @@
 <template>
     <div class="home">
-      <h1>BrowseTeams</h1>
-      <TeamDisplay v-bind:teamMembers="teamMembers"/>
+      <h1></h1>
+      <TeamDisplay v-bind:teamMembers="teamMembers" v-bind:isCaptain="currentUserIsCaptain"/>
       <p></p>
     </div>
   </template>
@@ -11,9 +11,28 @@
   import TeamService from '../services/TeamService.js';
   
   export default {
+//we will be able to populate this with team info, we do require a get team by team id 
+//path to be able to do this. 
     components: {
       TeamDisplay
     },
+
+    computed: {
+      teamId() {
+        return parseInt(this.$route.params.teamId);
+      },
+      currentUserIsCaptain() {
+        let holder = false;
+        this.$store.state.userPackage.myTeams.forEach((team) => {
+          if (parseInt(team.teamId) === this.teamId) {
+            holder = true;
+          }
+        })
+        return holder;
+      }
+    },
+  
+
     data() {
       return {
         teamMembers: [],
@@ -24,8 +43,8 @@
     },
     
     created() {
-      let teamId = parseInt(this.$route.params.id);
-      TeamService.getTeam(teamId).then((response) => {
+      TeamService.getUsersOnTeam(this.teamId)
+      .then((response) => {
         this.teamMembers = response.data;
       });
     }
