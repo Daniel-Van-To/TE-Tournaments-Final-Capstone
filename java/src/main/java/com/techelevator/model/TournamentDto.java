@@ -1,5 +1,7 @@
 package com.techelevator.model;
 
+import java.util.List;
+
 public class TournamentDto {
 
     private int tournamentId;
@@ -7,9 +9,11 @@ public class TournamentDto {
     private String tournamentName;
     private double entry_fee;
     private String gameName;
+    //TODO Change acceptingTeams to a boolean
     private String acceptingTeams;
     //UserId is the current user; This variable is used to check if the current user is the host
     private int userId;
+    private List<Team> participants;
 
     public TournamentDto() { }
 

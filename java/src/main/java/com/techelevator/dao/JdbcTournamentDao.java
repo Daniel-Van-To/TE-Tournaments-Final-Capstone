@@ -42,7 +42,6 @@ public class JdbcTournamentDao implements TournamentDao{
         try{
             int newTournamentId = jdbcTemplate.queryForObject(sql, int.class, tournament.getHostId(), tournament.getTournamentName(),
                     tournament.getEntry_fee(), tournament.getGameName(), tournament.getAcceptingTeams());
-            //TODO Remember to link team to tournament
 
             createdTournament = getTournamentById(newTournamentId);
         }
