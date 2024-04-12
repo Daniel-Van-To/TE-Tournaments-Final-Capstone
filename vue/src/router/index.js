@@ -13,6 +13,7 @@ import CreateTeamView from '../views/CreateTeamView.vue';
 import BrowseTeamsView from '../views/BrowseTeamsView.vue';
 import TeamView from '../views/TeamView.vue';
 import SeeTeamJoinRequestsView from '../views/SeeTeamJoinRequestsView.vue';
+import CreateTournamentView from '../views/CreateTournamentView.vue';
 
 
 /**
@@ -119,7 +120,16 @@ const routes = [
     meta: {
       requiresAuth: true
     }
-  }
+  },
+  
+  {
+    path: '/tournaments/create-tournament',
+    name: 'create-tournament-view',
+    component: CreateTournamentView,
+    meta: {
+      requiresAuth: true,
+    }
+  },
 ];
 
 // Create the router
