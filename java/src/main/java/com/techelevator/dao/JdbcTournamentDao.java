@@ -92,6 +92,27 @@ public class JdbcTournamentDao implements TournamentDao{
         }
         return tournament;
     }
+    public List<Team> getParticipatingTeams(int tournamentId) {
+        Tournament info = getTournamentById(tournamentId);
+        List<Team> participatingTeams = new ArrayList<>();
+        String sql = "SELECT team.team_id, team.team_name, team.team_captain_id, team.game_name, team.accepting_members " +
+                "FROM tournament " +
+                "JOIN team_tournament ON tournament.tournament_id = team_tournament.tournament_id " +
+                "JOIN team ON team_tournament.team_id = team.team_id " +
+                "WHERE tournament.tournament_id = ? ";
+        try{
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, tournamentId);
+            while(results.next()){
+                participatingTeams.add(mapRowToTeam(results));
+            }
+            return participatingTeams;
+        }
+        catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data integrity violation", e);
+        }
+    }
     @Override
     public TournamentDto getTournamentDetailById(int tournamentId) {
         Tournament info = getTournamentById(tournamentId);
