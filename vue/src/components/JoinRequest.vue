@@ -13,8 +13,8 @@
         </thead>
         <tbody>
             <td>{{ user.username }}</td>
-            <td><button @click="updateRequestStatus('a')" class="acceptBtn">Accept</button></td>
-            <td><button @click="updateRequestStatus('d')" class="denyBtn">Deny</button></td>
+            <td><button @click="submitRequest('a')" class="acceptBtn">Accept</button></td>
+            <td><button @click="submitRequest('d')" class="denyBtn">Deny</button></td>
         </tbody>
     </table>
     {{ JSON.stringify(updatedRequest) }}
