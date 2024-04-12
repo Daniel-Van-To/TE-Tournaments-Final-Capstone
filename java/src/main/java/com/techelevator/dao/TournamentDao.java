@@ -1,5 +1,6 @@
 package com.techelevator.dao;
 
+import com.techelevator.model.Team;
 import com.techelevator.model.Tournament;
 import com.techelevator.model.TournamentDto;
 import com.techelevator.model.UserDto;
@@ -19,5 +20,6 @@ public interface TournamentDao {
     public boolean checkIfUserIsTournamentHost(int tournamentId, int userId);
     public List<Tournament> getTournamentsByGameName(String gameName);
     public TournamentDto getTournamentDetailById(int tournamentId);
+    public List<Team> getParticipatingTeams(int tournamentId);
 
 }
