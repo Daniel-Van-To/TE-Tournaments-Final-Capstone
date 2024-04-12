@@ -1,9 +1,41 @@
 <template>
   <div id="capstone-app">
+    <div id="notificationContainer">
+      <notification/>
+    </div>
     <div id="nav">
-      <router-link v-bind:to="{ name: 'home' }">Home</router-link>&nbsp;|&nbsp;
-      <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>
+      <nav-bar/>
     </div>
     <router-view />
   </div>
 </template>
+
+<script>
+import NavBar from './components/NavBar.vue';
+import Notification from './components/Notification.vue';
+
+export default {
+  components:  {
+    NavBar,
+    Notification,
+  },
+
+  created() {
+    window.addEventListener('beforeunload', (event) => {
+      this.$store.commit("LOGOUT");
+      
+    })
+  },
+
+  
+
+}
+
+
+
+</script>
+
+<style>
+
+
+</style>

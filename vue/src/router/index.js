@@ -6,6 +6,14 @@ import HomeView from '../views/HomeView.vue';
 import LoginView from '../views/LoginView.vue';
 import LogoutView from '../views/LogoutView.vue';
 import RegisterView from '../views/RegisterView.vue';
+import AboutUsView from '../views/AboutUsView.vue';
+import FAQView from '../views/FAQView.vue';
+import BrowseTournamentsView from '../views/BrowseTournamentsView.vue';
+import CreateTeamView from '../views/CreateTeamView.vue';
+import BrowseTeamsView from '../views/BrowseTeamsView.vue';
+import TeamView from '../views/TeamView.vue';
+import SeeTeamJoinRequestsView from '../views/SeeTeamJoinRequestsView.vue';
+
 
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
@@ -21,7 +29,7 @@ const routes = [
     name: 'home',
     component: HomeView,
     meta: {
-      requiresAuth: true
+      requiresAuth: false
     }
   },
   {
@@ -46,6 +54,70 @@ const routes = [
     component: RegisterView,
     meta: {
       requiresAuth: false
+    }
+  },
+
+  {
+    path: "/about-us",
+    name: "about-us",
+    component: AboutUsView,
+    meta: {
+      requiresAuth: false
+    }
+  },
+
+  {
+    path: "/faq",
+    name: "faq",
+    component: FAQView,
+    meta: {
+      requiresAuth: false
+    }
+  },
+
+  {
+    path: "/browse-tournaments",
+    name: "browse-tournaments",
+    component: BrowseTournamentsView,
+    meta: {
+      requiresAuth: false
+    }
+  },
+
+  {
+    path: "/create-team",
+    name: "create-team",
+    component: CreateTeamView,
+    meta: {
+      requiresAuth: true
+    }
+  },
+
+  {
+    path: "/teams",
+    name: "teams",
+    component: BrowseTeamsView,
+    meta: {
+      requiresAuth: true
+    }
+  },
+
+  {
+    path: '/teams/:teamId',
+    name: 'team-view',
+    component: TeamView,
+    props: true,
+    meta: {
+      requiresAuth: true
+    }
+  },
+
+  {
+    path: '/teams/:teamId/captain',
+    name: 'see-team-join-requests-view',
+    component: SeeTeamJoinRequestsView,
+    meta: {
+      requiresAuth: true
     }
   }
 ];

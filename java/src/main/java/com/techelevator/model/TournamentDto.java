@@ -1,6 +1,8 @@
 package com.techelevator.model;
 
-public class Tournament {
+import java.util.List;
+
+public class TournamentDto {
 
     private int tournamentId;
     private int hostId;
@@ -9,10 +11,13 @@ public class Tournament {
     private String gameName;
     //TODO Change acceptingTeams to a boolean
     private String acceptingTeams;
+    //UserId is the current user; This variable is used to check if the current user is the host
+    private int userId;
+    private List<Team> participants;
 
-    public Tournament() { }
+    public TournamentDto() { }
 
-    public Tournament(int tournamentId, int hostId, String tournamentName, double entry_fee, String gameName, String acceptingTeams) {
+    public TournamentDto(int tournamentId, int hostId, String tournamentName, double entry_fee, String gameName, String acceptingTeams) {
         this.tournamentId = tournamentId;
         this.hostId = hostId;
         this.tournamentName = tournamentName;
@@ -63,6 +68,14 @@ public class Tournament {
 
     public String getGameName() {
         return gameName;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public void setGameName(String gameName) {

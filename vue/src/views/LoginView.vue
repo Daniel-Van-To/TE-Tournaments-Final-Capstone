@@ -1,7 +1,7 @@
 <template>
   <div id="login">
     <form v-on:submit.prevent="login">
-      <h1 >Please Sign In</h1>
+      <h1>Please Sign In</h1>
       <div role="alert" v-if="invalidCredentials">
         Invalid username and password!
       </div>
@@ -18,16 +18,19 @@
       </div>
       <button type="submit">Sign in</button>
       <p>
-      <router-link v-bind:to="{ name: 'register' }">Need an account? Sign up.</router-link></p>
+        <router-link v-bind:to="{ name: 'register' }">Need an account? Sign up.</router-link>
+      </p>
     </form>
   </div>
 </template>
 
 <script>
 import authService from "../services/AuthService";
+import teamService from "../services/TeamService";
 
 export default {
-  components: {},
+  components: {
+  },
   data() {
     return {
       user: {
@@ -39,23 +42,38 @@ export default {
   },
   methods: {
     login() {
-      authService
-        .login(this.user)
+      authService.login(this.user)
         .then(response => {
+          console.log('response status: '+ response.status)
           if (response.status == 200) {
+            console.log('response status: '+ response.status)
             this.$store.commit("SET_AUTH_TOKEN", response.data.token);
             this.$store.commit("SET_USER", response.data.user);
-            this.$router.push("/");
+
+            const userId = response.data.user.id;
+            const teams = teamService.returnTeamsAndHandleErrors(userId);
+
+            this.$store.commit("UPDATE_MY_TEAMS", teams);
+            
+            // this.$store.commit("UPDATE_MY_TOURNAMENTS", this.)
+
+            this.$router.push({name: 'home'});
           }
         })
-        .catch(error => {
-          const response = error.response;
-
-          if (response.status === 401) {
-            this.invalidCredentials = true;
+        .catch( (error) => {
+          console.log('error')
+          if (error.response) {
+            console.log(error.response.status);
+          }
+          else if(error.request) {
+            console.log('error with request, no response')
+          }
+          else {
+            console.log('no request or response, we have a code problem' + error.message);
           }
         });
-    }
+    },
+
   }
 };
 </script>
@@ -64,6 +82,7 @@ export default {
 .form-input-group {
   margin-bottom: 1rem;
 }
+
 label {
   margin-right: 0.5rem;
 }

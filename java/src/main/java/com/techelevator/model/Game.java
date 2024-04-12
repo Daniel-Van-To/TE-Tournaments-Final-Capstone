@@ -1,22 +1,15 @@
 package com.techelevator.model;
 
 public class Game {
-    private int id;
+
     private String name;
     private int maxPlayers;
 
-    public Game(int id, String name, int maxPlayers) {
-        this.id = id;
+    public Game() {}
+
+    public Game(String name, int maxPlayers) {
         this.name = name;
         this.maxPlayers = maxPlayers;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {
