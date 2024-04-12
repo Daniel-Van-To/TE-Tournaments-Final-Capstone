@@ -28,7 +28,7 @@ public class RequestController {
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(path = "/teams/{teamId}/requests", method = RequestMethod.GET)
-    public List<Request> getPendingRequests(@PathVariable int teamId) {
+    public List<Request> getPendingTeamRequests(@PathVariable int teamId) {
 
         try {
             //TODO method requires tests
@@ -53,6 +53,22 @@ public class RequestController {
                 teamDao.linkUserToTeam(updatedRequest.getRequesterId(), updatedRequest.getTeamId());
             }
             return updatedRequest;
+        }
+        catch (DaoException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+        }
+        catch (NullPointerException e) {
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());
+        }
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(path = "/tournaments/{tournamentId}/requests", method = RequestMethod.GET)
+    public List<Request> getPendingTournamentRequests(@PathVariable int tournamentId) {
+
+        try {
+            //TODO method requires tests
+            return null;
         }
         catch (DaoException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
