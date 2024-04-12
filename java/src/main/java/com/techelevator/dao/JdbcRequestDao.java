@@ -4,6 +4,7 @@ import com.techelevator.exception.DaoException;
 import com.techelevator.model.Request;
 import com.techelevator.model.RequestDto;
 import com.techelevator.model.Team;
+import com.techelevator.model.User;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -59,6 +60,25 @@ public class JdbcRequestDao implements RequestDao{
     }
 
     @Override
+    public List<Request> getPendingRequestsByTournamentId(int tournamentId) {
+        List<Request> requests = new ArrayList<>();
+
+        String sql = "SELECT * FROM request WHERE tournament_id = ? AND request_status = ?;";
+        try{
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, tournamentId, 'p');
+            while(results.next()){
+                requests.add(mapRowToRequest(results));
+            }
+        }
+        catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data integrity violation", e);
+        }
+        return requests;
+    }
+
+    @Override
     public Request updateRequestByRequestId(RequestDto request, int requestId) {
         Request updatedRequest = null;
         String sql = "UPDATE request SET request_status = ? " +
@@ -79,6 +99,28 @@ public class JdbcRequestDao implements RequestDao{
         }
         return updatedRequest;
     }
+
+
+    //TODO Remember to come back to addTournamentJoinRequest
+    @Override
+    public Request addTournamentJoinRequest(RequestDto request) {return null;}
+//    {
+//        Request joinTeam = null;
+//        User requester = userDao.getUserByUsername(request.getUserName());
+//        String sql = "INSERT INTO request (team_id, request_status, requester_id)" +
+//                "VALUES (?, ?, ?) RETURNING request_id;";
+//        try{
+//            int request_id = jdbcTemplate.queryForObject(sql, int.class, request.getTeamId(), 'p', requester.getId());
+//            joinTeam = requestDao.getRequestByRequestId(request_id);
+//        }
+//        catch (CannotGetJdbcConnectionException e) {
+//            throw new DaoException("Unable to connect to server or database", e);
+//        } catch (DataIntegrityViolationException e) {
+//            throw new DaoException("Data integrity violation", e);
+//        }
+//        return joinTeam;
+//    }
+
     public Request mapRowToRequest(SqlRowSet rowSet){
         Request request = new Request();
         if(rowSet.getString("team_id") != null && rowSet.getString("team_id") != "") {
