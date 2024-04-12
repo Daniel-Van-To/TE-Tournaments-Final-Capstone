@@ -138,6 +138,22 @@ public class TeamController {
         }
     }
 
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(path = "/teams/{teamId}/captain", method = RequestMethod.GET)
+    public boolean checkIfUserIsCaptain(@PathVariable int teamId, @RequestBody User currentUser) {
+
+        try {
+            //TODO requires unit tests
+            return teamDao.checkIfUserIsTeamCaptain(teamId, currentUser);
+        }
+        catch (DaoException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+        }
+        catch (NullPointerException e) {
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());
+        }
+    }
+
 
 
 }
