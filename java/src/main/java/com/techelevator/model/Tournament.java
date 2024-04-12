@@ -9,16 +9,30 @@ public class Tournament {
     private String gameName;
     //TODO Change acceptingTeams to a boolean
     private boolean acceptingTeams;
+    private char tournamentStatus;
 
     public Tournament() { }
 
-    public Tournament(int tournamentId, int hostId, String tournamentName, double entry_fee, String gameName, boolean acceptingTeams) {
+    public Tournament(int tournamentId, int hostId, String tournamentName, double entry_fee, String gameName, boolean acceptingTeams, char tournamentStatus) {
         this.tournamentId = tournamentId;
         this.hostId = hostId;
         this.tournamentName = tournamentName;
         this.entry_fee = entry_fee;
         this.gameName = gameName;
         this.acceptingTeams = acceptingTeams;
+        this.tournamentStatus = tournamentStatus;
+    }
+
+    public boolean isAcceptingTeams() {
+        return acceptingTeams;
+    }
+
+    public char getTournamentStatus() {
+        return tournamentStatus;
+    }
+
+    public void setTournamentStatus(char tournamentStatus) {
+        this.tournamentStatus = tournamentStatus;
     }
 
     public boolean getAcceptingTeams() {

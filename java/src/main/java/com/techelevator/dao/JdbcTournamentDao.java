@@ -27,8 +27,8 @@ public class JdbcTournamentDao implements TournamentDao{
     @Override
     public Tournament createTournament(TournamentDto tournament) {
         Tournament createdTournament = null;
-        String sql = "INSERT INTO tournament (host_id, tournament_name, entry_fee, game_name, accepting_teams) " +
-                "VALUES (?,?,?,?,?) RETURNING tournament_id";
+        String sql = "INSERT INTO tournament (host_id, tournament_name, entry_fee, game_name, accepting_teams, tournament_status) " +
+                "VALUES (?,?,?,?,?,?) RETURNING tournament_id";
 
 
 
@@ -41,7 +41,7 @@ public class JdbcTournamentDao implements TournamentDao{
 
         try{
             int newTournamentId = jdbcTemplate.queryForObject(sql, int.class, tournament.getHostId(), tournament.getTournamentName(),
-                    tournament.getEntry_fee(), tournament.getGameName(), tournament.getAcceptingTeams());
+                    tournament.getEntry_fee(), tournament.getGameName(), tournament.getAcceptingTeams(), tournament.getTournamentStatus());
 
             createdTournament = getTournamentById(newTournamentId);
         }
@@ -56,7 +56,7 @@ public class JdbcTournamentDao implements TournamentDao{
     @Override
     public List<Tournament> getTournaments() {
         List<Tournament> tournaments = new ArrayList<>();
-        String sql = "SELECT tournament_id, host_id, tournament_name, entry_fee, game_name, accepting_teams " +
+        String sql = "SELECT tournament_id, host_id, tournament_name, entry_fee, game_name, accepting_teams, tournament_status " +
                 "FROM tournament;";
 
         try {
@@ -77,7 +77,7 @@ public class JdbcTournamentDao implements TournamentDao{
     @Override
     public Tournament getTournamentById(int tournamentId) {
         Tournament tournament = null;
-        String sql = "SELECT tournament_id, host_id, tournament_name, entry_fee, game_name, accepting_teams " +
+        String sql = "SELECT tournament_id, host_id, tournament_name, entry_fee, game_name, accepting_teams, tournament_status " +
                 "FROM tournament WHERE tournament_id = ?;";
         try{
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, tournamentId);
@@ -128,7 +128,7 @@ public class JdbcTournamentDao implements TournamentDao{
                 participatingTeams.add(mapRowToTeam(results));
             }
             TournamentDto detailedTournament = new TournamentDto(info.getTournamentId(), info.getHostId(), info.getTournamentName(),
-                    info.getEntry_fee(), info.getGameName(), info.getAcceptingTeams(), participatingTeams);
+                    info.getEntry_fee(), info.getGameName(), info.getAcceptingTeams(), participatingTeams, info.getTournamentStatus());
             return detailedTournament;
 
         }
@@ -141,7 +141,7 @@ public class JdbcTournamentDao implements TournamentDao{
     @Override
     public List<Tournament> getOpenTournaments() {
         List<Tournament> openTournaments = new ArrayList<>();
-        String sql = "SELECT tournament_id, host_id, tournament_name, entry_fee, game_name, accepting_teams " +
+        String sql = "SELECT tournament_id, host_id, tournament_name, entry_fee, game_name, accepting_teams, tournament_status " +
                 "FROM tournament WHERE accepting_teams = true;";
 
         try {
@@ -162,7 +162,7 @@ public class JdbcTournamentDao implements TournamentDao{
     @Override
     public List<Tournament> getTournamentsByGameName(String gameName) {
         List<Tournament> tournamentsWithGameName = new ArrayList<>();
-        String sql = "SELECT tournament_id, host_id, tournament_name, entry_fee, game_name, accepting_teams " +
+        String sql = "SELECT tournament_id, host_id, tournament_name, entry_fee, game_name, accepting_teams, tournament_status " +
                 "FROM tournament WHERE game_name = ?;";
 
         try {
@@ -183,7 +183,7 @@ public class JdbcTournamentDao implements TournamentDao{
     @Override
     public List<Tournament> getTournamentsUserIsHost(UserDto user) {
         List<Tournament> tournamentsUserIsHost = new ArrayList<>();
-        String sql = "SELECT tournament_id, host_id, tournament_name, entry_fee, game_name, accepting_teams " +
+        String sql = "SELECT tournament_id, host_id, tournament_name, entry_fee, game_name, accepting_teams, tournament_status " +
                 "FROM tournament WHERE host_id = ?;";
 
         try {
@@ -233,11 +233,11 @@ public class JdbcTournamentDao implements TournamentDao{
     @Override
     public Tournament updateTournament(TournamentDto tournament, int tournamentId) {
         Tournament updatedTournament = null;
-        String sql = "UPDATE tournament SET tournament_name = ?, entry_fee = ?, accepting_teams = ? " +
+        String sql = "UPDATE tournament SET tournament_name = ?, entry_fee = ?, accepting_teams = ?, tournament_status = ? " +
                 "WHERE tournament_id = ?;";
         try{
             int numberOfRows = jdbcTemplate.update(sql, tournament.getTournamentName(), tournament.getEntry_fee(),
-                    tournament.getAcceptingTeams(), tournamentId);
+                    tournament.getAcceptingTeams(), tournament.getTournamentStatus(), tournamentId);
             if(numberOfRows == 0) {
                 throw new DaoException("Zero rows effected, expected atleast one");
             }
@@ -265,6 +265,8 @@ public class JdbcTournamentDao implements TournamentDao{
         tournament.setTournamentName(rowSet.getString("tournament_name"));
         tournament.setEntry_fee(rowSet.getDouble("entry_fee"));
         tournament.setGameName(rowSet.getString("game_name"));
+        tournament.setAcceptingTeams(rowSet.getBoolean("accepting_teams"));
+        tournament.setTournamentStatus(rowSet.getString("tournament_status").charAt(0));
 
         return tournament;
     }
