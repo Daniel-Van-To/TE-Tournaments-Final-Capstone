@@ -244,12 +244,9 @@ public class JdbcTeamDao implements TeamDao {
         return updatedTeam;
     }
     @Override
-    public boolean checkIfUserIsTeamCaptain(int teamId, User user) {
-
-
+    public boolean checkIfUserIsTeamCaptain(int teamId, int userId) {
         Team captainTeam = getTeamById(teamId);
-        User captainName = userDao.getUserById(captainTeam.getTeamCaptainId());
-        return captainName.getUsername().equals(user.getUsername());
+        return captainTeam.getTeamCaptainId() == userId;
     }
     public Team mapRowToTeam(SqlRowSet rowSet){
         Team team = new Team();

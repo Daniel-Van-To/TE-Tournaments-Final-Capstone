@@ -232,8 +232,9 @@ public class JdbcTournamentDao implements TournamentDao{
         return updatedTournament;
     }
     @Override
-    public boolean checkIfUserIsTournamentHost(TournamentDto tournament) {
-        return tournament.getUserId() == tournament.getHostId();
+    public boolean checkIfUserIsTournamentHost(int tournamentId, int userId) {
+        Tournament currentTournament = getTournamentById(tournamentId);
+        return currentTournament.getHostId() == userId;
     }
 
     public Tournament mapRowToTournament(SqlRowSet rowSet){

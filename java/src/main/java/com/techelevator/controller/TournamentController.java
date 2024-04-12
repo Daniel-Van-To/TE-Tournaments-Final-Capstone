@@ -97,6 +97,20 @@ public class TournamentController {
             throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());
         }
     }
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(path= "/browse-tournaments/{tournamentId}/host/{userId}", method = RequestMethod.GET)
+    public boolean checkIfUserIsTournamentHost(@PathVariable int tournamentId, @PathVariable int userId) {
+        try {
+            //TODO requires unit tests
+            return tournamentDao.checkIfUserIsTournamentHost(tournamentId, userId);
+        }
+        catch (DaoException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+        }
+        catch (NullPointerException e) {
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());
+        }
+    }
 
 }
 

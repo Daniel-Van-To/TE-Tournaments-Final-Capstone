@@ -19,7 +19,7 @@ public interface TeamDao {
     public int linkUserToTeam(int userId, int teamId);
     public int unlinkUserFromTeam(int userId, int teamId);
     public Team updateTeam(TeamDto team, int teamId);
-    public boolean checkIfUserIsTeamCaptain(int teamId, User user);
+    public boolean checkIfUserIsTeamCaptain(int teamId, int userId);
     public List<Team> getTeamsUserIsCaptain(int userId);
 
 }
