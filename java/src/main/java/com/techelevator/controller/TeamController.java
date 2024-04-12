@@ -120,23 +120,21 @@ public class TeamController {
 
         return teamDao.updateTeam(team, teamId);
     }
-
-
-    @ResponseStatus(HttpStatus.OK)
-    @RequestMapping(path = "/teams/{userId}/captain", method = RequestMethod.GET)
-    public List<Team> getListOfTeamsUserIsCaptainOf(@PathVariable int userId) {
-
-        try {
-            //TODO requires unit tests
-            return teamDao.getTeamsUserIsCaptain(userId);
-        }
-        catch (DaoException e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
-        }
-        catch (NullPointerException e) {
-            throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());
-        }
-    }
+//    @ResponseStatus(HttpStatus.OK)
+//    @RequestMapping(path = "/teams/{userId}/captain", method = RequestMethod.GET)
+//    public List<Team> getListOfTeamsUserIsCaptainOf(@PathVariable int userId) {
+//
+//        try {
+//            //TODO requires unit tests
+//            return teamDao.getTeamsUserIsCaptain(userId);
+//        }
+//        catch (DaoException e) {
+//            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+//        }
+//        catch (NullPointerException e) {
+//            throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());
+//        }
+//    }
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(path = "/teams/{teamId}/captain", method = RequestMethod.GET)

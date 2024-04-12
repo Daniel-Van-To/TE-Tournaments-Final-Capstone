@@ -93,6 +93,31 @@ public class JdbcTournamentDao implements TournamentDao{
         return tournament;
     }
     @Override
+    public TournamentDto getTournamentDetailById(int tournamentId) {
+        Tournament info = getTournamentById(tournamentId);
+        List<Team> participatingTeams = new ArrayList<>();
+        String sql = "SELECT team.team_id, team.team_name, team.team_captain_id, team.game_name, team.accepting_members " +
+                "FROM tournament " +
+                "JOIN team_tournament ON tournament.tournament_id = team_tournament.tournament_id " +
+                "JOIN team ON team_tournament.team_id = team.team_id " +
+                "WHERE tournament.tournament_id = ? ";
+        try{
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, tournamentId);
+            while(results.next()){
+                participatingTeams.add(mapRowToTeam(results));
+            }
+            TournamentDto detailedTournament = new TournamentDto(info.getTournamentId(), info.getHostId(), info.getTournamentName(),
+                    info.getEntry_fee(), info.getGameName(), info.getAcceptingTeams(), participatingTeams);
+            return detailedTournament;
+
+        }
+        catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data integrity violation", e);
+        }
+    }
+    @Override
     public List<Tournament> getOpenTournaments() {
         List<Tournament> openTournaments = new ArrayList<>();
         String sql = "SELECT tournament_id, host_id, tournament_name, entry_fee, game_name, accepting_teams " +
@@ -220,5 +245,15 @@ public class JdbcTournamentDao implements TournamentDao{
         tournament.setGameName(rowSet.getString("game_name"));
 
         return tournament;
+    }
+    public Team mapRowToTeam(SqlRowSet rowSet){
+        Team team = new Team();
+        team.setTeamId(rowSet.getInt("team_id"));
+        team.setTeamName(rowSet.getString("team_name"));
+        team.setTeamCaptainId(rowSet.getInt("team_captain_id"));
+        team.setGameName(rowSet.getString("game_name"));
+        team.setAcceptingMembers(rowSet.getBoolean("accepting_members"));
+
+        return team;
     }
 }

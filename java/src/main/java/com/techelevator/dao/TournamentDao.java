@@ -18,6 +18,6 @@ public interface TournamentDao {
     public Tournament updateTournament(TournamentDto tournament, int tournamentId);
     public boolean checkIfUserIsTournamentHost(TournamentDto tournament);
     public List<Tournament> getTournamentsByGameName(String gameName);
-
+    public TournamentDto getTournamentDetailById(int tournamentId);
 
 }

@@ -32,7 +32,6 @@ public class TournamentController {
         this.requestDao = requestDao;
         this.tournamentDao = tournamentDao;
     }
-
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(path = "/create-tournament", method = RequestMethod.POST)
     public Tournament createTournament(@Valid @RequestBody TournamentDto newTournament) {
@@ -56,7 +55,6 @@ public class TournamentController {
             }
         }
     }
-
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(path= "/browse-tournaments", method = RequestMethod.GET)
     public List<Tournament> browseTournaments() {
@@ -71,13 +69,26 @@ public class TournamentController {
             throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());
         }
     }
-
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(path= "/browse-tournaments/{gameName}", method = RequestMethod.GET)
     public List<Tournament> browseTournamentsByGameName(@PathVariable String gameName) {
         try {
             //TODO requires unit tests
             return tournamentDao.getTournamentsByGameName(gameName);
+        }
+        catch (DaoException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+        }
+        catch (NullPointerException e) {
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());
+        }
+    }
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(path= "/browse-tournaments/{tournamentId}", method = RequestMethod.GET)
+    public TournamentDto getTournamentById(@PathVariable int tournamentId) {
+        try {
+            //TODO requires unit tests
+            return tournamentDao.getTournamentDetailById(tournamentId);
         }
         catch (DaoException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());

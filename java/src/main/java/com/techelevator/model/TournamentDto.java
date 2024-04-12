@@ -17,13 +17,26 @@ public class TournamentDto {
 
     public TournamentDto() { }
 
-    public TournamentDto(int tournamentId, int hostId, String tournamentName, double entry_fee, String gameName, boolean acceptingTeams) {
+    public TournamentDto(int tournamentId, int hostId, String tournamentName, double entry_fee, String gameName, boolean acceptingTeams, List<Team> participants) {
         this.tournamentId = tournamentId;
         this.hostId = hostId;
         this.tournamentName = tournamentName;
         this.entry_fee = entry_fee;
         this.gameName = gameName;
         this.acceptingTeams = acceptingTeams;
+        this.participants = participants;
+    }
+
+    public boolean isAcceptingTeams() {
+        return acceptingTeams;
+    }
+
+    public List<Team> getParticipants() {
+        return participants;
+    }
+
+    public void setParticipants(List<Team> participants) {
+        this.participants = participants;
     }
 
     public boolean getAcceptingTeams() {
