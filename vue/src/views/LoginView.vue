@@ -26,7 +26,6 @@
 
 <script>
 import authService from "../services/AuthService";
-import teamService from "../services/TeamService";
 
 export default {
   components: {
@@ -44,32 +43,25 @@ export default {
     login() {
       authService.login(this.user)
         .then(response => {
-          console.log('response status: '+ response.status)
+          // console.log('response status: '+ response.status)
           if (response.status == 200) {
-            console.log('response status: '+ response.status)
+            // console.log('response status: '+ response.status)
             this.$store.commit("SET_AUTH_TOKEN", response.data.token);
             this.$store.commit("SET_USER", response.data.user);
-
-            const userId = response.data.user.id;
-            const teams = teamService.returnTeamsAndHandleErrors(userId);
-
-            this.$store.commit("UPDATE_MY_TEAMS", teams);
-            
-            // this.$store.commit("UPDATE_MY_TOURNAMENTS", this.)
 
             this.$router.push({name: 'home'});
           }
         })
         .catch( (error) => {
-          console.log('error')
+          // console.log('error')
           if (error.response) {
-            console.log(error.response.status);
+            // console.log(error.response.status);
           }
           else if(error.request) {
-            console.log('error with request, no response')
+            // console.log('error with request, no response')
           }
           else {
-            console.log('no request or response, we have a code problem' + error.message);
+            // console.log('no request or response, we have a code problem' + error.message);
           }
         });
     },

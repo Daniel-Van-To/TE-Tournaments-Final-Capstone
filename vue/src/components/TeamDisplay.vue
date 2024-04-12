@@ -1,8 +1,8 @@
 <template>
     <table>
         <thead>
-            <button class="btn btn-join-request" v-if=isNotCaptain v-on:click="submitRequest">Submit a Join Request</button>
-            <button class="btn btn-see-requests" v-else v-on:click="pushToSeeTeamJoinRequestsView">See Join Requests</button>
+            <button class="btn btn-see-requests" v-if="isCaptain" v-on:click="pushToSeeTeamJoinRequestsView">See Join Requests</button>
+            <button class="btn btn-join-request" v-else v-on:click="submitRequest">Submit a Join Request</button>
             <tr>
                 <th>ID</th>
                 <th>Name</th>
@@ -36,16 +36,10 @@ export default {
 
     computed : {
 
-        isNotCaptain() {
-            if(this.isCaptain) {
-                return false;
-            }
-            return true;
-        }
-
     },
     
     methods: {
+
         submitRequest() {
             TeamService.sendJoinRequest(this.request)
             .then((response) => {
@@ -67,7 +61,7 @@ export default {
         },
 
         pushToSeeTeamJoinRequestsView() {
-            this.$router.push({name: 'see-team-join-requests-view', params: {teamId: this.$route.params.teamId}})
+            this.$router.push({name: 'see-team-join-requests-view', params: {teamId: this.$route.params.teamId}});
         }
     }
 };
