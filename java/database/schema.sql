@@ -37,6 +37,7 @@ CREATE TABLE tournament (
     entry_fee decimal(5,2),
     game_name varchar(50) NOT NULL,
     accepting_teams boolean NOT NULL,
+    tournament_status varchar(5) NOT NULL,
     CONSTRAINT PK_tournament PRIMARY KEY (tournament_id),
     CONSTRAINT FK_tournament_host_user_id FOREIGN KEY (host_id) REFERENCES users(user_id),
     CONSTRAINT FK_tournament_game FOREIGN KEY (game_name) REFERENCES game(game_name)
