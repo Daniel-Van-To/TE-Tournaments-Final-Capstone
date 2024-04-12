@@ -10,14 +10,14 @@ public class TournamentDto {
     private double entry_fee;
     private String gameName;
     //TODO Change acceptingTeams to a boolean
-    private String acceptingTeams;
+    private boolean acceptingTeams;
     //UserId is the current user; This variable is used to check if the current user is the host
     private int userId;
     private List<Team> participants;
 
     public TournamentDto() { }
 
-    public TournamentDto(int tournamentId, int hostId, String tournamentName, double entry_fee, String gameName, String acceptingTeams) {
+    public TournamentDto(int tournamentId, int hostId, String tournamentName, double entry_fee, String gameName, boolean acceptingTeams) {
         this.tournamentId = tournamentId;
         this.hostId = hostId;
         this.tournamentName = tournamentName;
@@ -26,11 +26,11 @@ public class TournamentDto {
         this.acceptingTeams = acceptingTeams;
     }
 
-    public String getAcceptingTeams() {
+    public boolean getAcceptingTeams() {
         return acceptingTeams;
     }
 
-    public void setAcceptingTeams(String acceptingTeams) {
+    public void setAcceptingTeams(boolean acceptingTeams) {
         this.acceptingTeams = acceptingTeams;
     }
 

@@ -17,7 +17,7 @@ INSERT INTO team (team_captain_id, team_name, game_name, accepting_members)
 VALUES (3, 'find pearls', 'running', false), (4, 'pho 95', 'valorant', true), (5, 'raystar', 'running', false);
 
 INSERT INTO tournament (host_id,tournament_name,entry_fee,game_name, accepting_teams)
-VALUES (2, 'test tournament', 0, 'running', 'o');
+VALUES (2, 'test tournament', 0, 'running', true);
 
 INSERT INTO team_user (user_id, team_id)
 VALUES (3, 1), (5, 3), (4, 2), (3, 2);

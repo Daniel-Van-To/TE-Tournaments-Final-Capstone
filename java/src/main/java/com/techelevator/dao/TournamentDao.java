@@ -17,7 +17,7 @@ public interface TournamentDao {
     public int unlinkTeamFromTournament(int team_id, int tournament_id);
     public Tournament updateTournament(TournamentDto tournament, int tournamentId);
     public boolean checkIfUserIsTournamentHost(TournamentDto tournament);
-
+    public List<Tournament> getTournamentsByGameName(String gameName);
 
 
 }

@@ -35,7 +35,7 @@ public class TournamentController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(path = "/create-tournament", method = RequestMethod.POST)
-    public Tournament createTeam(@Valid @RequestBody TournamentDto newTournament) {
+    public Tournament createTournament(@Valid @RequestBody TournamentDto newTournament) {
 
         try {
             return tournamentDao.createTournament(newTournament);
@@ -43,13 +43,13 @@ public class TournamentController {
         } catch(DaoException e) {
 
             //Precondition Required
-            if (e.getMessage().equals("Team cannot be added since the game is not in the system.")) {
+            if (e.getMessage().equals("Tournament cannot be added since the game is not in the system.")) {
                 throw new ResponseStatusException(HttpStatus.PRECONDITION_REQUIRED,
                         "That game is not in the system. Please add it and try again.");
             }
-            else if (e.getMessage().equals("Team already exists.")) {
+            else if (e.getMessage().equals("Tournament already exists.")) {
                 throw new ResponseStatusException(HttpStatus.ALREADY_REPORTED,
-                        "That team name is taken for this game.");
+                        "That tournament name is taken for this game.");
             }
             else {
                 throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
@@ -60,7 +60,32 @@ public class TournamentController {
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(path= "/browse-tournaments", method = RequestMethod.GET)
     public List<Tournament> browseTournaments() {
-        return null;
+        try {
+            //TODO requires unit tests
+            return tournamentDao.getTournaments();
+        }
+        catch (DaoException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+        }
+        catch (NullPointerException e) {
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());
+        }
     }
+
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(path= "/browse-tournaments/{gameName}", method = RequestMethod.GET)
+    public List<Tournament> browseTournamentsByGameName(@PathVariable String gameName) {
+        try {
+            //TODO requires unit tests
+            return tournamentDao.getTournamentsByGameName(gameName);
+        }
+        catch (DaoException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+        }
+        catch (NullPointerException e) {
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());
+        }
+    }
+
 }
 

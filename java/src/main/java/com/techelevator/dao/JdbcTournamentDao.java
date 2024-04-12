@@ -96,7 +96,7 @@ public class JdbcTournamentDao implements TournamentDao{
     public List<Tournament> getOpenTournaments() {
         List<Tournament> openTournaments = new ArrayList<>();
         String sql = "SELECT tournament_id, host_id, tournament_name, entry_fee, game_name, accepting_teams " +
-                "FROM tournament WHERE accepting_teams = 'o';";
+                "FROM tournament WHERE accepting_teams = true;";
 
         try {
 
@@ -112,6 +112,27 @@ public class JdbcTournamentDao implements TournamentDao{
             throw new DaoException("Data integrity violation", e);
         }
         return openTournaments;
+    }
+    @Override
+    public List<Tournament> getTournamentsByGameName(String gameName) {
+        List<Tournament> tournamentsWithGameName = new ArrayList<>();
+        String sql = "SELECT tournament_id, host_id, tournament_name, entry_fee, game_name, accepting_teams " +
+                "FROM tournament WHERE game_name = ?;";
+
+        try {
+
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, gameName);
+            while (results.next()) {
+                tournamentsWithGameName.add(mapRowToTournament(results));
+            }
+
+        }
+        catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data integrity violation", e);
+        }
+        return tournamentsWithGameName;
     }
     @Override
     public List<Tournament> getTournamentsUserIsHost(UserDto user) {
