@@ -14,6 +14,12 @@ export function createStore(currentToken, currentUser) {
       }
     },
 
+    actions: {
+      async updateMyTeams( {team} ) {
+        this.commit("UPDATE_MY_TEAMS", await team);
+      }
+    },
+
     mutations: {
 
       //Authentication
@@ -72,11 +78,12 @@ export function createStore(currentToken, currentUser) {
 
       //User data
       UPDATE_MY_TEAMS(state, teams) {
-
+        console.log(JSON.stringify(teams));
+        state.userPackage.myTeams = teams;
       },
 
       UPDATE_MY_TOURNAMENTS(state, tournaments) {
-
+        state.userPackage.myTournaments = tournaments;
       }
 
 

@@ -2,12 +2,14 @@
     <div class="nav-bar">
         <img class="logo" src="../img/te-logo.png" v-on:click.prevent="home" />
         <div class="nav-links-bttns">
-            <a class="links"><router-link v-bind:to="{name: 'home'}">Home</router-link></a>
-            <a class="links"><router-link v-bind:to="{name: 'browse-tournaments'}">Browse Tournaments</router-link></a>
-            <a class="links" v-if="isLoggedIn"><router-link v-bind:to="{name: 'teams'}">Browse Teams</router-link></a>
-            <a class="links" v-if="isLoggedIn"><router-link v-bind:to="{name: 'create-team'}">Create a team</router-link></a>
-            <a class="links"><router-link v-bind:to="{name: 'about-us'}">About Us</router-link></a>
-            <a class="links"><router-link v-bind:to="{name: 'faq'}">FAQ</router-link></a>
+        
+            <router-link class="links" v-bind:to="{name: 'home'}">Home</router-link>
+            <router-link class="links" v-bind:to="{name: 'browse-tournaments'}">Browse Tournaments</router-link>
+            <router-link class="links" v-if="isLoggedIn" v-bind:to="{name: 'teams'}">Browse Teams</router-link>
+            <router-link class="links" v-if="isLoggedIn" v-bind:to="{name: 'create-team'}">Create a team</router-link>
+            <router-link class="links" v-bind:to="{name: 'about-us'}">About Us</router-link>
+            <router-link class="links" v-bind:to="{name: 'faq'}">FAQ</router-link>
+
             <span v-if="isLoggedIn" class="nav-bar-buttons">
                 <input class="loggedIn" type="button" value="Logout" v-on:click.prevent="logout">
                 <h4 class="loggedIn">Hello, {{this.$store.state.user.username}}</h4>
@@ -72,6 +74,11 @@ export default {
     flex-grow: 1;
 }
 
+input {
+    border: 1px solid black;
+    cursor: pointer;
+}
+
 .logo {
     display: flex;
     max-width: 10%;
@@ -110,18 +117,19 @@ span input {
     margin-right: 0.25rem;
 }
 
-a {
+.links {
     text-decoration: none;
     color:black;
     background-color: white;
     align-self: center;
-    padding-top: 0.4rem;
-    padding-bottom: 0.4rem; 
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem; 
     padding-left: 0.1rem;
     padding-right: 0.1rem;
+    border: 1px solid black;
 }
 
-a:hover {
+.links:hover {
     background-color: gray;
 }
 

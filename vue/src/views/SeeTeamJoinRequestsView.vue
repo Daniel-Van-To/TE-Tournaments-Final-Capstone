@@ -12,6 +12,9 @@
             </tr>
         </thead>
         <tbody>
+
+            <!-- consider grid implementation instead -->
+            
             <join-request v-for="request in requests" v-bind:key="request.requestId" 
             v-bind:columns="1" v-bind:request="request"/>
 
@@ -30,6 +33,8 @@ import JoinRequest from '../components/JoinRequest.vue';
 
 
 export default {
+
+    props: ["team"],
 
     components: { JoinRequest },
 

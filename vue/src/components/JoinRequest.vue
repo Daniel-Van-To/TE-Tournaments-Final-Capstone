@@ -2,8 +2,8 @@
     <tbody>
         <tr>
             <td>{{ request.requesterId }}</td>
-            <td><button>Accept</button></td>
-            <td><button>Deny</button></td>
+            <td><button class="acceptBtn">Accept</button></td>
+            <td><button class="denyBtn">Deny</button></td>
         </tr>
     </tbody>
 </template>

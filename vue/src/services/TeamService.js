@@ -1,5 +1,6 @@
 import axios from 'axios'
 
+
 export default {
 
     createTeam(team){
@@ -25,6 +26,33 @@ export default {
     getPendingJoinRequests(teamId) {
         return axios.get(`/teams/${teamId}/requests`);
     },
+
+    getMyTeams(userId) {
+        console.log(`inside the retriever getMyTeams() and here is what we're about to pass it:`);
+        return axios.get(`/teams/${userId}/captain`);
+    },
+
+    returnTeamsAndHandleErrors(userId) {
+        console.log(`inside teamService. see me?`);
+
+        this.getMyTeams(userId)
+        .then(response => {
+            console.log(JSON.stringify(response.data));
+            return response.data;
+        })
+        .catch(error => {
+            console.log('error');
+            if(error.response) {
+                console.log(`error fetching teams user is captain of, but we got some data: ${error.response.data}`)
+            }
+            else if (error.request) {
+                console.log(`error fetching teams user is captain of. no data, heres the request: ${error.request}`)
+            }
+            else {
+                console.log(`error fetching teams user is captain of. no data, no request. heres the message: ${error.message}`)
+            }
+        })
+    }
     
 
 }

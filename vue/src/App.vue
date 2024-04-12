@@ -11,14 +11,23 @@
 </template>
 
 <script>
-import NavBar from './components/NavBar.vue'
+import NavBar from './components/NavBar.vue';
 import Notification from './components/Notification.vue';
 
 export default {
   components:  {
     NavBar,
     Notification,
-  }
+  },
+
+  created() {
+    window.addEventListener('beforeunload', (event) => {
+      this.$store.commit("LOGOUT");
+      
+    })
+  },
+
+  
 
 }
 

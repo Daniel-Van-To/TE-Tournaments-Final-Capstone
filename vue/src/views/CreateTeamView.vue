@@ -51,8 +51,8 @@
                         message: 'Team was created',
                         type:'SUCCESS'
                     });
-                    // - we have already created a team in the server
-                    // - we need to either refresh the store completely OR ALSO create the team in the store
+                    this.$store.commit("UPDATE_MY_TEAMS", TeamService.getMyTeams());
+
                     this.$router.push({name: 'home'});
                 }
             })

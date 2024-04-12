@@ -20,6 +20,7 @@
 
 <script>
 import TeamService from '../services/TeamService';
+
 export default {
 
     props: ["teamMembers", "isCaptain"],

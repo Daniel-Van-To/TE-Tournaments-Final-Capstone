@@ -1,7 +1,7 @@
 <template>
     <div class="home">
       <h1></h1>
-      <TeamDisplay v-bind:teamMembers="teamMembers" v-bind:isCaptain="currentUserIsCaptain"/>
+      <TeamDisplay v-bind:teamMembers="teamMembers" v-bind:isCaptain="isCurrentUserCaptain"/>
       <p></p>
     </div>
   </template>
@@ -21,16 +21,20 @@
       teamId() {
         return parseInt(this.$route.params.teamId);
       },
-      currentUserIsCaptain() {
-        let holder = false;
-        this.$store.state.userPackage.myTeams.forEach((team) => {
-          if (parseInt(team.teamId) === this.teamId) {
-            holder = true;
-          }
-        })
 
-        // THIS NEEDS TO BE CHANGED BACK TO HOLDER - RETURNING TRUE FOR TESTING/DEBUGGING AS 
-        // CAPTAIN
+      teamCaptainId() {
+        return parseInt(this.$store.state.user.id);
+      },
+
+      isCurrentUserCaptain() {
+        let holder = false;
+        // const myTeams = this.$store.state.userPackage.myTeams;
+        // console.log(JSON.stringify(myTeams));
+        // myTeams.forEach((team) => {
+        //   if (parseInt(team.teamCaptainId) === this.teamCaptainId) {
+        //     holder = true;
+        //   }
+        // })
 
         return true;
       }
@@ -40,6 +44,8 @@
     data() {
       return {
         teamMembers: [],
+        isCaptain: false,
+
       }
     },
   
@@ -51,6 +57,11 @@
       .then((response) => {
         this.teamMembers = response.data;
       });
+      TeamService.isCurrentUserCaptain(this.teamId)
+      .then((response) => {
+        this.isCaptain = response.data;
+      })
+      // this.$store.commit("UPDATE_MY_TEAMS", TeamService.returnTeamsAndHandleErrors(this.$store.state.user.id));
     }
   };
   </script>
