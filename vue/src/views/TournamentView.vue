@@ -1,8 +1,8 @@
 <template>
     <div class="home">
-        <div v-for="team in teams" v-bind:key="team.teamId">
+        <!-- <div v-for="team in teams" v-bind:key="team.teamId">
             {{ team.teamName }}
-        </div>
+        </div> -->
     </div>
   </template>
     
@@ -25,7 +25,20 @@
     data() {
       return {
        teams: {},
-       tournament: {},        
+    //    team: {
+        // teamId:
+        // teamCaptainId: 
+        // teamName: 
+        // acceptingMembers:
+        // gameName:
+    // }
+       tournament: {},  
+        //   tournamentId:
+        //   tournamentHost:
+        //   tournamentName:
+        //  entryFee:
+        //  gameName:
+        //
       }
     },
   
