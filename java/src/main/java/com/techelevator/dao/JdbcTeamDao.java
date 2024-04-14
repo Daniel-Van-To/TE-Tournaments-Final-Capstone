@@ -187,8 +187,6 @@ public class JdbcTeamDao implements TeamDao {
         return joinTeam;
     }
 
-
-
     @Override
     public int linkUserToTeam(int userId, int teamId) {
         int numRows = 0;

@@ -69,20 +69,7 @@ public class TournamentController {
             throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());
         }
     }
-//    @ResponseStatus(HttpStatus.OK)
-//    @RequestMapping(path= "/browse-tournaments/{gameName}", method = RequestMethod.GET)
-//    public List<Tournament> browseTournamentsByGameName(@PathVariable String gameName) {
-//        try {
-//            //TODO requires unit tests
-//            return tournamentDao.getTournamentsByGameName(gameName);
-//        }
-//        catch (DaoException e) {
-//            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
-//        }
-//        catch (NullPointerException e) {
-//            throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());
-//        }
-//    }
+
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(path= "/browse-tournaments/{tournamentId}", method = RequestMethod.GET)
     public TournamentDto getTournamentById(@PathVariable int tournamentId) {
@@ -97,6 +84,7 @@ public class TournamentController {
             throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());
         }
     }
+
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(path= "/browse-tournaments/{tournamentId}/host/{userId}", method = RequestMethod.GET)
     public boolean checkIfUserIsTournamentHost(@PathVariable int tournamentId, @PathVariable int userId) {
@@ -112,5 +100,28 @@ public class TournamentController {
         }
     }
 
+
+
+
+
+
+
+/*  *******        Extra Code that was commented out         ******* */
+
+
+    //    @ResponseStatus(HttpStatus.OK)
+//    @RequestMapping(path= "/browse-tournaments/{gameName}", method = RequestMethod.GET)
+//    public List<Tournament> browseTournamentsByGameName(@PathVariable String gameName) {
+//        try {
+//            //TODO requires unit tests
+//            return tournamentDao.getTournamentsByGameName(gameName);
+//        }
+//        catch (DaoException e) {
+//            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+//        }
+//        catch (NullPointerException e) {
+//            throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());
+//        }
+//    }
 }
 
