@@ -43,6 +43,17 @@ CREATE TABLE tournament (
     CONSTRAINT FK_tournament_game FOREIGN KEY (game_name) REFERENCES game(game_name)
 );
 
+CREATE TABLE scores (
+    score_id SERIAL,
+    tournament_id integer,
+    team_id integer,
+    bracket_position integer,
+    score varchar(10),
+    CONSTRAINT PK_scores PRIMARY KEY (score_id),
+    CONSTRAINT FK_scores_tournament FOREIGN KEY (tournament_id) REFERENCES tournament(tournament_id),
+    CONSTRAINT FK_scores_team FOREIGN KEY (team_id) REFERENCES team(team_id)
+);
+
 CREATE TABLE request (
 
     request_id SERIAL,

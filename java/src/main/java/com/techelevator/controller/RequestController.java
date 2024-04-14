@@ -43,6 +43,7 @@ public class RequestController {
             throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());
         }
     }
+
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(path = "/teams/{teamId}/requests/{requestId}", method = RequestMethod.PUT)
     public Request updateRequestById(@RequestBody RequestDto request, @PathVariable int requestId) {
@@ -61,6 +62,7 @@ public class RequestController {
             throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());
         }
     }
+
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(path = "/tournaments/{tournamentId}/requests/{requestId}", method = RequestMethod.PUT)
     public Request updateTournamentRequestById(@RequestBody RequestDto request, @PathVariable int requestId) {
@@ -79,6 +81,7 @@ public class RequestController {
             throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());
         }
     }
+
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(path = "/tournaments/{tournamentId}/requests", method = RequestMethod.GET)
     public List<Request> getPendingTournamentRequests(@PathVariable int tournamentId) {
@@ -93,6 +96,7 @@ public class RequestController {
             throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());
         }
     }
+
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(path = "/tournaments/{tournamentId}", method = RequestMethod.POST)
     public Request handleTournamentJoinRequest(@Valid @RequestBody RequestDto requestDto, @PathVariable int tournamentId) {
