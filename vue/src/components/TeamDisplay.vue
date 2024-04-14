@@ -30,7 +30,9 @@ export default {
             request: {
                 teamId: this.$route.params.teamId,
                 userName: this.$store.state.user.username,      
-            }
+            },
+
+            teamMemberCount: 1
         }
     },
 
@@ -62,7 +64,8 @@ export default {
 
         pushToSeeTeamJoinRequestsView() {
             this.$router.push({name: 'see-team-join-requests-view', params: {teamId: this.$route.params.teamId}});
-        }
+        },
+
     }
 };
 

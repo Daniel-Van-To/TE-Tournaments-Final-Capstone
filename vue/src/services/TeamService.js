@@ -12,7 +12,7 @@ export default {
     },
 
     getUsersOnTeam(teamId) {
-        return axios.get(`/users/${teamId}`);
+        return axios.get(`/users/${teamId}/list`);
     },
 
     sendJoinRequest(request) {
