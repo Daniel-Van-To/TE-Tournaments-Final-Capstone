@@ -1,4 +1,5 @@
 <template>
+    
     <div class="card-container" v-on:click="pushToTournamentView">
         <h3>{{ tournament.tournamentName }}</h3>
         <span class="game-name">{{ tournament.gameName }}</span>
@@ -11,7 +12,10 @@
 
 export default {
 
-    props: ['tournament'],
+    props: [
+        'tournament'
+    ],
+
     methods: {
         pushToTournamentView() {
             this.$router.push({name: "tournament-details-view", 

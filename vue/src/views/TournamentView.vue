@@ -2,8 +2,10 @@
     <section id="bracket">
         <div class="container">
             <div class="split split-one">
-              <TournamentRound v-bind:teams="teams"
-              v-bind:currentRound="1" v-bind:tournamentId="tournament.tournamentId"
+              <TournamentRound 
+              v-bind:teams="teams"
+              v-bind:currentRound="1" 
+              v-bind:tournamentId="tournament.tournamentId"
               v-bind:startPosition="1"
               />
             </div>
@@ -17,8 +19,6 @@ import TournamentService from '../services/TournamentService';
 import TournamentRound from '../components/TournamentViewOrganizer/TournamentRound.vue';
 
 export default {
-
-
 
     components: {
         TournamentRound
@@ -40,7 +40,6 @@ export default {
 
     },
 
-
     data() {
         return {
             teams: [
@@ -60,15 +59,8 @@ export default {
                     teamId: 7,
                     teamName: "Dogs"
                 }
-
             ],
-            //    team: {
-            // teamId:
-            // teamCaptainId: 
-            // teamName: 
-            // acceptingMembers:
-            // gameName:
-            // }
+
             tournament: {},
             //   tournamentId:
             //   tournamentHost:
@@ -98,13 +90,16 @@ export default {
 
 
 <style scoped>
-body {
+
+/* This refers to our sources html body - we will want our own fonts and such. 
+*/
+/* body {
     font-family: 'Istok Web', sans-serif;
     background: url("http://picjumbo.com/wp-content/uploads/HNCK2189-1300x866.jpg") no-repeat #000;
     background-size: cover;
     min-height: 100%;
     margin: 0;
-}
+} */
 
 #bracket {
     overflow: hidden;
@@ -119,23 +114,24 @@ body {
     max-width: 1100px;
     margin: 0 auto;
     display: block;
-    display: -webkit-box;
+    /* display: -webkit-box;
     display: -moz-box;
     display: -ms-flexbox;
     display: -webkit-flex;
-    display: -webkit-flex;
+    display: -webkit-flex; */
     display: flex;
-    -webkit-flex-direction: row;
+    /* -webkit-flex-direction: row; */
     flex-direction: row;
+    min-height: 100%;
 }
 
 .split {
     display: block;
     float: left;
-    display: -webkit-box;
+    /* display: -webkit-box;
     display: -moz-box;
     display: -ms-flexbox;
-    display: -webkit-flex;
+    display: -webkit-flex; */
     display: flex;
     width: 42%;
     -webkit-flex-direction: row;
@@ -143,7 +139,11 @@ body {
     flex-direction: row;
 }
 
-.champion {
+/* This refers to the source's semi-final to final to champion section. 
+We aren't using that section as of yet. 
+*/
+
+/* .champion {
     float: left;
     display: block;
     width: 16%;
@@ -154,15 +154,16 @@ body {
     margin-top: -15px;
     text-align: center;
     padding: 230px 0\9;
-}
+} 
 
 .champion i {
     color: #a0a6a8;
     font-size: 45px;
     padding: 10px 0;
-}
+} */
 
-.round {
+/* moved to TournamentRound.vue */
+/* .round {
     display: block;
     float: left;
     display: -webkit-box;
@@ -174,9 +175,11 @@ body {
     flex-direction: column;
     width: 95%;
     width: 30.8333%\9;
-}
+} */
 
 /* .split-two {} */
+
+/* moved to TournamentRound.vue, leaving as is because .split-one has a ref */
 
 .split-one .round {
     margin: 0 2.5% 0 0;
@@ -186,7 +189,9 @@ body {
     margin: 0 0 0 2.5%;
 }
 
-.matchup {
+/* Moved the next 5 to TournamentMatchUp.vue, copied the last two to TournamentRound.vue */
+
+/* .matchup {
     margin: 0;
     width: 100%;
     padding: 10px 0;
@@ -226,8 +231,9 @@ body {
     margin: 0;
     height: 60px;
     padding: 130px 0;
-}
+} */
 
+/* adding round-details to TournamentRound.vue */
 .round-details {
     font-family: 'Roboto Condensed', sans-serif;
     font-size: 13px;
