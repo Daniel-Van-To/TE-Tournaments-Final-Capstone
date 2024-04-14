@@ -1,18 +1,23 @@
 <template>
     <div class="home">
-      <!-- team requirements:
-            team_name, game_name, current_user, is_accepting_members, 
+      <!-- tournament requirements:
+             host_id, tournament_name(50 char), entry_fee, game_name, accepting_teams
               -->
-      <h1>Create a team</h1>
-      <form v-on:submit.prevent="submitForm" class="createTeamForm">
-        <div class="teamFormField">
-            <label for="teamName">Team name: </label>
-            <input id="teamName" type="text" class="formControl" v-model="team.teamName"/>
+      <form v-on:submit.prevent="submitForm" class="createTournamentForm">
+        <div class="tournamentFormField">
+            <label for="tournamentName">Tournament name: </label>
+            <input id="tournamentName" type="text" class="formControl" v-model="tournament.tournamentName"/>
         </div> 
-        <div class="teamFormField">
+        <div class="tournamentFormField">
             <label for="gameName">Game name: </label>
-            <input id="gameName" type="text" class="formControl" v-model="team.gameName"/>
+            <input id="gameName" type="text" class="formControl" v-model="tournament.gameName"/>
         </div> 
+        <div class="tournamentFormField">
+            <label for="entryFee">Entry fee: $</label>
+            <input id="entryFee" type="number" class="formControl" v-model="tournament.entryFee"/>
+        </div> 
+        <span>When you press submit, this tournament will appear in the list of tournaments.</span>
+        <br/>
         <button class="btn btn-submit" type="submit">Submit</button>
         <button class="btn btn-cancel" v-on:click="cancelForm" type="button">Cancel</button>
      </form>
@@ -21,18 +26,20 @@
   </template>
   
   <script>
-  import TeamService from '../services/TeamService.js';
+  import tournamentService from '../services/TournamentService'
   
   export default {
     components: {
     },
     data() {
       return {
-        team: {
-            teamName: "",
+        tournament: {
+            tournamentName: "",
             gameName: "",
-            username: this.$store.state.user.username,
-            acceptingMembers: true
+            hostId: this.$store.state.user.id,
+            entryFee: "",
+            tournamentStatus: "s",
+            acceptingTeams: true
         }
       }
     },
@@ -43,24 +50,24 @@
             if(!this.validateForm()){
                 return ;
             }
-            TeamService.createTeam(this.team)
+            tournamentService.createTournament(this.tournament)
             .then((response)=> {
                 if(response.status === 201) {
                     this.$store.commit('SET_NOTIFICATION',
                     {
-                        message: 'Team was created',
+                        message: 'Tournament was created',
                         type:'SUCCESS'
                     });
 
-                    this.$router.push({name: 'home'});
+                    this.$router.push({name: 'browse-tournaments'});
                 }
             })
             .catch(error => {
-                this.handleErrorResponse(error, 'adding');
+                this.handleErrorResponse(error, 'creating');
             });
         },
         cancelForm(){
-            this.$router.push({name:'home'})
+            this.$router.push({name:'browse-tournaments'})
         },
         handleErrorResponse(error, verb) {
             if (error.response) {
@@ -74,11 +81,14 @@
         },
         validateForm() {
             let msg = '';
-            if (this.team.teamName.length === 0) {
-              msg += 'The new team must have a team name. ';
+            if (this.tournament.tournamentName.length === 0) {
+              msg += 'A new tournament must have a name. ';
             }
-            if (this.team.gameName.length === 0) {
-              msg += 'The new game must have a game name.';
+            if (this.tournament.tournamentName.length > 50) {
+              msg += 'Tournament name is too long (over 50 characters). '
+            }
+            if (this.tournament.gameName.length === 0) {
+              msg += 'A new tournament must have a game name.';
             }
             if (msg.length > 0) {
               this.$store.commit('SET_NOTIFICATION', msg);
@@ -95,12 +105,12 @@
 
   
 <style scoped>
-.createTeamForm {
+.createTournamentForm {
   padding: 10px;
   margin-bottom: 10px;
 }
 
-.teamFormField {
+.tournamentFormField {
   margin-bottom: 10px;
   margin-top: 10px;
 }
