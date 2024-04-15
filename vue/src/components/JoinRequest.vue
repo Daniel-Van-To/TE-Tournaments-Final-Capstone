@@ -1,6 +1,6 @@
-<template>
+<template >
     <!-- this might be easier with a grid -->
-    <table>
+    <table v-if="tournamentIdIsNull">
         <thead>
             <tr>
                 <th>Player username</th>
@@ -20,7 +20,7 @@
 
         </tbody>
     </table>
-    {{ JSON.stringify(updatedRequest) }}
+   <p v-if="tournamentIdIsNull">{{ JSON.stringify(updatedRequest) }}</p> 
 </template>
 
 <script>
@@ -50,6 +50,10 @@ export default {
 
         deniedRequestStatus() {
             return this.updatedRequest.requestStatus === 'd';
+        },
+
+        tournamentIdIsNull() {
+            return this.updatedRequest.tournamentId === 0;
         }
     },
 
