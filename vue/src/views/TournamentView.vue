@@ -1,10 +1,12 @@
 <template>
-    <div v-if="this.isCurrentUserTournamentHost">
-        <router-link v-bind:to="{name: 'see-tournament-join-requests-view', 
-        params: {tournamentId: this.tournament.tournamentId}}">
+    <div v-if="isTournamentHost">
+        <button v-on:click="pushToSeeTournamentJoinRequestsView">
             See Join Requests for {{ this.tournament.tournamentName }}
-        </router-link>
+    </button>
     </div>
+    <button v-if="isNotTournamentHost" v-on:click="pushToSendTournamentJoinRequestView">
+            Send Join Requests for {{ this.tournament.tournamentName }}
+    </button>
     <section id="bracket">
         <div class="container">
             <div class="split split-one">
@@ -39,6 +41,12 @@ export default {
         },
         positions() {
             return 2 ^ (this.rounds + 1) - 1;
+        },
+        isNotTournamentHost() {
+            return !this.isCurrentUserTournamentHost;
+        },
+        isTournamentHost() {
+            return this.isCurrentUserTournamentHost;
         }
 
     },
@@ -77,6 +85,15 @@ export default {
     },
 
     methods: {
+        pushToSeeTournamentJoinRequestsView() {
+            this.$router.push({name: 'see-tournament-join-requests-view', 
+        params: {tournamentId: this.tournament.tournamentId}});
+        },
+        pushToSendTournamentJoinRequestView() {
+            this.$router.push({name: 'send-tournament-join-request-view', 
+            params: {tournamentId: this.tournament.tournamentId}});
+        }
+        
     },
 
     created() {

@@ -16,6 +16,7 @@ import SeeTeamJoinRequestsView from '../views/SeeTeamJoinRequestsView.vue';
 import CreateTournamentView from '../views/CreateTournamentView.vue';
 import TournamentView from '../views/TournamentView.vue';
 import SeeTournamentJoinRequestView from '../views/SeeTournamentJoinRequestView.vue';
+import SendTournamentJoinRequestView from '../views/SendTournamentJoinRequestView.vue';
 
 
 /**
@@ -146,6 +147,14 @@ const routes = [
     path: '/tournaments/:tournamentId/requests',
     name: 'see-tournament-join-requests-view',
     component: SeeTournamentJoinRequestView,
+    meta: {
+      requiresAuth: true,
+    }
+  },
+  {
+    path: '/tournaments/:tournamentId/sendRequests',
+    name: 'send-tournament-join-request-view',
+    component: SendTournamentJoinRequestView,
     meta: {
       requiresAuth: true,
     }
