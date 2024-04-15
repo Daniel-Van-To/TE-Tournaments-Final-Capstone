@@ -15,6 +15,7 @@ import TeamView from '../views/TeamView.vue';
 import SeeTeamJoinRequestsView from '../views/SeeTeamJoinRequestsView.vue';
 import CreateTournamentView from '../views/CreateTournamentView.vue';
 import TournamentView from '../views/TournamentView.vue';
+import SeeTournamentJoinRequestView from '../views/SeeTournamentJoinRequestView.vue';
 
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
@@ -114,7 +115,7 @@ const routes = [
   },
 
   {
-    path: '/teams/:teamId/captain',
+    path: '/teams/:teamId/requests',
     name: 'see-team-join-requests-view',
     component: SeeTeamJoinRequestsView,
     meta: {
@@ -135,6 +136,15 @@ const routes = [
     path: '/tournaments/:tournamentId',
     name: 'tournament-details-view',
     component: TournamentView,
+    meta: {
+      requiresAuth: true,
+    }
+  },
+
+  {
+    path: '/tournaments/:tournamentId/requests',
+    name: 'see-tournament-join-requests-view',
+    component: SeeTournamentJoinRequestView,
     meta: {
       requiresAuth: true,
     }

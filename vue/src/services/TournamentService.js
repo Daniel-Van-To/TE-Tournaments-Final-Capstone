@@ -13,5 +13,9 @@ export default {
 
     getTournamentDetail(tournamentId) {
         return axios.get(`/browse-tournaments/${tournamentId}`)
+    },
+
+    checkUserForTournamentHost(tournamentId, userId) {
+        return axios.get(`/browse-tournaments/${tournamentId}/host/${userId}`)
     }
 }

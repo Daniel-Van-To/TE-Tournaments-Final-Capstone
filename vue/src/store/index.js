@@ -14,11 +14,6 @@ export function createStore(currentToken, currentUser) {
       }
     },
 
-    actions: {
-      async updateMyTeams( {team} ) {
-        this.commit("UPDATE_MY_TEAMS", await team);
-      }
-    },
 
     mutations: {
 

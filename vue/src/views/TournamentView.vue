@@ -1,13 +1,15 @@
 <template>
+    <div v-if="this.isCurrentUserTournamentHost">
+        <router-link v-bind:to="{name: 'see-tournament-join-requests-view', 
+        params: {tournamentId: this.tournament.tournamentId}}">
+            See Join Requests for {{ this.tournament.tournamentName }}
+        </router-link>
+    </div>
     <section id="bracket">
         <div class="container">
             <div class="split split-one">
-              <TournamentRound 
-              v-bind:teams="teams"
-              v-bind:currentRound="1" 
-              v-bind:tournamentId="tournament.tournamentId"
-              v-bind:startPosition="1"
-              />
+                <TournamentRound v-bind:teams="teams" v-bind:currentRound="1" v-bind:tournamentId="tournament.tournamentId"
+                    v-bind:startPosition="1" />
             </div>
         </div>
     </section>
@@ -25,6 +27,7 @@ export default {
     },
 
     computed: {
+
         rounds() {
             let count = 0;
             let iterator = this.teams.length;
@@ -61,6 +64,8 @@ export default {
                 }
             ],
 
+            isCurrentUserTournamentHost: false,
+
             tournament: {},
             //   tournamentId:
             //   tournamentHost:
@@ -84,13 +89,22 @@ export default {
                 this.$store.commit("SET_NOTIFICATION", "getTournamentDetail method in tournament view failed");
             });
 
+        TournamentService.checkUserForTournamentHost(this.$route.params.tournamentId, this.$store.state.user.id)
+            .then(response => {
+                this.isCurrentUserTournamentHost = response.data;
+            })
+            .catch(error => {
+                this.$store.commit("SET_NOTIFICATION", "isCurrentUserTournamentHost method in tournament view failed");
+            });
+
+
+
     }
 };
 </script>
 
 
 <style scoped>
-
 /* This refers to our sources html body - we will want our own fonts and such. 
 */
 /* body {
