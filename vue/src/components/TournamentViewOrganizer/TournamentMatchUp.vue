@@ -1,15 +1,16 @@
 <template>
     <ul class="matchup">
         <li class="team team-top">{{firstTeam.teamName}}
-            <span class="score">{{firstPositionScore}}</span>
+            <span class="score">{{firstPositionScore.score}}</span>
         </li>
         <li class="team team-bottom">{{secondTeam.teamName}}
-            <span class="score">{{secondPositionScore}}</span>
+            <span class="score">{{secondPositionScore.score}}</span>
         </li>
     </ul>
 </template>
 
 <script>
+import ScoreService from '../../services/ScoreService';
 
 export default {
 
@@ -23,8 +24,25 @@ export default {
         }
     },
     created() {
-        
-
+        //first team
+        ScoreService.getScoreByBracketPositionTeamIdTournamentId(this.firstPosition, this.firstTeam.teamId, this.tournamentId)
+            .then(response => {
+                if (response.status == 200){
+                    this.firstPositionScore = response.data;
+                }
+            })
+            .catch(error => {
+                this.$store.commit('SET_NOTIFICATION', 'error in TournamentMatchUp component getting firstpositionscore');
+            });
+        ScoreService.getScoreByBracketPositionTeamIdTournamentId(this.secondPosition, this.secondTeam.teamId, this.tournamentId)
+        .then(response => {
+                if (response.status == 200){
+                    this.secondPositionScore = response.data;
+                }
+            })
+            .catch(error => {
+                this.$store.commit('SET_NOTIFICATION', 'error in TournamentMatchUp component getting secondpositionscore');
+            });
     }
 
 }
