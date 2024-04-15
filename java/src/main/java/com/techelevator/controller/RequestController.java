@@ -65,7 +65,7 @@ public class RequestController {
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(path = "/tournaments/{tournamentId}/requests/{requestId}", method = RequestMethod.PUT)
-    public Request updateTournamentRequestById(@RequestBody RequestDto request, @PathVariable int requestId) {
+    public Request updateTournamentRequestById(@RequestBody RequestDto request,@PathVariable int tournamentId, @PathVariable int requestId) {
         Request updatedRequest = requestDao.updateRequestByRequestId(request, requestId);
         try {
             //TODO method requires tests

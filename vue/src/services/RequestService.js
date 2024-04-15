@@ -17,4 +17,8 @@ export default {
 
         return axios.put(`/teams/${request.teamId}/requests/${request.requestId}`, request)
     },
+
+    submitUpdatedTournamentRequest(request) {
+        return axios.put(`/tournaments/${request.tournamentId}/requests/${request.requestId}`, request)
+    }
 }
