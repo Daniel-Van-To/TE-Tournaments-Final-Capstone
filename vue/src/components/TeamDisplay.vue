@@ -55,6 +55,12 @@ export default {
                     );
                     this.$router.push({name: 'home'});
                     }
+                else if(response.status === 208) {
+                    this.$store.commit('SET_NOTIFICATION', {
+                        message: 'Request not sent - user already have a pending join request for this team.',
+                        type: 'error'
+                    });
+                }
                 this.$router.push({name: 'teams'});
             })
             .catch((error) => {

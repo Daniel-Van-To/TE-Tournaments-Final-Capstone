@@ -86,7 +86,7 @@ public class TeamController {
         try {
             List<User> requestTeamMembers = teamDao.getUsersOnTeam(requestDto.getTeamId());
             List<Request> teamPendingRequests = requestDao.getPendingRequestsByTeamId(requestDto.getTeamId());
-            User requester = userDao.getUserById(requestDto.getRequesterId());
+            User requester = userDao.getUserByUsername(requestDto.getUserName());
 
             if(requestTeamMembers.contains(requester)) {
                 throw new ResponseStatusException(HttpStatus.ALREADY_REPORTED,
@@ -94,7 +94,7 @@ public class TeamController {
             }
 
             for(Request request: teamPendingRequests) {
-                if(request.getRequesterId() == requestDto.getRequesterId()) {
+                if(request.getRequesterId() == requester.getId()) {
                     throw new ResponseStatusException(HttpStatus.ALREADY_REPORTED,
                             "You already have a pending request to join this team");
                 }

@@ -45,9 +45,9 @@ public class JdbcRequestDao implements RequestDao{
     public List<Request> getPendingRequestsByTeamId(int teamId) {
         List<Request> requests = new ArrayList<>();
 
-        String sql = "SELECT * FROM request WHERE team_id = ? AND request_status = ?;";
+        String sql = "SELECT * FROM request WHERE team_id = ? AND request_status = ? AND tournament_id = ?;";
         try{
-            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, teamId, 'p');
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, teamId, 'p', null);
             while(results.next()){
                 requests.add(mapRowToRequest(results));
             }

@@ -70,7 +70,7 @@ export default {
         // }
             this.updatedRequest = this.request;
             this.updatedRequest.requestStatus = newStatus;
-            requestService.submitUpdatedTournamentRequest(this.updateRequest);
+            requestService.submitUpdatedTournamentRequest(this.updatedRequest);
 
         }
     },

@@ -70,7 +70,7 @@ export default {
         // }
             this.updatedRequest = this.request;
             this.updatedRequest.requestStatus = newStatus;
-            requestService.submitUpdatedRequest(this.updateRequest);
+            requestService.submitUpdatedRequest(this.updatedRequest);
 
         }
     },
