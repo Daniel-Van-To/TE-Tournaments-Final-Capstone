@@ -2,10 +2,10 @@
     <div v-if="isTournamentHost">
         <button v-on:click="pushToSeeTournamentJoinRequestsView">
             See Join Requests for {{ this.tournament.tournamentName }}
-    </button>
+        </button>
     </div>
     <button v-if="isNotTournamentHost" v-on:click="pushToSendTournamentJoinRequestView">
-            Send Join Requests for {{ this.tournament.tournamentName }}
+        Send Join Requests for {{ this.tournament.tournamentName }}
     </button>
     <section id="bracket">
         <div class="container">
@@ -47,7 +47,7 @@ export default {
         },
         isTournamentHost() {
             return this.isCurrentUserTournamentHost;
-        }
+        },
 
     },
 
@@ -86,14 +86,18 @@ export default {
 
     methods: {
         pushToSeeTournamentJoinRequestsView() {
-            this.$router.push({name: 'see-tournament-join-requests-view', 
-        params: {tournamentId: this.tournament.tournamentId}});
+            this.$router.push({
+                name: 'see-tournament-join-requests-view',
+                params: { tournamentId: this.tournament.tournamentId }
+            });
         },
         pushToSendTournamentJoinRequestView() {
-            this.$router.push({name: 'send-tournament-join-request-view', 
-            params: {tournamentId: this.tournament.tournamentId}});
+            this.$router.push({
+                name: 'send-tournament-join-request-view',
+                params: { tournamentId: this.tournament.tournamentId }
+            });
         }
-        
+
     },
 
     created() {
@@ -133,12 +137,13 @@ export default {
 } */
 
 #bracket {
-    overflow: hidden;
+    /* overflow: hidden; */
     background-color: #e1e1e1;
     background-color: rgba(225, 225, 225, 0.9);
     padding-top: 20px;
     font-size: 12px;
     padding: 40px 0;
+    height: 100vh;
 }
 
 .container {
@@ -483,5 +488,4 @@ We aren't using that section as of yet.
         font-size: 18px;
     }
 
-}
-</style>
+}</style>
