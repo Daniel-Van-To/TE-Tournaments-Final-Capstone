@@ -64,12 +64,9 @@ export default {
             let count = 1;
 
             while (count < round) {
-                console.log(`count: ${count} round: ${round} (this.rounds - (count-1)):` + (this.rounds - (count - 1)));
-                console.log(this.rounds);
                 holder = holder + (2 ** (this.rounds - (count - 1)));
                 ++count;
             }
-            console.log(`holder: ${holder}`)
 
             return holder;
         },

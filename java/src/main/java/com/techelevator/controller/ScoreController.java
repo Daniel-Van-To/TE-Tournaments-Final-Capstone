@@ -39,16 +39,16 @@ public class ScoreController {
         }
     }
 
-    @ResponseStatus(HttpStatus.OK)
-    @RequestMapping(path = "/tournaments/{tournamentsId}/team/{teamId}/scores/{scoreId}", method = RequestMethod.GET)
-    public Score getScoreByScoreId(@PathVariable int tournamentsId, @PathVariable int teamId, @PathVariable int scoreId) {
-        try {
-            return scoreDao.getScoresByScoreId(scoreId);
-
-        } catch(DaoException e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
-        }
-    }
+//    @ResponseStatus(HttpStatus.OK)
+//    @RequestMapping(path = "/tournaments/{tournamentsId}/team/{teamId}/scores/{scoreId}", method = RequestMethod.GET)
+//    public Score getScoreByScoreId(@PathVariable int tournamentsId, @PathVariable int teamId, @PathVariable int scoreId) {
+//        try {
+//            return scoreDao.getScoresByScoreId(scoreId);
+//
+//        } catch(DaoException e) {
+//            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+//        }
+//    }
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(path = "/tournaments/{tournamentId}/team/{teamId}/scores/{position}", method = RequestMethod.GET)
