@@ -56,10 +56,15 @@ export default {
                     this.$router.push({name: 'home'});
                     }
                 this.$router.push({name: 'teams'});
+            })
+            .catch((error) => {
+                if(error.response.status === 208) {
+                    this.$store.commit('SET_NOTIFICATION', {
+                        message: 'Request not sent - user already have a pending join request for this team.',
+                        type: 'error'
+                    });
+                }
             });
-            // .catch((error) => {
-            //     if(error.response.status === 'something')
-            // })
         },
 
         pushToSeeTeamJoinRequestsView() {
