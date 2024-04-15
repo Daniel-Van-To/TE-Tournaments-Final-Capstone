@@ -101,14 +101,17 @@ public class RequestController {
     @RequestMapping(path = "/tournaments/{tournamentId}", method = RequestMethod.POST)
     public Request handleTournamentJoinRequest(@Valid @RequestBody RequestDto requestDto, @PathVariable int tournamentId) {
         try {
-            List<Team> requestTournamentTeams = tournamentDao.getParticipatingTeams(tournamentId);
-            List<Request> tournamentPendingRequests = requestDao.getPendingRequestsByTournamentId(tournamentId);
-            int teamId = requestDto.getTeamId();
 
-            if(requestTournamentTeams.contains(teamDao.getTeamById(teamId))) {
-                throw new ResponseStatusException(HttpStatus.ALREADY_REPORTED,
-                        "You are already a member of this team.");
+            int teamId = requestDto.getTeamId();
+            if(tournamentDao.getParticipatingTeams(tournamentId) != null){
+                List<Team> requestTournamentTeams = tournamentDao.getParticipatingTeams(tournamentId);
+                if(requestTournamentTeams.contains(teamDao.getTeamById(teamId))) {
+                    throw new ResponseStatusException(HttpStatus.ALREADY_REPORTED,
+                            "You are already a member of this team.");
+                }
             }
+
+            List<Request> tournamentPendingRequests = requestDao.getPendingRequestsByTournamentId(tournamentId);
             for(Request request: tournamentPendingRequests) {
                 if(request.getTeamId() == teamId) {
                     throw new ResponseStatusException(HttpStatus.ALREADY_REPORTED,

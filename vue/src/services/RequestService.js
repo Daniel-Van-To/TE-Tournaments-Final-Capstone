@@ -20,5 +20,9 @@ export default {
 
     submitUpdatedTournamentRequest(request) {
         return axios.put(`/tournaments/${request.tournamentId}/requests/${request.requestId}`, request)
+    },
+
+    submitTournamentJoinRequestForTeam(request) {
+        return axios.post(`/tournaments/${request.tournamentId}`, request);
     }
 }
