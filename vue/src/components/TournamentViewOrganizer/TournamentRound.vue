@@ -2,7 +2,7 @@
     <!-- TODO - programmatically add the round-one class, and change for 
                 other rounds. should be simple enough with computed property. -->
      <div class="round round-one current">
-          <div class="round-details"> {{this.currentRound}}<br />
+          <div class="round-details"> Round {{this.currentRound}}<br />
             <!-- <span class="date">March 16</span> -->
              <TournamentMatchUp v-for="(matchup, index) in this.matchUps"
              v-bind:key="matchup[0].teamId"
@@ -72,6 +72,7 @@ export default {
     flex-direction: column;
     width: 95%;
     width: 30.8333%\9;
+    background-color: gray;
 }
 
 .split-one .round {
