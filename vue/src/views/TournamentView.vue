@@ -8,13 +8,10 @@
     <section id="bracket">
         <div class="container">
             <div class="split split-one">
-                <TournamentRound v-for="(round, index) in rounds" :key="index" 
-                class="round"
-                v-bind:class="this.roundToString(round)"
-                v-bind:teams="teams" 
-                v-bind:currentRound="round" 
-                v-bind:tournamentId="tournament.tournamentId"  
-                v-bind:startPosition="this.calculateStartPosition(round)" />
+                <TournamentRound v-for="(round, index) in rounds" :key="index" class="round"
+                    v-bind:class="this.roundToString(round)" v-bind:teams="teams" v-bind:currentRound="round"
+                    v-bind:tournamentId="tournament.tournamentId"
+                    v-bind:startPosition="this.calculateStartPosition(round)" />
             </div>
         </div>
     </section>
@@ -22,16 +19,15 @@
     
 <script>
 import TournamentService from '../services/TournamentService';
+import ScoreService from '../services/ScoreService';
+
 import TournamentRound from '../components/TournamentViewOrganizer/TournamentRound.vue';
 
 export default {
 
-    components: {
-        TournamentRound
-    },
+    components: { TournamentRound },
 
     computed: {
-
         rounds() {
             let count = 0;
             let iterator = this.teams.length;
@@ -41,7 +37,6 @@ export default {
             }
             return count;
         },
-
         positions() {
             return 2 ^ (this.rounds + 1) - 1;
         },
@@ -51,41 +46,13 @@ export default {
         isTournamentHost() {
             return this.isCurrentUserTournamentHost;
         },
-
     },
 
     data() {
         return {
-
             teams: [],
-            // teams: [
-            //     {
-            //         teamId: 4,
-            //         teamName: "Beavers"
-            //     },
-            //     {
-            //         teamId: 5,
-            //         teamName: "Ducks"
-            //     },
-            //     {
-            //         teamId: 6,
-            //         teamName: "Chickens"
-            //     },
-            //     {
-            //         teamId: 7,
-            //         teamName: "Dogs"
-            //     }
-            // ],
-
             isCurrentUserTournamentHost: false,
-
             tournament: {},
-            //   tournamentId:
-            //   tournamentHost:
-            //   tournamentName:
-            //  entryFee:
-            //  gameName:
-            //
         }
     },
 
@@ -165,8 +132,13 @@ export default {
                 this.$store.commit("SET_NOTIFICATION", "isCurrentUserTournamentHost method in tournament view failed");
             });
 
+        // ScoreService.getListOfScoresByTournamentId(this.$route.params.tournamentId)
+        //     .then(response => {
 
+        //     })
+        //     .catch(error => {
 
+        //     });
     }
 };
 </script>
@@ -313,7 +285,7 @@ We aren't using that section as of yet.
     margin: 0;
     height: 60px;
     padding: 130px 0;
-} 
+}
 
 /* adding round-details to TournamentRound.vue */
 .round-details {

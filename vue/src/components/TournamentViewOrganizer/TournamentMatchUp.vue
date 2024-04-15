@@ -23,7 +23,7 @@ export default {
         }
     },
     created() {
-        // get scores with score service
+        
 
     }
 
