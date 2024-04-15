@@ -31,6 +31,10 @@ export default {
         return axios.get(`/teams/${teamId}/requests`);
     },
 
+    getListOfTeamsUserIsCaptainOf(userId) {
+        return axios.get(`/teams/${userId}/captain`);
+    }
+
     // getMyTeams(userId) {
     //     console.log(`inside the retriever getMyTeams() and here is what we're about to pass it:`);
     //     return axios.get(`/teams/${userId}/captain`);
