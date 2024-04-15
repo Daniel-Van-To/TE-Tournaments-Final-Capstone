@@ -13,8 +13,11 @@
         </thead>
         <tbody>
             <td>{{ user.username }}</td>
-            <td><button @click="submitRequest('a')" class="acceptBtn">Accept</button></td>
-            <td><button @click="submitRequest('d')" class="denyBtn">Deny</button></td>
+            <td  v-if="pendingStatus" ><button @click="submitRequest('a')" class="acceptBtn">Accept</button></td>
+            <td v-if="pendingStatus"><button @click="submitRequest('d')" class="denyBtn">Deny</button></td>
+            <td v-if="acceptedRequestStatus">Request Accepted!</td>
+            <td v-if="deniedRequestStatus">Request Denied!</td>
+
         </tbody>
     </table>
     {{ JSON.stringify(updatedRequest) }}
@@ -36,6 +39,20 @@ export default {
 
     props: ['request'],
 
+    computed : {
+        pendingStatus() {
+            return this.updatedRequest.requestStatus === 'p';
+        },
+
+        acceptedRequestStatus() {
+            return this.updatedRequest.requestStatus === 'a';
+        },
+
+        deniedRequestStatus() {
+            return this.updatedRequest.requestStatus === 'd';
+        }
+    },
+
     methods: {
 
         updateRequestStatus(newStatus) {
@@ -51,9 +68,9 @@ export default {
             // requestStatus: ,
             // requesterId: ,
         // }
-            const request = this.request;
-            request.requestStatus = newStatus;
-            requestService.submitUpdatedRequest(request);
+            this.updatedRequest = this.request;
+            this.updatedRequest.requestStatus = newStatus;
+            requestService.submitUpdatedRequest(this.updateRequest);
 
         }
     },
