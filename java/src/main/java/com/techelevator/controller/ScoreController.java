@@ -60,10 +60,10 @@ public class ScoreController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @RequestMapping(path = "/tournaments/{tournamentsId}/scores", method = RequestMethod.GET)
-    public List<Score> getScoreByTournamentId(@PathVariable int tournamentsId, @PathVariable int teamId, @PathVariable int scoreId) {
+    @RequestMapping(path = "/tournaments/{tournamentId}/scores", method = RequestMethod.GET)
+    public List<Score> getScoreByTournamentId(@PathVariable int tournamentId, @PathVariable int teamId, @PathVariable int scoreId) {
         try {
-            return scoreDao.getScoresByTournamentId(tournamentsId);
+            return scoreDao.getScoresByTournamentId(tournamentId);
 
         } catch(DaoException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
