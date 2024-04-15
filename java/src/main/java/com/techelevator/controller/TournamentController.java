@@ -1,14 +1,8 @@
 package com.techelevator.controller;
 
-import com.techelevator.dao.RequestDao;
-import com.techelevator.dao.TeamDao;
-import com.techelevator.dao.TournamentDao;
-import com.techelevator.dao.UserDao;
+import com.techelevator.dao.*;
 import com.techelevator.exception.DaoException;
-import com.techelevator.model.Team;
-import com.techelevator.model.TeamDto;
-import com.techelevator.model.Tournament;
-import com.techelevator.model.TournamentDto;
+import com.techelevator.model.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -24,20 +18,35 @@ public class TournamentController {
     private TeamDao teamDao;
     private RequestDao requestDao;
     private TournamentDao tournamentDao;
+    private ScoreDao scoreDao;
 
 
-    public TournamentController(UserDao userDao, TeamDao teamDao, RequestDao requestDao, TournamentDao tournamentDao) {
+    public TournamentController(UserDao userDao, TeamDao teamDao, RequestDao requestDao, TournamentDao tournamentDao, ScoreDao scoreDao) {
         this.userDao = userDao;
         this.teamDao = teamDao;
         this.requestDao = requestDao;
         this.tournamentDao = tournamentDao;
+        this.scoreDao = scoreDao;
     }
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(path = "/create-tournament", method = RequestMethod.POST)
     public Tournament createTournament(@Valid @RequestBody TournamentDto newTournament) {
-
+        Tournament createdTournament = null;
         try {
-            return tournamentDao.createTournament(newTournament);
+            createdTournament =  tournamentDao.createTournament(newTournament);
+            int positions = createdTournament.getMaximumParticipants();
+            if(positions > 0) {
+                positions = (positions * 2);
+                for(int i = 1; i < positions; i++) {
+                    Score newScore = new Score();
+                    newScore.setTournamentId(createdTournament.getTournamentId());
+                    newScore.setBracketPosition(i);
+                    newScore.setScore("");
+//                    newScore.setTeamId();
+                    scoreDao.addScore(newScore);
+                }
+            }
+            return createdTournament;
 
         } catch(DaoException e) {
 

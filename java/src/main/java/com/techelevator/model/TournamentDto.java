@@ -15,10 +15,11 @@ public class TournamentDto {
     //UserId is the current user; This variable is used to check if the current user is the host
     private int userId;
     private List<Team> participants;
+    private int maximumParticipants;
 
     public TournamentDto() { }
 
-    public TournamentDto(int tournamentId, int hostId, String tournamentName, double entry_fee, String gameName, boolean acceptingTeams, List<Team> participants, char tournamentStatus) {
+    public TournamentDto(int tournamentId, int hostId, String tournamentName, double entry_fee, String gameName, boolean acceptingTeams, List<Team> participants, char tournamentStatus, int maximumParticipants) {
         this.tournamentId = tournamentId;
         this.hostId = hostId;
         this.tournamentName = tournamentName;
@@ -27,6 +28,15 @@ public class TournamentDto {
         this.acceptingTeams = acceptingTeams;
         this.participants = participants;
         this.tournamentStatus = tournamentStatus;
+        this.maximumParticipants = maximumParticipants;
+    }
+
+    public int getMaximumParticipants() {
+        return maximumParticipants;
+    }
+
+    public void setMaximumParticipants(int maximumParticipants) {
+        this.maximumParticipants = maximumParticipants;
     }
 
     public char getTournamentStatus() {

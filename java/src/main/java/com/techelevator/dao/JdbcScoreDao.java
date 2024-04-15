@@ -8,9 +8,11 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class JdbcScoreDao implements ScoreDao {
 
     private JdbcTemplate jdbcTemplate;
@@ -18,17 +20,17 @@ public class JdbcScoreDao implements ScoreDao {
     private UserDao userDao;
     private RequestDao requestDao;
 
-    public JdbcScoreDao(JdbcTemplate jdbcTemplate, GameDao gameDao, UserDao userDao, RequestDao requestDao) {
+    public JdbcScoreDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
-        this.gameDao = gameDao;
-        this.userDao = userDao;
-        this.requestDao = requestDao;
+        gameDao = new JdbcGameDao(jdbcTemplate);
+        userDao = new JdbcUserDao(jdbcTemplate);
+        requestDao = new JdbcRequestDao(jdbcTemplate);
     }
-
+    @Override
     public Score addScore(Score newScore) {
         Score addedScore = null;
-        String sql = "INSERT INTO score (tournament_id, team_id, bracket_position, score) " +
-                "VALUEUS (?, ?, ?, ?) RETURNING score_id";
+        String sql = "INSERT INTO scores (tournament_id, team_id, bracket_position, score) " +
+                "VALUES (?, ?, ?, ?) RETURNING score_id";
         try {
             int addedScoreId = jdbcTemplate.queryForObject(sql, int.class, newScore.getTournamentId(),
                     newScore.getTeamId(), newScore.getBracketPosition(), newScore.getScore());
@@ -43,10 +45,11 @@ public class JdbcScoreDao implements ScoreDao {
 
         return addedScore;
     }
+    @Override
     public Score getScoresByScoreId(int scoreId) {
         Score score = null;
         String sql = "SELECT score_id, tournament_id, team_id, bracket_position, score " +
-                "FROM score WHERE score_id = ?;";
+                "FROM scores WHERE score_id = ?;";
 
         try{
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, scoreId);
@@ -62,10 +65,11 @@ public class JdbcScoreDao implements ScoreDao {
 
         return score;
     }
+    @Override
     public Score getScoreByPosition(int tournamentId, int position) {
         Score score = null;
         String sql = "SELECT score_id, tournament_id, team_id, bracket_position, score " +
-                "FROM score WHERE tournament_id = ? AND bracket_position = ?;";
+                "FROM scores WHERE tournament_id = ? AND bracket_position = ?;";
 
         try{
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, tournamentId, position);
@@ -81,10 +85,11 @@ public class JdbcScoreDao implements ScoreDao {
 
         return score;
     }
+    @Override
     public List<Score> getScoresByTournamentId(int tournamentId) {
         List<Score> score = null;
         String sql = "SELECT score_id, tournament_id, team_id, bracket_position, score " +
-                "FROM score WHERE tournament_id = ?;";
+                "FROM scores WHERE tournament_id = ?;";
 
         try{
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, tournamentId);
@@ -100,10 +105,11 @@ public class JdbcScoreDao implements ScoreDao {
 
         return score;
     }
+    @Override
     public List<Score> getScoresByTeamId(int teamId) {
         List<Score> score = null;
         String sql = "SELECT score_id, tournament_id, team_id, bracket_position, score " +
-                "FROM score WHERE team_id = ?;";
+                "FROM scores WHERE team_id = ?;";
 
         try{
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, teamId);

@@ -43,6 +43,9 @@ VALUES ('running', 1),
 ('water polo', 7),
 ('swimming', 1);
 
+INSERT INTO team (team_id, team_captain_id, team_name, game_name, accepting_members)
+VALUES (0,2, 'dummy', 'running', false);
+
 INSERT INTO team (team_captain_id, team_name, game_name, accepting_members)
 VALUES (3, 'find pearls', 'running', false), --team_id 1
 (4, 'pho 95', 'valorant', true), --team_id 2

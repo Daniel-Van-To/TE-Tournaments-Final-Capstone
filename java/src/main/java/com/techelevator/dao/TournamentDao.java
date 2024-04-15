@@ -21,5 +21,6 @@ public interface TournamentDao {
     public List<Tournament> getTournamentsByGameName(String gameName);
     public TournamentDto getTournamentDetailById(int tournamentId);
     public List<Team> getParticipatingTeams(int tournamentId);
+    public int getmaximumPartipatingTeamsByTournamentId(int tournamentId);
 
 }

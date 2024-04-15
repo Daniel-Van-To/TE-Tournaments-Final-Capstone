@@ -16,6 +16,10 @@
             <label for="entryFee">Entry fee: $</label>
             <input id="entryFee" type="number" class="formControl" v-model="tournament.entryFee"/>
         </div> 
+        <div class="tournamentFormField">
+            <label for="maximumParticipants">Maximum Participants: </label>
+            <input id="maximumParticipants" type="number" class="formControl" v-model="tournament.maximumParticipants"/>
+        </div> 
         <span>When you press submit, this tournament will appear in the list of tournaments.</span>
         <br/>
         <button class="btn btn-submit" type="submit">Submit</button>
@@ -39,7 +43,8 @@
             hostId: this.$store.state.user.id,
             entryFee: "",
             tournamentStatus: "s",
-            acceptingTeams: true
+            acceptingTeams: true,
+            maximumParticipants: ""
         }
       }
     },

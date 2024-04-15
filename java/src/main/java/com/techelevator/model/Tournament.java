@@ -10,10 +10,11 @@ public class Tournament {
     //TODO Change acceptingTeams to a boolean
     private boolean acceptingTeams;
     private char tournamentStatus;
+    private int maximumParticipants;
 
     public Tournament() { }
 
-    public Tournament(int tournamentId, int hostId, String tournamentName, double entry_fee, String gameName, boolean acceptingTeams, char tournamentStatus) {
+    public Tournament(int tournamentId, int hostId, String tournamentName, double entry_fee, String gameName, boolean acceptingTeams, char tournamentStatus, int maximumParticipants) {
         this.tournamentId = tournamentId;
         this.hostId = hostId;
         this.tournamentName = tournamentName;
@@ -21,6 +22,15 @@ public class Tournament {
         this.gameName = gameName;
         this.acceptingTeams = acceptingTeams;
         this.tournamentStatus = tournamentStatus;
+        this.maximumParticipants = maximumParticipants;
+    }
+
+    public int getMaximumParticipants() {
+        return maximumParticipants;
+    }
+
+    public void setMaximumParticipants(int maximumParticipants) {
+        this.maximumParticipants = maximumParticipants;
     }
 
     public boolean isAcceptingTeams() {
