@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import ScoreService from '../../services/ScoreService';
 
 export default {
 
@@ -23,8 +24,25 @@ export default {
         }
     },
     created() {
-        
-
+        //first team
+        ScoreService.getScoreByBracketPositionTeamIdTournamentId(this.firstPosition, this.firstTeam.teamId, this.tournamentId)
+            .then(response => {
+                if (response.status == 200){
+                    this.firstPositionScore = response.data;
+                }
+            })
+            .catch(error => {
+                this.$store.commit('SET_NOTIFICATION', 'error in TournamentMatchUp component getting firstpositionscore');
+            });
+        ScoreService.getScoreByBracketPositionTeamIdTournamentId(this.secondPosition, this.secondTeam.teamId, this.tournamentId)
+        .then(response => {
+                if (response.status == 200){
+                    this.secondPositionScore = response.data;
+                }
+            })
+            .catch(error => {
+                this.$store.commit('SET_NOTIFICATION', 'error in TournamentMatchUp component getting secondpositionscore');
+            });
     }
 
 }

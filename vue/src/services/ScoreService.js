@@ -7,6 +7,8 @@ export default {
         return axios.get(`/tournaments/${tournamentId}/scores`);
     },
 
-    // getScoreByBracketPosition()
+    getScoreByBracketPositionTeamIdTournamentId(position, teamId, tournamentId) {
+        return axios.get(`/tournaments/${tournamentId}/team/${teamId}/scores/${position}`);
+    }
 
 }
