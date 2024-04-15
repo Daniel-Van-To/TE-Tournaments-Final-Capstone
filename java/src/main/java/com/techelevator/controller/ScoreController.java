@@ -49,8 +49,8 @@ public class ScoreController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @RequestMapping(path = "/tournaments/{tournamentsId}/team/{teamId}/scores/{scoreId}/{position}", method = RequestMethod.GET)
-    public Score getScoreByBracketPosition(@PathVariable int tournamentsId, @PathVariable int teamId, @PathVariable int scoreId, @PathVariable int position) {
+    @RequestMapping(path = "/tournaments/{tournamentsId}/team/{teamId}/scores/{position}", method = RequestMethod.GET)
+    public Score getScoreByBracketPosition(@PathVariable int tournamentsId, @PathVariable int teamId, @PathVariable int position) {
         try {
             return scoreDao.getScoreByPosition(tournamentsId, position);
 
