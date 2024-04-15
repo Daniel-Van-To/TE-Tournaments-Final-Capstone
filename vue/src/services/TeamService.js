@@ -11,6 +11,10 @@ export default {
         return axios.get('/teams');
     },
 
+    getTeam(teamId) {
+        return axios.get(`/teams/${teamId}`)
+    },
+
     getUsersOnTeam(teamId) {
         return axios.get(`/users/${teamId}/list`);
     },

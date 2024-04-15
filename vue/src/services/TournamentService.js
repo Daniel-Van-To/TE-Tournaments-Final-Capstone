@@ -17,5 +17,22 @@ export default {
 
     checkUserForTournamentHost(tournamentId, userId) {
         return axios.get(`/browse-tournaments/${tournamentId}/host/${userId}`)
+    },
+    getPendingTournamentJoinRequests(tournamentId) {
+        return axios.get(`/tournaments/${tournamentId}/requests`)
+    },
+    sendTournamentJoinRequest (request) {
+        // request: {
+            // requestId: ,
+            // tournamentId: ,
+            // teamId: ,
+            // gameName: ,
+            // requestStatus: ,
+            // requesterId: ,
+        // }
+
+
+
+        return axios.put(`/tournament/${request.tournamentId}`, request)
     }
 }

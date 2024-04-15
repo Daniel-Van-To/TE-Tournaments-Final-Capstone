@@ -1,6 +1,6 @@
 <template>
     <h1>Join Requests for {{ }}</h1>
-    <join-request v-for="request in requests" v-bind:key="request.requestId" 
+    <tournament-join-request v-for="request in requests" v-bind:key="request.requestId" 
     v-bind:request="request" />
 </template>
 
@@ -8,14 +8,14 @@
 
 
 <script>
-import teamService from '../services/TeamService.js'
-import JoinRequest from '../components/JoinRequest.vue';
+import tournamentService from '../services/TournamentService.js'
+import TournamentJoinRequest from '../components/TournamentJoinRequest.vue'
 
 
 
 export default {
 
-    components: { JoinRequest },
+    components: { TournamentJoinRequest },
 
     data() {
         return {
@@ -24,8 +24,9 @@ export default {
     },
 
     created() {
-        teamService.getPendingJoinRequests(this.$route.params.teamId)
+        tournamentService.getPendingTournamentJoinRequests(this.$route.params.tournamentId)
             .then((response) => {
+                console.log(this.$route.params.tournamentId);
                 if (response.status === 200) {
                     this.requests = response.data;
                 }

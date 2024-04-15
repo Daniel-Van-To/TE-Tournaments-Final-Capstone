@@ -87,7 +87,7 @@ public class RequestController {
     public List<Request> getPendingTournamentRequests(@PathVariable int tournamentId) {
         try {
             //TODO method requires tests
-            return null;
+            return requestDao.getPendingRequestsByTournamentId(tournamentId);
         }
         catch (DaoException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
