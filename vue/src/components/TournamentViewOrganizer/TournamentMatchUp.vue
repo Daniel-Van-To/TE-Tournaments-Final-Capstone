@@ -1,10 +1,10 @@
 <template>
     <ul class="matchup">
         <li class="team team-top">{{firstTeam.teamName}}
-            <span class="score">{{firstPositionScore}}</span>
+            <span class="score">{{firstPositionScore.score}}</span>
         </li>
         <li class="team team-bottom">{{secondTeam.teamName}}
-            <span class="score">{{secondPositionScore}}</span>
+            <span class="score">{{secondPositionScore.score}}</span>
         </li>
     </ul>
 </template>

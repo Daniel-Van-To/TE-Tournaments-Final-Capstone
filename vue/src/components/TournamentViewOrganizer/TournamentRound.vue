@@ -3,6 +3,7 @@
                 other rounds. should be simple enough with computed property. -->
      <div class="round current">
           <div class="round-details"> Round {{this.currentRound}}<br />
+            {{ startPosition }}
              <TournamentMatchUp v-for="(matchup, index) in this.matchUps"
              v-bind:key="matchup[0].teamId"
              v-bind:tournamentId="this.tournamentId"
