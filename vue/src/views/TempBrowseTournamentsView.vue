@@ -3,7 +3,8 @@
       <h1>Browse Tournaments</h1>
       <button @click.prevent="pushToCreateTournamentView">Create A Tournament</button>
       <br><br/>
-      <select v-model="this.filterBy">  
+      <label for="game-filter">Filter Tournaments by Game: </label>
+      <select class="game-filter" v-model="this.filterBy">  
         <option v-for="(game,index) in games" v-bind:value="game.name" v-bind:key="index">
             {{ game.name }}
         </option>
@@ -53,7 +54,7 @@
         });
       },
       filterTournamentsByGame() {
-        if(this.filterBy.length > 0 && !(this.filterBy === "Enter a game to filter by:")) {
+        if(this.filterBy.length > 0 && !(this.filterBy === "Reset Filter")) {
             return this.tournaments.filter((tournament) => {   
              return tournament.gameName == this.filterBy;
             

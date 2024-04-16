@@ -28,7 +28,7 @@ VALUES ('silliesimps', 'harrys_alt_account', 'silly_boy_47@msn.com', '$2a$08$UkV
 --user id 10
 
 INSERT INTO game (game_name,max_players)
-VALUES ('Enter a game to filter by:', 0),
+VALUES ('Reset Filter', 0),
 ('running', 1),
 ('valorant', 5),
 ('cricket', 11),
