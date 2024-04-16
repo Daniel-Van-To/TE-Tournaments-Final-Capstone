@@ -9,6 +9,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Service
 public class JdbcGameDao implements GameDao {
@@ -29,6 +32,25 @@ public class JdbcGameDao implements GameDao {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, gameName);
             if(results.next()){
                 game = mapRowToGame(results);
+            }
+        }
+        catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data integrity violation", e);
+        }
+        return game;
+    }
+
+    @Override
+    public List<Game> getAllGames() {
+        List<Game> game = new ArrayList<>();
+        String sql = "SELECT game_name, max_players FROM game;";
+
+        try{
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
+            while(results.next()){
+                game.add(mapRowToGame(results));
             }
         }
         catch (CannotGetJdbcConnectionException e) {
