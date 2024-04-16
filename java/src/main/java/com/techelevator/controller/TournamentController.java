@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -100,6 +101,30 @@ public class TournamentController {
         try {
             //TODO requires unit tests
             return tournamentDao.checkIfUserIsTournamentHost(tournamentId, userId);
+        }
+        catch (DaoException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+        }
+        catch (NullPointerException e) {
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());
+        }
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(path= "/send-request/{tournamentId}/captain/{userId}", method = RequestMethod.GET)
+    public List<Team> getTeamsThatMatchTournamentGame(@PathVariable int tournamentId, @PathVariable int userId) {
+        try {
+            List<Team> teamsUserIsCaptain = teamDao.getTeamsUserIsCaptain(userId);
+            List<Team> filteredTeams = new ArrayList<>();
+            Tournament info = tournamentDao.getTournamentById(tournamentId);
+
+            for(Team team: teamsUserIsCaptain) {
+                if(team.getGameName().equalsIgnoreCase(info.getGameName())) {
+                    filteredTeams.add(team);
+                }
+            }
+
+            return filteredTeams;
         }
         catch (DaoException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
