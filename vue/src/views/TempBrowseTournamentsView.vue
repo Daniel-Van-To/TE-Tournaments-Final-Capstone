@@ -4,7 +4,7 @@
       <button @click.prevent="pushToCreateTournamentView">Create A Tournament</button>
       <br><br/>
       <label for="game-filter">Filter Tournaments by Game: </label>
-      <select class="game-filter" v-model="this.filterBy">  
+      <select class="game-filter" v-model="this.gameFilter">  
         <option v-for="(game,index) in games" v-bind:value="game.name" v-bind:key="index">
             {{ game.name }}
         </option>
@@ -29,43 +29,24 @@
       return {
         tournaments: [],
         games: [],
-        filterBy: ''
+        // tournamentStatus: ['Reset Filter', 'Completed', 'Ongoing', 'scheduled'],
+        gameFilter: ''
         
       }
     },
   
     computed: {
   
-      completed() {
-        return this.tournaments.filter( (tournament) => {
-          return tournament.tournamentStatus == 'c';
-        });
-      },
-  
-      ongoing() {
-        return this.tournaments.filter( (tournament) => {
-          return (tournament.tournamentStatus == 'o' && tournament.tournamentId > 0);
-        });
-      },
-  
-      scheduled() {
-        return this.tournaments.filter( (tournament) => {
-          return tournament.tournamentStatus == 's';
-        });
-      },
       filterTournamentsByGame() {
-        if(this.filterBy.length > 0 && !(this.filterBy === "Reset Filter")) {
-            return this.tournaments.filter((tournament) => {   
-             return tournament.gameName == this.filterBy;
-            
-        })
-        }
-        else {
-            return this.tournaments;
-        }
-        
-      }
-  
+            if(this.gameFilter.length > 0 && !(this.gameFilter === "Reset Filter")) {
+                return this.tournaments.filter((tournament) => {   
+                return tournament.gameName == this.gameFilter;
+                });    
+            }
+            else {
+                return this.tournaments;
+            }
+        },
     },
   
     methods: {
@@ -75,21 +56,25 @@
       }
   
     },
+    
   
     created() {
       TournamentService.getAllTournaments()
       .then(response => {
         this.tournaments = response.data;
-      })
+      });
 
       GameService.getGamesList()
       .then((response) => {
         this.games = response.data;
-      })
+      });
   
   
     }
-  };
+  
+  }
+
+
   </script>
   
   <style scoped>
