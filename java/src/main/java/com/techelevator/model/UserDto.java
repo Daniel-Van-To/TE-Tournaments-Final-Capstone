@@ -10,6 +10,7 @@ public class UserDto {
 
     private int id;
     private String username;
+    private String displayName;
     @JsonIgnore
     private String password;
     @JsonIgnore
@@ -18,12 +19,21 @@ public class UserDto {
 
     public UserDto() { }
 
-    public UserDto(int id, String username, String password, String authorities) {
+    public UserDto(int id, String username, String displayName, String password, String authorities) {
         this.id = id;
         this.username = username;
+        this.displayName = displayName;
         this.password = password;
         if (authorities != null) this.setAuthorities(authorities);
         this.activated = true;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
 
     public int getId() {

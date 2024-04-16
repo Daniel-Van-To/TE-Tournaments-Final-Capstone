@@ -12,11 +12,21 @@ public class RegisterUserDto {
     @NotEmpty
     private String username;
     @NotEmpty
+    private String displayName;
+    @NotEmpty
     private String password;
     @NotEmpty
     private String confirmPassword;
     @NotEmpty(message = "Please select a role for this user.")
     private String role;
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
 
     public String getUsername() {
         return username;
