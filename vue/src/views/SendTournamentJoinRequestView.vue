@@ -42,7 +42,7 @@
     methods: {
         filterTeamsByGameName() {
             let gameName = this.tournament.gameName;
-            this.teamsUserIsCaptainOf.filter((team) => {
+            this.teamsUserIsCaptainOf = this.teamsUserIsCaptainOf.filter((team) => {
                 return team.gameName === gameName;
             });
         },
@@ -60,15 +60,15 @@
                         type: 'success'
                         }
                     );
-                    this.$router.push({name: 'home'});
+                    this.$router.push({name: 'tournament-details-view'});
                     }
                 else if(response.status === 208) {
                     this.$store.commit('SET_NOTIFICATION', {
-                        message: 'Request not sent - user already have a pending join request for this team.',
+                        message: 'Request not sent - that team already has a pending join request for this tournament.',
                         type: 'error'
                     });
                 }
-                this.$router.push({name: 'teams'});
+                this.$router.push({name: 'tournament-details-view'});
             })
             .catch((error) => {
                 if(error.response.status === 208) {
@@ -76,6 +76,9 @@
                         message: 'Request not sent - user already have a pending join request for this team.',
                         type: 'error'
                     });
+                }
+                else if(error.response.status === 418) {
+                    this.$router.push({name: 'tournament-details-view'});
                 }
             });
         },

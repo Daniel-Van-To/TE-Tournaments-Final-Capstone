@@ -10,6 +10,10 @@
         <input type="text" id="username" v-model="user.username" required autofocus />
       </div>
       <div class="form-input-group">
+        <label for="display-name">Display Name</label>
+        <input type="text" id="display-name" v-model="user.displayName" required autofocus />
+      </div>
+      <div class="form-input-group">
         <label for="password">Password</label>
         <input type="password" id="password" v-model="user.password" required />
       </div>
@@ -33,6 +37,7 @@ export default {
     return {
       user: {
         username: '',
+        displayName: '',
         password: '',
         confirmPassword: '',
         role: 'user',

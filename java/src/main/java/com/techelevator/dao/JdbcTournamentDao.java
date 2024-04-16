@@ -203,7 +203,7 @@ public class JdbcTournamentDao implements TournamentDao{
     @Override
     public int linkTeamToTournament(int teamId, int tournamentId) {
         int numRows = 0;
-        String sql = "Insert INTO team_tournament(team_id, tournament_id" +
+        String sql = "Insert INTO team_tournament(team_id, tournament_id) " +
                 "VALUES (?,?)";
         try{
             numRows = jdbcTemplate.update(sql, teamId, tournamentId);

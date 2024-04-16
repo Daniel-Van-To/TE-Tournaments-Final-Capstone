@@ -24,10 +24,11 @@ public class RequestController {
     private TeamDao teamDao;
     private TournamentDao tournamentDao;
 
-    public RequestController(RequestDao requestDao, UserDao userDao, TeamDao teamDao) {
+    public RequestController(RequestDao requestDao, UserDao userDao, TeamDao teamDao, TournamentDao tournamentDao) {
         this.requestDao = requestDao;
         this.userDao = userDao;
         this.teamDao = teamDao;
+        this.tournamentDao = tournamentDao;
     }
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(path = "/teams/{teamId}/requests", method = RequestMethod.GET)
@@ -103,12 +104,10 @@ public class RequestController {
         try {
 
             int teamId = requestDto.getTeamId();
-            if(tournamentDao.getParticipatingTeams(tournamentId) != null){
-                List<Team> requestTournamentTeams = tournamentDao.getParticipatingTeams(tournamentId);
-                if(requestTournamentTeams.contains(teamDao.getTeamById(teamId))) {
-                    throw new ResponseStatusException(HttpStatus.ALREADY_REPORTED,
-                            "You are already a member of this team.");
-                }
+            List<Team> requestTournamentTeams = tournamentDao.getParticipatingTeams(tournamentId);
+            if(requestTournamentTeams.contains(teamDao.getTeamById(teamId))) {
+                throw new ResponseStatusException(HttpStatus.ALREADY_REPORTED,
+                        "You are already a member of this team.");
             }
 
             List<Request> tournamentPendingRequests = requestDao.getPendingRequestsByTournamentId(tournamentId);
@@ -120,8 +119,8 @@ public class RequestController {
             }
             return requestDao.addTournamentJoinRequest(requestDto);
         }
-        catch (DaoException e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+        catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.I_AM_A_TEAPOT, e.getMessage());
         }
     }
 
