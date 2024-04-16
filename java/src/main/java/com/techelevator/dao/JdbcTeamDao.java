@@ -148,7 +148,7 @@ public class JdbcTeamDao implements TeamDao {
     @Override
     public List<User> getUsersOnTeam(int teamId) {
         List<User> users = new ArrayList<>();
-        String sql = "SELECT users.user_id, users.username, users.role " +
+        String sql = "SELECT users.user_id, users.username, users.display_name, users.role " +
                 "FROM team " +
                 "JOIN team_user ON team.team_id = team_user.team_id " +
                 "JOIN users ON team_user.user_id = users.user_id " +
