@@ -1,10 +1,10 @@
 <template>
     <ul class="matchup">
-        <li class="team team-top">{{firstTeam.teamName}}
-            <span class="score">{{firstPositionScore.score}}</span>
+        <li class="team team-top">{{firstTeamName}}
+            <span class="score">{{firstPositionScore}}</span>
         </li>
-        <li class="team team-bottom">{{secondTeam.teamName}}
-            <span class="score">{{secondPositionScore.score}}</span>
+        <li class="team team-bottom">{{secondTeamName}}
+            <span class="score">{{secondPositionScore}}</span>
         </li>
     </ul>
 </template>
@@ -14,16 +14,43 @@ import ScoreService from '../../services/ScoreService';
 
 export default {
 
-    props: ["tournamentId", "firstPosition", "firstTeam", "secondPosition", "secondTeam"],
+    props: ["tournamentId", "firstPosition", "firstTeam", "secondPosition", "secondTeam", "scores"],
 
     data() {
 
         return {
             firstPositionScore: "",
-            secondPositionScore: ""
+            secondPositionScore: "",
+            firstTeamName: this.firstTeam.teamName,
+            secondTeamName: this.secondTeam.teamName,
         }
     },
-    created() {
+
+    methods: {
+        returnsScoreOrEmptyStringGivenBracketPosition(position) {
+            this.scores.forEach((score) => {
+                if (score.bracketPosition == position) {
+                    return score;
+                }
+                
+            });
+            return '';
+        },
+
+    },  
+    beforeMount() {
+        if (this.firstPosition > this.scores.length) {
+            this.firstTeamName = '';
+            this.secondTeamName = '';
+        }
+
+        else {
+            this.firstPositionScore = this.returnsScoreOrEmptyStringGivenBracketPosition(this.firstPosition).score;
+            this.secondPositionScore = this.returnsScoreOrEmptyStringGivenBracketPosition(this.secondPosition).score;
+        }
+
+
+
         //first team
         // ScoreService.getScoreByBracketPositionTeamIdTournamentId(this.firstPosition, this.firstTeam.teamId, this.tournamentId)
         //     .then(response => {

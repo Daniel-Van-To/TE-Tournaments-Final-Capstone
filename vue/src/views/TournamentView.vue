@@ -10,15 +10,11 @@
     </section>
     <section v-else id="bracket">
         <div class="container">
-            {{ JSON.stringify(this.scores) }}
-            <br/>
-            {{ teams }}
             <div class="split split-one">
                 <TournamentRound v-for="(round, index) in rounds" :key="index" class="round"
-                    v-bind:class="this.roundToString(round)" v-bind:teams="this.teamsByRound(index+1)" 
-                    v-bind:currentRound="round"
-                    v-bind:tournamentId="tournament.tournamentId"
-                    v-bind:startPosition="this.calculateStartPosition(round)" />
+                    v-bind:class="this.roundToString(round)" v-bind:teams="this.teamsByRound(index + 1)" v-bind:round="round"
+                    v-bind:currentRound="currentRound" v-bind:tournamentId="tournament.tournamentId"
+                    v-bind:startPosition="this.calculateStartPosition(round)" v-bind:scores="scores" />
             </div>
         </div>
     </section>
@@ -90,6 +86,7 @@ export default {
             scores: [],
             isLoadingScores: true,
             isLoadingTournament: true,
+            currentRound: '',
         }
     },
 
@@ -100,31 +97,26 @@ export default {
             const start = this.calculateStartPosition(round);
             const finish = this.calculateStartPosition(round + 1);
 
-            console.log(`start: ${start} finish: ${finish}`);
+            
 
             //scores is ordered by bracket position, so we can iterate through.
-            for (let i = (start); i < finish; i+=1 ) {
-                console.log(`i: ${i}`);
-                const score = this.scores[i-1];
+            for (let i = (start); i < finish; i += 1) {
+                const score = this.scores[i - 1];
 
                 if (score == undefined || score == null) {
-                    break;
+                    this.currentRound = round;
+                    teamsForThisRound.push({});
                 }
+                else {
+                    for (let j = 0; j < this.teams.length; j++) {
+                        const teamToCheck = this.teams[j];
 
-                console.log(`score: ${JSON.stringify(score)}
-                scores[0]: ${this.scores[0]}`)
+                        
 
-                for (let j = 0; j < this.teams.length; j++) {
-                    const teamToCheck = this.teams[j];
-
-                    console.log(`teamToCheck: ${JSON.stringify(teamToCheck)}`)
-
-                    if (score.teamId == teamToCheck.teamId) {
-                        teamsForThisRound.push(this.teams[j]);
-
-                        console.log(`teamsForThisRound after push: ${JSON.stringify(teamsForThisRound)}
-                        teams in data after push: ${JSON.stringify(this.teams)}`);
-                        break;
+                        if (score.teamId == teamToCheck.teamId) {
+                            teamsForThisRound.push(this.teams[j]);
+                            break;
+                        }
                     }
                 }
             }
@@ -376,11 +368,11 @@ We aren't using that section as of yet.
     opacity: 0.45;
 }
 
-.current li {
+.current :deep(li) {
     opacity: 1;
 }
 
-.current li.team {
+.current :deep(li.team) {
     background-color: #fff;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
     opacity: 1;

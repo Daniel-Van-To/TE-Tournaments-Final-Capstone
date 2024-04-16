@@ -1,18 +1,18 @@
 <template>
     <!-- TODO - programmatically add the round-one class, and change for 
                 other rounds. should be simple enough with computed property. -->
-     <div class="round current">
-          <div class="round-details"> Round {{this.currentRound}}<br />
-             <TournamentMatchUp v-for="(matchup, index) in this.matchUps"
-             v-bind:key="matchup[0].teamId"
-             v-bind:tournamentId="this.tournamentId"
-             :firstTeam="matchup[0]"
-             :secondTeam="matchup[1]"
-             :firstPosition="startPosition + (2*index)"
-             :secondPosition="startPosition + (2*index) + 1"
-             />
+    <div class="round ">
+        <div class="round-details" :class="isCurrentRound ? 'current' : ''">
+            Round {{ this.currentRound }}<br />
+            <TournamentMatchUp v-for="(matchup, index) in this.matchUps" v-bind:key="matchup[0].teamId"
+                v-bind:tournamentId="this.tournamentId" 
+                :firstTeam="matchup[0]" 
+                :secondTeam="matchup[1]"
+                :firstPosition="startPosition + (2 * index)" 
+                :secondPosition="startPosition + (2 * index) + 1" 
+                :scores="this.scores"/>
 
-          </div>
+        </div>
     </div>
 </template>
 
@@ -21,23 +21,35 @@ import TournamentMatchUp from './TournamentMatchUp.vue';
 export default {
 
     props: [
-        "currentRound", 
-        "teams", 
-        "tournamentId", 
-        "startPosition"
+        "currentRound",
+        "round",
+        "teams",
+        "tournamentId",
+        "startPosition",
+        "scores",
     ],
+
+    computed: {
+        isCurrentRound() {
+            if (this.round <= this.currentRound) {
+                return true;
+            }
+            return false;
+        },
+
+    },
 
     data() {
         return {
-           matchUps: []
+            matchUps: []
         }
     },
 
     methods: {
         packageMatchUps() {
             let returnArray = [];
-            for(let i = 0; i < this.teams.length; i+=2) {
-                const tempArray = [this.teams[i], this.teams[i+1]];
+            for (let i = 0; i < this.teams.length; i += 2) {
+                const tempArray = [this.teams[i], this.teams[i + 1]];
                 returnArray.push(tempArray);
             }
             this.matchUps = returnArray;
@@ -58,7 +70,6 @@ export default {
 </script>
 
 <style scoped>
-
 .round {
     display: block;
     float: left;
@@ -112,13 +123,11 @@ export default {
 
 .current :deep(li) {
     opacity: 1;
-} 
+}
 
 .current :deep(li.team) {
     background-color: #fff;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
     opacity: 1;
 }
-
-
 </style>
