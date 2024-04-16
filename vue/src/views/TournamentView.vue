@@ -5,12 +5,18 @@
     <button v-if="isNotTournamentHost" v-on:click="pushToSendTournamentJoinRequestView">
         Send Join Requests for {{ this.tournament.tournamentName }}
     </button>
-    <section id="bracket">
+    <section v-if="isLoading" class="loading">
+        Loading...
+    </section>
+    <section v-else id="bracket">
         <div class="container">
             {{ JSON.stringify(this.scores) }}
+            <br/>
+            {{ teams }}
             <div class="split split-one">
                 <TournamentRound v-for="(round, index) in rounds" :key="index" class="round"
-                    v-bind:class="this.roundToString(round)" v-bind:teams="teams" v-bind:currentRound="round"
+                    v-bind:class="this.roundToString(round)" v-bind:teams="this.teamsByRound(index+1)" 
+                    v-bind:currentRound="round"
                     v-bind:tournamentId="tournament.tournamentId"
                     v-bind:startPosition="this.calculateStartPosition(round)" />
             </div>
@@ -19,6 +25,7 @@
 </template>
     
 <script>
+
 import TournamentService from '../services/TournamentService';
 import ScoreService from '../services/ScoreService';
 
@@ -30,18 +37,30 @@ export default {
 
     computed: {
 
-        teamsByRound(round) {
-            let teamsForThisRound = this.teams.filter( (team) => {
-                const start = this.calculateStartPosition(round);
-                const finish = this.calculateStartPosition(round+1)
-
-                //get array of scores for 
-
-            })
-
-
-            return teamsForThisRound;
+        isLoading() {
+            console.log(`this.isLoadingScores: ${this.isLoadingScores}
+            this.isLoadingTournament: ${this.isLoadingTournament} 
+            result of or statement: ${this.isLoadingScores || this.isLoadingTournament}`);
+            return this.isLoadingScores || this.isLoadingTournament;
         },
+
+        // teamsByRound(round) {
+        //     let teamsForThisRound = [];
+
+        //     const start = this.calculateStartPosition(round);
+        //     const finish = this.calculateStartPosition(round + 1)
+        //     //scores is ordered by bracket position, so we can iterate through.
+        //     for (let i = start; i<finish; i++) {
+        //         const score = this.scores[i];
+        //         for (let j = 0; j < this.teams.length; j++) {
+        //             if (score.teamId == this.teams[j].teamId) {
+        //                 teamsForThisRound.push(this.teams[j]);
+        //             }
+        //         }
+        //     }
+        //     return teamsForThisRound;
+
+        // },
         rounds() {
             let count = 0;
             let iterator = this.teams.length;
@@ -60,6 +79,7 @@ export default {
         isTournamentHost() {
             return this.isCurrentUserTournamentHost;
         },
+
     },
 
     data() {
@@ -68,10 +88,49 @@ export default {
             isCurrentUserTournamentHost: false,
             tournament: {},
             scores: [],
+            isLoadingScores: true,
+            isLoadingTournament: true,
         }
     },
 
     methods: {
+
+        teamsByRound(round) {
+            let teamsForThisRound = [];
+            const start = this.calculateStartPosition(round);
+            const finish = this.calculateStartPosition(round + 1);
+
+            console.log(`start: ${start} finish: ${finish}`);
+
+            //scores is ordered by bracket position, so we can iterate through.
+            for (let i = (start); i < finish; i+=1 ) {
+                console.log(`i: ${i}`);
+                const score = this.scores[i-1];
+
+                if (score == undefined || score == null) {
+                    break;
+                }
+
+                console.log(`score: ${JSON.stringify(score)}
+                scores[0]: ${this.scores[0]}`)
+
+                for (let j = 0; j < this.teams.length; j++) {
+                    const teamToCheck = this.teams[j];
+
+                    console.log(`teamToCheck: ${JSON.stringify(teamToCheck)}`)
+
+                    if (score.teamId == teamToCheck.teamId) {
+                        teamsForThisRound.push(this.teams[j]);
+
+                        console.log(`teamsForThisRound after push: ${JSON.stringify(teamsForThisRound)}
+                        teams in data after push: ${JSON.stringify(this.teams)}`);
+                        break;
+                    }
+                }
+            }
+            return teamsForThisRound;
+
+        },
         calculateStartPosition(round) {
             let holder = 1;
             let iterator = round;
@@ -128,6 +187,7 @@ export default {
             .then(response => {
                 this.teams = response.data.participants;
                 this.tournament = response.data;
+                this.isLoadingTournament = false;
             })
             .catch(error => {
                 this.$store.commit("SET_NOTIFICATION", "getTournamentDetail method in tournament view failed");
@@ -144,7 +204,8 @@ export default {
         ScoreService.getListOfScoresByTournamentId(this.$route.params.tournamentId)
             .then(response => {
                 if (response.status == 200) {
-                this.scores = response.data;
+                    this.scores = response.data;
+                    this.isLoadingScores = false;
                 }
             })
             .catch(error => {
