@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -87,13 +88,13 @@ public class JdbcScoreDao implements ScoreDao {
     }
     @Override
     public List<Score> getScoresByTournamentId(int tournamentId) {
-        List<Score> score = null;
+        List<Score> score = new ArrayList<>();
         String sql = "SELECT score_id, tournament_id, team_id, bracket_position, score " +
                 "FROM scores WHERE tournament_id = ?;";
 
         try{
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, tournamentId);
-            while(results.next()){
+            while(results.next()) {
                 score.add(mapRowToScore(results));
             }
         }
@@ -107,7 +108,7 @@ public class JdbcScoreDao implements ScoreDao {
     }
     @Override
     public List<Score> getScoresByTeamId(int teamId) {
-        List<Score> score = null;
+        List<Score> score = new ArrayList<>();
         String sql = "SELECT score_id, tournament_id, team_id, bracket_position, score " +
                 "FROM scores WHERE team_id = ?;";
 
@@ -128,6 +129,7 @@ public class JdbcScoreDao implements ScoreDao {
 
     public Score mapRowToScore(SqlRowSet rowSet){
         Score score = new Score();
+
         score.setScoreId(rowSet.getInt("score_id"));
         score.setTournamentId(rowSet.getInt("tournament_id"));
         score.setTeamId(rowSet.getInt("team_id"));
