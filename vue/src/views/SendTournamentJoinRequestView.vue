@@ -78,6 +78,10 @@
                     });
                 }
                 else if(error.response.status === 418) {
+                    this.$store.commit('SET_NOTIFICATION', {
+                        message: 'Request Sent.',
+                        type: 'success'
+                    });
                     this.$router.push({name: 'tournament-details-view'});
                 }
             });
