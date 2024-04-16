@@ -90,7 +90,7 @@ public class JdbcScoreDao implements ScoreDao {
     public List<Score> getScoresByTournamentId(int tournamentId) {
         List<Score> score = new ArrayList<>();
         String sql = "SELECT score_id, tournament_id, team_id, bracket_position, score " +
-                "FROM scores WHERE tournament_id = ?;";
+                "FROM scores WHERE tournament_id = ? ORDER BY bracket_position ASC;";
 
         try{
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, tournamentId);

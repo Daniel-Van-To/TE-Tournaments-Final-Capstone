@@ -7,6 +7,7 @@
     </button>
     <section id="bracket">
         <div class="container">
+            {{ JSON.stringify(this.scores) }}
             <div class="split split-one">
                 <TournamentRound v-for="(round, index) in rounds" :key="index" class="round"
                     v-bind:class="this.roundToString(round)" v-bind:teams="teams" v-bind:currentRound="round"
@@ -31,7 +32,11 @@ export default {
 
         teamsByRound(round) {
             let teamsForThisRound = this.teams.filter( (team) => {
-                //we have the scores for the tournament, we can calculate 
+                const start = this.calculateStartPosition(round);
+                const finish = this.calculateStartPosition(round+1)
+
+                //get array of scores for 
+
             })
 
 
