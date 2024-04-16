@@ -49,10 +49,10 @@ public class ScoreController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @RequestMapping(path = "/tournaments/{tournamentsId}/team/{teamId}/scores/{scoreId}/{position}", method = RequestMethod.GET)
-    public Score getScoreByBracketPosition(@PathVariable int tournamentsId, @PathVariable int teamId, @PathVariable int scoreId, @PathVariable int position) {
+    @RequestMapping(path = "/tournaments/{tournamentId}/team/{teamId}/scores/{position}", method = RequestMethod.GET)
+    public Score getScoreByBracketPosition(@PathVariable int tournamentId, @PathVariable int teamId, @PathVariable int position) {
         try {
-            return scoreDao.getScoreByPosition(tournamentsId, position);
+            return scoreDao.getScoreByPosition(tournamentId, position);
 
         } catch(DaoException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
@@ -60,10 +60,10 @@ public class ScoreController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @RequestMapping(path = "/tournaments/{tournamentsId}/scores", method = RequestMethod.GET)
-    public List<Score> getScoreByTournamentId(@PathVariable int tournamentsId, @PathVariable int teamId, @PathVariable int scoreId) {
+    @RequestMapping(path = "/tournaments/{tournamentId}/scores", method = RequestMethod.GET)
+    public List<Score> getScoreByTournamentId(@PathVariable int tournamentId, @PathVariable int teamId, @PathVariable int scoreId) {
         try {
-            return scoreDao.getScoresByTournamentId(tournamentsId);
+            return scoreDao.getScoresByTournamentId(tournamentId);
 
         } catch(DaoException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());

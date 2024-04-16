@@ -80,6 +80,17 @@ public class TeamController {
         }
     }
 
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(path = "/teams/{userId}/captain", method = RequestMethod.GET)
+    public List<Team> getTeamsUserIsCaptain(@PathVariable int userId) {
+        try {
+            return teamDao.getTeamsUserIsCaptain(userId);
+        }
+        catch (DaoException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+        }
+    }
+
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(path = "/teams/{teamId}", method = RequestMethod.POST)
     public Request handleTeamJoinRequest(@Valid @RequestBody RequestDto requestDto, @PathVariable int teamId) {

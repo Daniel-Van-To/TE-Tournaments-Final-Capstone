@@ -1,35 +1,33 @@
 <template>
-    <div v-if="isTournamentHost">
-        <button v-on:click="pushToSeeTournamentJoinRequestsView">
-            See Join Requests for {{ this.tournament.tournamentName }}
-        </button>
-    </div>
+    <button v-if="isTournamentHost" v-on:click="pushToSeeTournamentJoinRequestsView">
+        See Join Requests for {{ this.tournament.tournamentName }}
+    </button>
     <button v-if="isNotTournamentHost" v-on:click="pushToSendTournamentJoinRequestView">
         Send Join Requests for {{ this.tournament.tournamentName }}
     </button>
     <section id="bracket">
         <div class="container">
             <div class="split split-one">
-                <TournamentRound v-bind:teams="teams" v-bind:currentRound="1" v-bind:tournamentId="tournament.tournamentId"
-                    v-bind:startPosition="1" />
+                <TournamentRound v-for="(round, index) in rounds" :key="index" class="round"
+                    v-bind:class="this.roundToString(round)" v-bind:teams="teams" v-bind:currentRound="round"
+                    v-bind:tournamentId="tournament.tournamentId"
+                    v-bind:startPosition="this.calculateStartPosition(round)" />
             </div>
         </div>
     </section>
 </template>
     
 <script>
-
 import TournamentService from '../services/TournamentService';
+import ScoreService from '../services/ScoreService';
+
 import TournamentRound from '../components/TournamentViewOrganizer/TournamentRound.vue';
 
 export default {
 
-    components: {
-        TournamentRound
-    },
+    components: { TournamentRound },
 
     computed: {
-
         rounds() {
             let count = 0;
             let iterator = this.teams.length;
@@ -48,43 +46,34 @@ export default {
         isTournamentHost() {
             return this.isCurrentUserTournamentHost;
         },
-
     },
 
     data() {
         return {
-            teams: [
-                {
-                    teamId: 4,
-                    teamName: "Beavers"
-                },
-                {
-                    teamId: 5,
-                    teamName: "Ducks"
-                },
-                {
-                    teamId: 6,
-                    teamName: "Chickens"
-                },
-                {
-                    teamId: 7,
-                    teamName: "Dogs"
-                }
-            ],
-
+            teams: [],
             isCurrentUserTournamentHost: false,
-
             tournament: {},
-            //   tournamentId:
-            //   tournamentHost:
-            //   tournamentName:
-            //  entryFee:
-            //  gameName:
-            //
         }
     },
 
     methods: {
+
+        calculateStartPosition(round) {
+            let holder = 1;
+            let iterator = round;
+            let count = 1;
+
+            while (count < round) {
+                console.log(`count: ${count} round: ${round} (this.rounds - (count-1)):` + (this.rounds - (count - 1)));
+                console.log(this.rounds);
+                holder = holder + (2 ** (this.rounds - (count - 1)));
+                ++count;
+            }
+            console.log(`holder: ${holder}`)
+
+            return holder;
+        },
+
         pushToSeeTournamentJoinRequestsView() {
             this.$router.push({
                 name: 'see-tournament-join-requests-view',
@@ -96,7 +85,32 @@ export default {
                 name: 'send-tournament-join-request-view',
                 params: { tournamentId: this.tournament.tournamentId }
             });
-        }
+        },
+        roundToString(round) {
+            let returnString = 'round-';
+            switch (round) {
+                case (round == 1):
+                    return returnString + 'one';
+                case (round == 2):
+                    return returnString + 'two';
+                case (round == 3):
+                    return returnString + 'three';
+                case (round == 4):
+                    return returnString + 'four';
+                case (round == 5):
+                    return returnString + 'five';
+                case (round == 6):
+                    return returnString + 'six';
+                case (round == 7):
+                    return returnString + 'seven';
+                case (round == 8):
+                    return returnString + 'eight';
+                case (round == 9):
+                    return returnString + 'nine';
+                case (round == 10):
+                    return returnString + 'ten';
+            }
+        },
 
     },
 
@@ -118,8 +132,13 @@ export default {
                 this.$store.commit("SET_NOTIFICATION", "isCurrentUserTournamentHost method in tournament view failed");
             });
 
+        // ScoreService.getListOfScoresByTournamentId(this.$route.params.tournamentId)
+        //     .then(response => {
 
+        //     })
+        //     .catch(error => {
 
+        //     });
     }
 };
 </script>
@@ -198,20 +217,19 @@ We aren't using that section as of yet.
     padding: 10px 0;
 } */
 
-/* moved to TournamentRound.vue */
-/* .round {
+.round {
     display: block;
     float: left;
-    display: -webkit-box;
+    /* display: -webkit-box;
     display: -moz-box;
     display: -ms-flexbox;
-    display: -webkit-flex;
+    display: -webkit-flex; */
     display: flex;
-    -webkit-flex-direction: column;
+    /* -webkit-flex-direction: column; */
     flex-direction: column;
     width: 95%;
     width: 30.8333%\9;
-} */
+}
 
 /* .split-two {} */
 
@@ -255,19 +273,19 @@ We aren't using that section as of yet.
     white-space: nowrap;
     overflow: hidden;
     position: relative;
-}
+} */
 
-.round-two .matchup {
+.round-two :deep(.matchup) {
     margin: 0;
     height: 60px;
     padding: 50px 0;
 }
 
-.round-three .matchup {
+.round-three :deep(.matchup) {
     margin: 0;
     height: 60px;
     padding: 130px 0;
-} */
+}
 
 /* adding round-details to TournamentRound.vue */
 .round-details {
@@ -488,4 +506,5 @@ We aren't using that section as of yet.
         font-size: 18px;
     }
 
-}</style>
+}
+</style>

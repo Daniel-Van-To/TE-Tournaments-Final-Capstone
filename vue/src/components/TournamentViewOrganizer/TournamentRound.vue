@@ -1,9 +1,8 @@
 <template>
     <!-- TODO - programmatically add the round-one class, and change for 
                 other rounds. should be simple enough with computed property. -->
-     <div class="round round-one current">
+     <div class="round current">
           <div class="round-details"> Round {{this.currentRound}}<br />
-            <!-- <span class="date">March 16</span> -->
              <TournamentMatchUp v-for="(matchup, index) in this.matchUps"
              v-bind:key="matchup[0].teamId"
              v-bind:tournamentId="this.tournamentId"
@@ -113,7 +112,7 @@ export default {
 
 .current :deep(li) {
     opacity: 1;
-}
+} 
 
 .current :deep(li.team) {
     background-color: #fff;
