@@ -33,6 +33,10 @@ export default {
 
     getListOfTeamsUserIsCaptainOf(userId) {
         return axios.get(`/teams/${userId}/captain`);
+    },
+
+    getListOfTeamsMatchingTournamentGame(tournamentId, userId) {
+        return axios.get(`/send-request/${tournamentId}/captain/${userId}`);
     }
 
     // getMyTeams(userId) {

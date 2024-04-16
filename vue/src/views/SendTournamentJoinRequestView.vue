@@ -2,7 +2,7 @@
     <div class="home">
       <h1>Teams Able to Join this Tournament</h1>
       <table>
-        <tbody v-for="(team,index) in teamsUserIsCaptainOf" v-bind:key="index">
+        <tbody v-for="(team,index) in this.teamsUserIsCaptainOf" v-bind:key="index">
             <td >{{ team.teamName }} <button @click="submitRequest(team.teamId)" class="acceptBtn">Send Join Request for {{ team.teamName }}</button> </td>
                 
         </tbody>
@@ -33,16 +33,20 @@
             requesterId: this.$store.state.user.id
       },
         teamsUserIsCaptainOf: [],
+        filteredTeams: [],
         tournament: []
   
       }
     },
   
   
+  
+
+  
     methods: {
         filterTeamsByGameName() {
             let gameName = this.tournament.gameName;
-            this.teamsUserIsCaptainOf = this.teamsUserIsCaptainOf.filter((team) => {
+            this.filteredTeams = this.teamsUserIsCaptainOf.filter((team) => {
                 return team.gameName === gameName;
             });
         },
@@ -91,7 +95,7 @@
     },
     created() {
 
-        teamService.getListOfTeamsUserIsCaptainOf(this.$store.state.user.id)
+        teamService.getListOfTeamsMatchingTournamentGame(this.$route.params.tournamentId, this.$store.state.user.id)
         .then((response) => {
             this.teamsUserIsCaptainOf = response.data;
         });

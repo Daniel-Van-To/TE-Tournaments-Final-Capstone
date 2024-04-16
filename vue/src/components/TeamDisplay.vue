@@ -9,8 +9,8 @@
             </tr>
         </thead>
         <tbody>
-            <tr v-for="member in teamMembers" v-bind:key="member.id">
-                <td>{{ member.id }}</td>
+            <tr v-for="(member,index) in teamMembers" v-bind:key="member.id">
+                <td>{{ index+1 }}</td>
                 <td>{{ member.username }}</td>
             </tr>
         </tbody>

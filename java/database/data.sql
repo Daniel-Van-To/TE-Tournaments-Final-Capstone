@@ -98,8 +98,6 @@ VALUES (3, 1), --links 'raystar' to test tournament
 (10, 2),
 (11, 2);
 
-INSERT INTO request (tournament_id, team_id, game_name, request_status, requester_id)
-VALUES (2, 2, 'swimming', 'p', 3);
 
 INSERT INTO scores (tournament_id, team_id, bracket_position, score)
 VALUES (2, 4, 1, 'L'),
