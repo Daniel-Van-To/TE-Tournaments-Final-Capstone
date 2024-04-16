@@ -10,6 +10,7 @@
       </select>
         <TournamentCard class="card" v-for="tournament in filterTournamentsByGame" v-bind:key="tournament.tournamentId"
             v-bind:tournament="tournament"/>
+        
     </div>
   </template>
     
@@ -27,7 +28,7 @@
       return {
         tournaments: [],
         games: [],
-        filterBy: ""
+        filterBy: ''
         
       }
     },
@@ -52,7 +53,7 @@
         });
       },
       filterTournamentsByGame() {
-        if(this.filterBy.length > 0 || !(this.filterBy === "Enter a game to filter by:") ) {
+        if(this.filterBy.length > 0 && !(this.filterBy === "Enter a game to filter by:")) {
             return this.tournaments.filter((tournament) => {   
              return tournament.gameName == this.filterBy;
             
