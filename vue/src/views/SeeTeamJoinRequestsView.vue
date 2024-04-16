@@ -2,6 +2,7 @@
     <h1>Join Requests for {{ }}</h1>
     <join-request v-for="request in requests" v-bind:key="request.requestId" 
     v-bind:request="request" />
+    <button v-on:click="previousPage()">Back</button>
 </template>
 
 
@@ -31,6 +32,12 @@ export default {
                 }
             });
 
+    },
+
+    methods: {
+        previousPage() {
+            this.$router.push({name: 'team-view'});
+        }
     }
 }
 
