@@ -28,6 +28,15 @@ export default {
     components: { TournamentRound },
 
     computed: {
+
+        teamsByRound(round) {
+            let teamsForThisRound = this.teams.filter( (team) => {
+                //we have the scores for the tournament, we can calculate 
+            })
+
+
+            return teamsForThisRound;
+        },
         rounds() {
             let count = 0;
             let iterator = this.teams.length;
@@ -53,11 +62,11 @@ export default {
             teams: [],
             isCurrentUserTournamentHost: false,
             tournament: {},
+            scores: [],
         }
     },
 
     methods: {
-
         calculateStartPosition(round) {
             let holder = 1;
             let iterator = round;
@@ -70,7 +79,6 @@ export default {
 
             return holder;
         },
-
         pushToSeeTournamentJoinRequestsView() {
             this.$router.push({
                 name: 'see-tournament-join-requests-view',
@@ -108,7 +116,6 @@ export default {
                     return returnString + 'ten';
             }
         },
-
     },
 
     created() {
@@ -129,13 +136,15 @@ export default {
                 this.$store.commit("SET_NOTIFICATION", "isCurrentUserTournamentHost method in tournament view failed");
             });
 
-        // ScoreService.getListOfScoresByTournamentId(this.$route.params.tournamentId)
-        //     .then(response => {
-
-        //     })
-        //     .catch(error => {
-
-        //     });
+        ScoreService.getListOfScoresByTournamentId(this.$route.params.tournamentId)
+            .then(response => {
+                if (response.status == 200) {
+                this.scores = response.data;
+                }
+            })
+            .catch(error => {
+                this.$store.commit('SET_NOTIFICATION', 'issue getting list of scores by tournamentId in TournamentView.');
+            });
     }
 };
 </script>

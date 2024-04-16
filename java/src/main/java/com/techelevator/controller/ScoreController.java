@@ -63,7 +63,7 @@ public class ScoreController {
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(path = "/tournaments/{tournamentId}/scores", method = RequestMethod.GET)
-    public List<Score> getScoreByTournamentId(@PathVariable int tournamentId, @PathVariable int teamId, @PathVariable int scoreId) {
+    public List<Score> getScoreByTournamentId(@PathVariable int tournamentId) {
         try {
             return scoreDao.getScoresByTournamentId(tournamentId);
 
