@@ -1,10 +1,10 @@
 <template>
     
-    <div class="card-container" v-on:click="pushToTournamentView">
+    <div class="card-container" v-if="this.tournamentDto.tournamentId > 0" v-on:click="pushToTournamentView">
         <h3>{{ tournament.tournamentName }}</h3>
         <span class="game-name">{{ tournament.gameName }}</span>
-        <!-- <span class="participants">{{ currentNumberOfParticipants }} / {{ tournamentDto.maximumParticipants }}</span> -->
-        <span class="entry-fee">{{ tournament.entryFee }}  {{ tournamentDto.tournamentStatus }}</span>
+        <span class="participants">{{ numberOfParticipants }} / {{ tournamentDto.maximumParticipants }} Teams Participating</span>
+        <span class="entry-fee">{{ tournament.entryFee }}  {{ tournamentStatus }}</span>
     </div>
 
 </template>
@@ -16,7 +16,7 @@ export default {
 
     data() {
         return {
-            tournamentDto: {},
+            tournamentDto: [],
             numberOfParticipants: ""
         }
   },
@@ -26,10 +26,19 @@ export default {
     ],
 
     computed: {
-        currentNumberOfParticipants() {
-                return this.tournamentDto.participants.length;
-        },
+        tournamentStatus() {
+            if(this.tournamentDto.tournamentStatus == 'c') {
+                return 'Completed';
+            }
+            else if(this.tournamentDto.tournamentStatus == 'o') {
+                return 'Ongoing';
+            }
+            else {
+                return 'Scheduled';
+            }
+        }
     },
+
 
     methods: {
         pushToTournamentView() {
@@ -45,6 +54,7 @@ export default {
     created() {
         tournamentService.getTournamentDetail(this.tournament.tournamentId).then((response) => {
             this.tournamentDto = response.data;
+            this.numberOfParticipants = response.data.participants.length;
         })
     }
 
@@ -65,9 +75,13 @@ div {
         "t_name t_name t_participants"
         "t_game .      t_entry"
     ;
-    /* width: 100;
-    height:auto; */
+    padding: 20px;
+    border: 1px;
+    box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    margin:0em;
+    cursor: pointer;
 }
+
 
 h3 {
     grid-area: t_name;

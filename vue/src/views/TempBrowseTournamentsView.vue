@@ -3,24 +3,31 @@
       <h1>Browse Tournaments</h1>
       <button @click.prevent="pushToCreateTournamentView">Create A Tournament</button>
       <br><br/>
-      <div class="tournamentSections">
-        <tournament-section title="Ongoing" :tournaments="ongoing" />
-      </div>
+      <select v-model="this.filterBy">  
+        <option v-for="(game,index) in games" v-bind:value="game.name" v-bind:key="index">
+            {{ game.name }}
+        </option>
+      </select>
+        <TournamentCard class="card" v-for="tournament in filterTournamentsByGame" v-bind:key="tournament.tournamentId"
+            v-bind:tournament="tournament"/>
     </div>
   </template>
     
   <script>
-  import TournamentSection from '../components/browseTournamentsOrganizer/TournamentSection.vue';
+  import TournamentCard from '../components/browseTournamentsOrganizer/TournamentCard.vue';
   import TournamentService from '../services/TournamentService';
+  import GameService from '../services/GameService.js';
   
   export default {
   
   
-    components: { TournamentSection },
+    components: { TournamentCard },
   
     data() {
       return {
         tournaments: [],
+        games: [],
+        filterBy: ""
         
       }
     },
@@ -44,6 +51,18 @@
           return tournament.tournamentStatus == 's';
         });
       },
+      filterTournamentsByGame() {
+        if(this.filterBy.length > 0 || !(this.filterBy === "Enter a game to filter by:") ) {
+            return this.tournaments.filter((tournament) => {   
+             return tournament.gameName == this.filterBy;
+            
+        })
+        }
+        else {
+            return this.tournaments;
+        }
+        
+      }
   
     },
   
@@ -60,6 +79,11 @@
       .then(response => {
         this.tournaments = response.data;
       })
+
+      GameService.getGamesList()
+      .then((response) => {
+        this.games = response.data;
+      })
   
   
     }
@@ -70,6 +94,7 @@
   
   .tournamentSections {
     display: flex;
+    flex-direction:column;
     border: 1px solid black;
     flex-basis: 100%;
     padding: 0;
@@ -79,7 +104,11 @@
   
   .tournamentSections>* {
     border: 2px dashed blue;
-    margin: 2rem;
+    padding-bottom: 20px;
+  }
+  
+  .card {
+    margin-bottom: 1rem;
   }
   
   

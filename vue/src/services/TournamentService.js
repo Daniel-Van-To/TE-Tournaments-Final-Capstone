@@ -30,9 +30,7 @@ export default {
             // requestStatus: ,
             // requesterId: ,
         // }
-
-
-
         return axios.put(`/tournament/${request.tournamentId}`, request)
-    }
+    },
+    
 }
