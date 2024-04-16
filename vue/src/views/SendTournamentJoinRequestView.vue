@@ -33,7 +33,6 @@
             requesterId: this.$store.state.user.id
       },
         teamsUserIsCaptainOf: [],
-        filteredTeams: [],
         tournament: []
   
       }
@@ -44,12 +43,6 @@
 
   
     methods: {
-        filterTeamsByGameName() {
-            let gameName = this.tournament.gameName;
-            this.filteredTeams = this.teamsUserIsCaptainOf.filter((team) => {
-                return team.gameName === gameName;
-            });
-        },
         submitRequest(teamId) {
             this.request.teamId = teamId;
             this.request.tournamentId = this.tournament.tournamentId;
@@ -104,8 +97,6 @@
         .then((response) => {
             this.tournament = response.data;
         });
-
-        this.filterTeamsByGameName();
 
     }
   };

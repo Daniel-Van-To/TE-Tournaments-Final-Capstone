@@ -61,12 +61,12 @@ VALUES (3, 'find pearls', 'running', false), --team_id 1
 (9, 'Wet cats', 'swimming', false), --team_id 10
 (10, 'Wet bats', 'swimming', false); --team_id 11
 
-INSERT INTO tournament (tournament_id, host_id,tournament_name,entry_fee,game_name, accepting_teams, tournament_status)
-VALUES(0, 2, 'dummy tournament', 0, 'valorant', false, 'o');
+INSERT INTO tournament (tournament_id, host_id,tournament_name,entry_fee,game_name, accepting_teams, tournament_status, maximum_participants)
+VALUES(0, 2, 'dummy tournament', 0, 'valorant', false, 'o',10);
 
-INSERT INTO tournament (host_id,tournament_name,entry_fee,game_name, accepting_teams, tournament_status)
-VALUES (2, 'test tournament', 0, 'running', true, 'o'),
-(3, 'test swimming tournament', 0, 'swimming', true, 'o'); -- tournament_id 2
+INSERT INTO tournament (host_id,tournament_name,entry_fee,game_name, accepting_teams, tournament_status, maximum_participants)
+VALUES (2, 'test tournament', 0, 'running', true, 'o',32),
+(3, 'test swimming tournament', 0, 'swimming', true, 'o',32); -- tournament_id 2
 
 
 INSERT INTO team_user (user_id, team_id)

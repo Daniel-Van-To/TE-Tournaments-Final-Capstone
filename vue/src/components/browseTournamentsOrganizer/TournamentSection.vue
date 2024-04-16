@@ -28,11 +28,13 @@ export default {
 section {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    /* justify-content: center; */
+    flex-basis: 100%;
+    padding: 0;
 }
 
 div {
-    align-self:center;
+    /* align-self:center; */
 }
 
 

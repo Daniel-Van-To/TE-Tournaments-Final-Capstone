@@ -37,7 +37,7 @@ export default {
 
     ongoing() {
       return this.tournaments.filter( (tournament) => {
-        return tournament.tournamentStatus == 'o';
+        return (tournament.tournamentStatus == 'o' && tournament.tournamentId > 0);
       });
     },
 
