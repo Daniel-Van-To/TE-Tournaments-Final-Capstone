@@ -71,6 +71,7 @@ export default {
             this.updatedRequest = this.request;
             this.updatedRequest.requestStatus = newStatus;
             requestService.submitUpdatedTournamentRequest(this.updatedRequest);
+            
 
         }
     },
