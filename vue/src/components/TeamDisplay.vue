@@ -11,7 +11,7 @@
         <tbody>
             <tr v-for="(member,index) in teamMembers" v-bind:key="member.id">
                 <td>{{ index+1 }}</td>
-                <td>{{ member.username }}</td>
+                <td>{{ member.displayName }}</td>
             </tr>
         </tbody>
     </table>
