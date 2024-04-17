@@ -1,18 +1,14 @@
 <template>
-    <!-- TODO - programmatically add the round-one class, and change for 
-                other rounds. should be simple enough with computed property. -->
-    <div class="round ">
-        <div class="round-details" :class="isCurrentRound ? 'current' : ''">
-            Round {{ this.currentRound }}<br />
-            <TournamentMatchUp v-for="(matchup, index) in this.matchUps" v-bind:key="matchup[0].teamId"
-                v-bind:tournamentId="this.tournamentId" 
-                :firstTeam="matchup[0]" 
-                :secondTeam="matchup[1]"
-                :firstPosition="startPosition + (2 * index)" 
-                :secondPosition="startPosition + (2 * index) + 1" 
-                :scores="this.scores"/>
-
+    <div class="round" :class="[this.roundToString(this.round), {current: isCurrentRound}]">
+        <div class="round-details">
+            Round {{ this.round }}<br />
         </div>
+        <TournamentMatchUp v-for="(matchup, index) in this.matchUps" v-bind:key="matchup[0].teamId"
+            v-bind:tournamentId="this.tournamentId" :firstTeam="matchup[0]" :secondTeam="matchup[1]"
+            :firstPosition="startPosition + (2 * index)" :secondPosition="startPosition + (2 * index) + 1"
+            :scores="this.scores" />
+
+
     </div>
 </template>
 
@@ -31,7 +27,7 @@ export default {
 
     computed: {
         isCurrentRound() {
-            if (this.round <= this.currentRound) {
+            if (this.round < this.currentRound) {
                 return true;
             }
             return false;
@@ -53,7 +49,43 @@ export default {
                 returnArray.push(tempArray);
             }
             this.matchUps = returnArray;
-        }
+        },
+        roundToString(round) {
+            let returnString = 'round-';
+            switch (round) {
+                case (1):
+                    returnString += 'one';
+                    break;
+                case (2):
+                    returnString += 'two';
+                    break;
+                case (3):
+                    returnString += 'three';
+                    break;
+                case (4):
+                    returnString += 'four';
+                    break;
+                case (5):
+                    returnString += 'five';
+                    break;
+                case (6):
+                    returnString += 'six';
+                    break;
+                case (7):
+                    returnString += 'seven';
+                    break;
+                case (8):
+                    returnString += 'eight';
+                    break;
+                case (9):
+                    returnString += 'nine';
+                    break;
+                case (10):
+                    returnString += 'ten';
+                    break;
+            }
+            return returnString;
+        },
 
     },
 
@@ -70,20 +102,13 @@ export default {
 </script>
 
 <style scoped>
-.round {
-    display: block;
-    float: left;
-    /* display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: -webkit-flex; */
+/* .round {
     display: flex;
-    -webkit-flex-direction: column;
     flex-direction: column;
     width: 95%;
     width: 30.8333%\9;
     background-color: gray;
-}
+} */
 
 .split-one .round {
     margin: 0 2.5% 0 0;
@@ -107,10 +132,13 @@ export default {
 
 .round-details {
     font-family: 'Roboto Condensed', sans-serif;
-    font-size: 13px;
-    color: #2C7399;
+    font-size: 14px;
+    font-weight: bold;
+    color: black;
+    background-color: var(--brownGray);
     text-transform: uppercase;
     text-align: center;
+    align-content: center;
     height: 40px;
 }
 

@@ -32,6 +32,14 @@ export default {
 </script>
 
 <style>
+:root {
+  --pinkish: #FAAAA9;
+  --darkGreen: #245032;
+  --brownGray: #BAA2A2;
+  --lightGreen: #AAFAC3;
+  --dullGreen: #82A58D;
+  --maroonKindof: #7A4D4C;
+}
 /*
 #capstone-app{
   font-family: "Avenir", Helvetica, Arial, sans-serif;
