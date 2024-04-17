@@ -10,9 +10,13 @@
             <input id="teamName" type="text" class="formControl" v-model="team.teamName"/>
         </div> 
         <div class="teamFormField">
-            <label for="gameName">Game name: </label>
-            <input id="gameName" type="text" class="formControl" v-model="team.gameName"/>
-        </div> 
+          <label for="games">Game Name: </label>
+          <select class="games" v-model="this.team.gameName">  
+              <option v-for="(game,index) in games" v-bind:value="game.name" v-bind:key="index">
+                  {{ game.name }}
+              </option>
+          </select>
+        </div>
         <button class="btn btn-submit" type="submit">Submit</button>
         <button class="btn btn-cancel" v-on:click="cancelForm" type="button">Cancel</button>
      </form>
@@ -22,6 +26,7 @@
   
   <script>
   import TeamService from '../services/TeamService.js';
+  import GameService from '../services/GameService.js';
   
   export default {
     components: {
@@ -33,7 +38,8 @@
             gameName: "",
             username: this.$store.state.user.username,
             acceptingMembers: true
-        }
+        },
+        games: []
       }
     },
   
@@ -88,7 +94,10 @@
         }
     },
     created() {
-  
+      GameService.getGamesList()
+        .then((response) => {
+        this.games = response.data;
+        });
     }
   };
   </script>
