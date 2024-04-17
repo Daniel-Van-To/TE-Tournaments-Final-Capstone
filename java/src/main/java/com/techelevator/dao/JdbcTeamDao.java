@@ -50,8 +50,10 @@ public class JdbcTeamDao implements TeamDao {
 
         try{
             User teamCaptain = userDao.getUserByUsername(newTeam.getUsername());
+            Game game = gameDao.getGameByGameName(newTeam.getGameName());
+            boolean isFull = game.getMaxPlayers() != 1;
             int newTeamId = jdbcTemplate.queryForObject(sql, int.class, newTeam.getTeamName(), teamCaptain.getId(),
-                    newTeam.getGameName(), newTeam.isAcceptingMembers());
+                    newTeam.getGameName(), isFull);
             linkUserToTeam(teamCaptain.getId(), newTeamId);
 
             createdTeam = getTeamById(newTeamId);
