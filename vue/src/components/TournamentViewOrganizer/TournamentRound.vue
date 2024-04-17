@@ -120,6 +120,10 @@ export default {
     margin: 0 0 0 2.5%;
 }
 
+.round {
+    width: 100px;
+}
+
 .round-two :deep(.matchup) {
     margin: 0;
     height: 60px;

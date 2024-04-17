@@ -237,10 +237,12 @@ export default {
     display: flex;
     flex-direction: row;
     min-height: fit-content;
+    justify-content: center;
 }
 
 .split {
-    float: left;
+    /* float: left; */
+    justify-self: center;
     display: flex;
     width: 42%;
     flex-direction: row;
@@ -269,7 +271,7 @@ We aren't using that section as of yet.
     padding: 10px 0;
 } */
 
-.round {
+.split :deep(.round) {
     float: left;
     display: flex;
     flex-direction: column;
