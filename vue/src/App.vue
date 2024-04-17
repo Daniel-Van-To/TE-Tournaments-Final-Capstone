@@ -63,6 +63,7 @@ export default {
 
 #notificationContainer {
   grid-area: notif;
+  z-index: 3;
 }
 
 #leftSidebar {
