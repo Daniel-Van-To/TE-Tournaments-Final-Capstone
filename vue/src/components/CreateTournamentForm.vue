@@ -9,8 +9,12 @@
             <input id="tournamentName" type="text" class="formControl" v-model="tournament.tournamentName"/>
         </div> 
         <div class="tournamentFormField">
-            <label for="gameName">Game name: </label>
-            <input id="gameName" type="text" class="formControl" v-model="tournament.gameName"/>
+          <label for="games">Game Name: </label>
+          <select class="games" v-model="this.tournament.gameName">  
+              <option v-for="(game,index) in games" v-bind:value="game.name" v-bind:key="index">
+                  {{ game.name }}
+              </option>
+          </select>
         </div> 
         <div class="tournamentFormField">
             <label for="entryFee">Entry fee: $</label>
@@ -31,6 +35,7 @@
   
   <script>
   import tournamentService from '../services/TournamentService'
+  import GameService from '../services/GameService';
   
   export default {
     components: {
@@ -45,7 +50,8 @@
             tournamentStatus: "s",
             acceptingTeams: true,
             maximumParticipants: ""
-        }
+        },
+        games: []
       }
     },
   
@@ -103,6 +109,10 @@
         }
     },
     created() {
+      GameService.getGamesList()
+        .then((response) => {
+        this.games = response.data;
+        });
   
     }
   };

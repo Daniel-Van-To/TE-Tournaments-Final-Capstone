@@ -20,7 +20,7 @@
 
         </tbody>
     </table>
-   <p v-if="tournamentIdIsNull">{{ JSON.stringify(updatedRequest) }}</p> 
+   <!-- <p v-if="tournamentIdIsNull">{{ JSON.stringify(updatedRequest) }}</p>  -->
 </template>
 
 <script>
