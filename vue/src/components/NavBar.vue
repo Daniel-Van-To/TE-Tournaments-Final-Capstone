@@ -5,7 +5,7 @@
         
             <router-link class="links" v-bind:to="{name: 'home'}">Home</router-link>
             <router-link class="links" v-bind:to="{name: 'browse-tournaments'}">Browse Tournaments</router-link>
-            <!-- <router-link class="links" v-bind:to="{name: 'browse-tournaments-temp'}">Browse Tournaments (TEMP *WIP*)</router-link> -->
+            <router-link class="links" v-bind:to="{name: 'browse-tournaments-temp'}">Browse Teams (TEMP *WIP*)</router-link>
             <router-link class="links" v-if="isLoggedIn" v-bind:to="{name: 'teams'}">Browse Teams</router-link>
             <router-link class="links" v-if="isLoggedIn" v-bind:to="{name: 'create-team'}">Create a team</router-link>
             <router-link class="links" v-bind:to="{name: 'about-us'}">About Us</router-link>

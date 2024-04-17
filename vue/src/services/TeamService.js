@@ -37,6 +37,10 @@ export default {
 
     getListOfTeamsMatchingTournamentGame(tournamentId, userId) {
         return axios.get(`/send-request/${tournamentId}/captain/${userId}`);
+    },
+    
+    getTeamInfo(teamId) {
+        return axios.get(`/teams/${teamId}/info`);
     }
 
     // getMyTeams(userId) {

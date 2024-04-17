@@ -1,6 +1,7 @@
 package com.techelevator.controller;
 
 
+import com.techelevator.dao.GameDao;
 import com.techelevator.dao.RequestDao;
 import com.techelevator.dao.TeamDao;
 import com.techelevator.dao.UserDao;
@@ -21,12 +22,14 @@ public class TeamController {
     private UserDao userDao;
     private TeamDao teamDao;
     private RequestDao requestDao;
+    private GameDao gameDao;
 
 
-    public TeamController(UserDao userDao, TeamDao teamDao, RequestDao requestDao) {
+    public TeamController(UserDao userDao, TeamDao teamDao, RequestDao requestDao, GameDao gameDao) {
         this.userDao = userDao;
         this.teamDao = teamDao;
         this.requestDao = requestDao;
+        this.gameDao = gameDao;
     }
 
 
@@ -74,6 +77,30 @@ public class TeamController {
     public Team getTeamByTeamId(@PathVariable int teamId) {
         try {
             return teamDao.getTeamById(teamId);
+        }
+        catch (DaoException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+        }
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(path = "/teams/{teamId}/info", method = RequestMethod.GET)
+    public TeamDto getTeamDtoByTeamId(@PathVariable int teamId) {
+        try {
+            Team team = teamDao.getTeamById(teamId);
+            List<User> teamMembers = teamDao.getUsersOnTeam(teamId);
+            Game game = gameDao.getGameByGameName(team.getGameName());
+            User teamCaptain = null;
+
+            for(User user: teamMembers) {
+                if(teamDao.checkIfUserIsTeamCaptain(teamId,user.getId())) {
+                    teamCaptain = user;
+                }
+            }
+
+            TeamDto teamInfo = new TeamDto(team.getTeamId(),team.getTeamName(),team.getTeamCaptainId(),
+                    team.getGameName(), team.isAcceptingMembers(), teamCaptain.getUsername(), teamMembers,game.getMaxPlayers());
+            return teamInfo;
         }
         catch (DaoException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
@@ -162,6 +189,8 @@ public class TeamController {
             throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());
         }
     }
+
+
 
 
 
