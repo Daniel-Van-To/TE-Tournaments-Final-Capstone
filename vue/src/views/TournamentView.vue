@@ -1,7 +1,17 @@
 <template>
-    <button v-if="isTournamentHost" v-on:click="pushToSeeTournamentJoinRequestsView">
-        See Join Requests for {{ this.tournament.tournamentName }}
-    </button>
+    <div class="hostContainer" v-if="isTournamentHost"> 
+        <h3>Welcome to your tournament, {{ this.$store.state.user.displayName }}!</h3>
+        <p>As host, you can see requests to join this tournament, and you may enter scores by entering 'Edit Mode'.</p>
+        <div class="hostButtonsContainer">
+            
+            <button v-on:click="pushToSeeTournamentJoinRequestsView">
+                See Join Requests
+            </button>
+            <button @click="toggleEditMode">
+                Edit Mode
+            </button>
+        </div>
+    </div>
     <button v-if="isNotTournamentHost" v-on:click="pushToSendTournamentJoinRequestView">
         Send Join Requests for {{ this.tournament.tournamentName }}
     </button>
@@ -11,8 +21,8 @@
     <section v-else id="bracket">
         <div class="container">
             <div class="split split-one">
-                <TournamentRound v-for="(round, index) in rounds" :key="index" class="round"
-                    v-bind:class="this.roundToString(round)" v-bind:teams="this.teamsByRound(index + 1)" v-bind:round="round"
+                <TournamentRound v-for="(round, index) in rounds" :key="index"
+                    v-bind:teams="this.teamsByRound(index + 1)" v-bind:round="round"
                     v-bind:currentRound="currentRound" v-bind:tournamentId="tournament.tournamentId"
                     v-bind:startPosition="this.calculateStartPosition(round)" v-bind:scores="scores" />
             </div>
@@ -34,29 +44,8 @@ export default {
     computed: {
 
         isLoading() {
-            console.log(`this.isLoadingScores: ${this.isLoadingScores}
-            this.isLoadingTournament: ${this.isLoadingTournament} 
-            result of or statement: ${this.isLoadingScores || this.isLoadingTournament}`);
             return this.isLoadingScores || this.isLoadingTournament;
         },
-
-        // teamsByRound(round) {
-        //     let teamsForThisRound = [];
-
-        //     const start = this.calculateStartPosition(round);
-        //     const finish = this.calculateStartPosition(round + 1)
-        //     //scores is ordered by bracket position, so we can iterate through.
-        //     for (let i = start; i<finish; i++) {
-        //         const score = this.scores[i];
-        //         for (let j = 0; j < this.teams.length; j++) {
-        //             if (score.teamId == this.teams[j].teamId) {
-        //                 teamsForThisRound.push(this.teams[j]);
-        //             }
-        //         }
-        //     }
-        //     return teamsForThisRound;
-
-        // },
         rounds() {
             let count = 0;
             let iterator = this.teams.length;
@@ -87,11 +76,19 @@ export default {
             isLoadingScores: true,
             isLoadingTournament: true,
             currentRound: '',
+            editMode: false,
         }
     },
 
     methods: {
 
+        toggleEditMode() {
+            if (this.editMode) {
+                this.editMode = false;
+            }
+            else this.editMode = true;
+
+        },
         teamsByRound(round) {
             let teamsForThisRound = [];
             const start = this.calculateStartPosition(round);
@@ -147,31 +144,6 @@ export default {
                 params: { tournamentId: this.tournament.tournamentId }
             });
         },
-        roundToString(round) {
-            let returnString = 'round-';
-            switch (round) {
-                case (round == 1):
-                    return returnString + 'one';
-                case (round == 2):
-                    return returnString + 'two';
-                case (round == 3):
-                    return returnString + 'three';
-                case (round == 4):
-                    return returnString + 'four';
-                case (round == 5):
-                    return returnString + 'five';
-                case (round == 6):
-                    return returnString + 'six';
-                case (round == 7):
-                    return returnString + 'seven';
-                case (round == 8):
-                    return returnString + 'eight';
-                case (round == 9):
-                    return returnString + 'nine';
-                case (round == 10):
-                    return returnString + 'ten';
-            }
-        },
     },
 
     created() {
@@ -207,7 +179,6 @@ export default {
 };
 </script>
 
-
 <style scoped>
 /* This refers to our sources html body - we will want our own fonts and such. 
 */
@@ -232,29 +203,15 @@ export default {
 .container {
     max-width: 1100px;
     margin: 0 auto;
-    display: block;
-    /* display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: -webkit-flex; */
     display: flex;
-    /* -webkit-flex-direction: row; */
     flex-direction: row;
-    min-height: 100%;
+    min-height: fit-content;
 }
 
 .split {
-    display: block;
     float: left;
-    /* display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: -webkit-flex; */
     display: flex;
     width: 42%;
-    -webkit-flex-direction: row;
-    -moz-flex-direction: row;
     flex-direction: row;
 }
 
@@ -282,17 +239,12 @@ We aren't using that section as of yet.
 } */
 
 .round {
-    display: block;
     float: left;
-    /* display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: -webkit-flex; */
     display: flex;
-    /* -webkit-flex-direction: column; */
     flex-direction: column;
     width: 95%;
-    width: 30.8333%\9;
+    height: fit-content;
+    
 }
 
 /* .split-two {} */
@@ -404,60 +356,7 @@ We aren't using that section as of yet.
     margin: 4.5em 0;
 }
 
-@-webkit-keyframes pulse {
-    0% {
-        -webkit-transform: scale(1);
-        transform: scale(1);
-    }
 
-    50% {
-        -webkit-transform: scale(1.3);
-        transform: scale(1.3);
-    }
-
-    100% {
-        -webkit-transform: scale(1);
-        transform: scale(1);
-    }
-}
-
-@keyframes pulse {
-    0% {
-        -webkit-transform: scale(1);
-        -ms-transform: scale(1);
-        transform: scale(1);
-    }
-
-    50% {
-        -webkit-transform: scale(1.3);
-        -ms-transform: scale(1.3);
-        transform: scale(1.3);
-    }
-
-    100% {
-        -webkit-transform: scale(1);
-        -ms-transform: scale(1);
-        transform: scale(1);
-    }
-}
-
-.share-icon {
-    color: #fff;
-    opacity: 0.35;
-}
-
-.share-icon:hover {
-    opacity: 1;
-    -webkit-animation: pulse 0.5s;
-    animation: pulse 0.5s;
-}
-
-.date {
-    font-size: 10px;
-    letter-spacing: 2px;
-    font-family: 'Istok Web', sans-serif;
-    color: #3F915F;
-}
 
 
 

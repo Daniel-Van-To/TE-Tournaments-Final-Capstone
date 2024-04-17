@@ -28,13 +28,10 @@ export default {
 
     methods: {
         returnsScoreOrEmptyStringGivenBracketPosition(position) {
-            this.scores.forEach((score) => {
-                if (score.bracketPosition == position) {
-                    return score;
-                }
-                
-            });
-            return '';
+            if (this.scores.length < position) {
+                return '';
+            }
+            return this.scores[position-1];
         },
 
     },  
@@ -45,8 +42,11 @@ export default {
         }
 
         else {
-            this.firstPositionScore = this.returnsScoreOrEmptyStringGivenBracketPosition(this.firstPosition).score;
-            this.secondPositionScore = this.returnsScoreOrEmptyStringGivenBracketPosition(this.secondPosition).score;
+            const score1 = this.returnsScoreOrEmptyStringGivenBracketPosition(this.firstPosition)
+            const score2 = this.returnsScoreOrEmptyStringGivenBracketPosition(this.secondPosition)
+            
+            this.firstPositionScore = score1.score;       
+            this.secondPositionScore = score2.score;
         }
 
 
@@ -83,8 +83,6 @@ export default {
     width: 100%;
     padding: 10px 0;
     height: 60px;
-    /* -webkit-transition: all 0.2s;
-    transition: all 0.2s; */
 }
 
 .score {
@@ -99,6 +97,9 @@ export default {
 }
 
 .team {
+    text-transform: uppercase;
+    font-weight: bold;
+    font-family: 'Roboto Condensed', sans-serif;
     padding: 0 5px;
     margin: 3px 0;
     height: 25px;
