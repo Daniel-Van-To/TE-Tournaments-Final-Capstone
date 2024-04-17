@@ -62,7 +62,7 @@ export default {
     margin: none;
     padding: none;
     display: flex;
-    background-color: #FAAAA9;
+    background-color: var(--pinkish);
     /* justify-content: space-between; */
     height: fit-content;
 
