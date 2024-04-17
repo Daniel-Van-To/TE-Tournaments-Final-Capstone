@@ -46,7 +46,7 @@ VALUES ('Reset Filter', 0),
 
 --Dummy Team used for creating empty scores
 INSERT INTO team (team_id, team_captain_id, team_name, game_name, accepting_members)
-VALUES (0,2, 'dummy', 'running', false);
+VALUES (0,4, 'dummy', 'running', false);
 
 INSERT INTO team (team_captain_id, team_name, game_name, accepting_members)
 VALUES (3, 'find pearls', 'running', false), --team_id 1
@@ -55,8 +55,8 @@ VALUES (3, 'find pearls', 'running', false), --team_id 1
 --swimming teams for 8 person tourney
 (3, 'flying turtles', 'swimming', false), --team_id 4
 (4, 'pho 96', 'swimming', false), --team_id 5
-(5, 'Ray Stars', 'swimming', true), --team_id 6
-(6, 'Your Boy', 'swimming', true), --team_id 7
+(5, 'Ray Stars', 'swimming', false), --team_id 6
+(6, 'Your Boy', 'swimming', false), --team_id 7
 (7, 'Chandras Champion', 'swimming', false), --team_id 8
 (8, 'Bens team', 'swimming', false), --team_id 9
 (9, 'Wet cats', 'swimming', false), --team_id 10
@@ -75,12 +75,14 @@ VALUES (3, 1), --links harry to 'find pearls'
 (5, 3), --links revathi to 'raystar'
 (4, 2), --links daniel to 'pho 95'
 (3, 2), --links harry to 'pho 95'
+(4, 0), --links daniel to 'dummy'
 
 --linking everyone to their own swimming team
 (3, 4),
 (4, 5),
 (5, 6),
 (6, 7),
+(7, 8), --links Chandra to 'Chandra's Champion'
 (8, 9),
 (9, 10),
 (10, 11);

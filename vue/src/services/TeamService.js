@@ -10,6 +10,10 @@ export default {
     getTeams() {
         return axios.get('/teams');
     },
+    
+    getAllTeams() {
+        return axios.get(`/teams/all`);
+    },
 
     getTeam(teamId) {
         return axios.get(`/teams/${teamId}`)
@@ -41,6 +45,10 @@ export default {
     
     getTeamInfo(teamId) {
         return axios.get(`/teams/${teamId}/info`);
+    },
+
+    checkIfTeamIsFull(teamId) {
+        return axios.get(`/teams/${teamId}/full`);
     }
 
     // getMyTeams(userId) {
