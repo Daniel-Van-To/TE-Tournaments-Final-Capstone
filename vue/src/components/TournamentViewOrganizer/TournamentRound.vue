@@ -6,7 +6,8 @@
         <TournamentMatchUp v-for="(matchup, index) in this.matchUps" v-bind:key="matchup[0].teamId"
             v-bind:tournamentId="this.tournamentId" :firstTeam="matchup[0]" :secondTeam="matchup[1]"
             :firstPosition="startPosition + (2 * index)" :secondPosition="startPosition + (2 * index) + 1"
-            :scores="this.scores" />
+            :scores="this.scores"
+            :edit="edit" />
 
 
     </div>
@@ -23,6 +24,7 @@ export default {
         "tournamentId",
         "startPosition",
         "scores",
+        "edit",
     ],
 
     computed: {
@@ -135,7 +137,8 @@ export default {
     font-size: 14px;
     font-weight: bold;
     color: black;
-    background-color: var(--brownGray);
+    background-color: var(--pinkish);
+    border: 2px solid var(--darkGreen);
     text-transform: uppercase;
     text-align: center;
     align-content: center;

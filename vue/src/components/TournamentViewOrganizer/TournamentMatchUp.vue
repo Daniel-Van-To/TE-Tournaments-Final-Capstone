@@ -1,10 +1,18 @@
 <template>
-    <ul class="matchup">
-        <li class="team team-top">{{firstTeamName}}
-            <span class="score">{{firstPositionScore}}</span>
+    <ul v-if="edit" class="matchup">
+        <li class="team team-top">{{ firstTeamName }}
+            <span class="score"><input :disabled="inputDisabledFirst" v-model="firstPositionScore" type="text" /></span>
         </li>
-        <li class="team team-bottom">{{secondTeamName}}
-            <span class="score">{{secondPositionScore}}</span>
+        <li class="team team-bottom">{{ secondTeamName }}
+            <span class="score"><input :disabled="inputDisabledSecond" v-model="secondPositionScore" type="text" /></span>
+        </li>
+    </ul>
+    <ul v-else class="matchup">
+        <li class="team team-top">{{ firstTeamName }}
+            <span class="score">{{ firstPositionScore }}</span>
+        </li>
+        <li class="team team-bottom">{{ secondTeamName }}
+            <span class="score">{{ secondPositionScore }}</span>
         </li>
     </ul>
 </template>
@@ -14,7 +22,31 @@ import ScoreService from '../../services/ScoreService';
 
 export default {
 
-    props: ["tournamentId", "firstPosition", "firstTeam", "secondPosition", "secondTeam", "scores"],
+    computed: {
+        inputDisabledFirst() {
+            if (this.firstTeamName === '') {
+                return true;
+            }
+            return false;
+        },
+
+        inputDisabledSecond() {
+            if (this.secondTeamName === '') {
+                return true;
+            }
+            return false;
+        }
+    },      
+
+    props: [
+        "tournamentId",
+        "firstPosition",
+        "firstTeam",
+        "secondPosition",
+        "secondTeam",
+        "scores",
+        "edit",
+    ],
 
     data() {
 
@@ -31,10 +63,10 @@ export default {
             if (this.scores.length < position) {
                 return '';
             }
-            return this.scores[position-1];
+            return this.scores[position - 1];
         },
 
-    },  
+    },
     beforeMount() {
         if (this.firstPosition > this.scores.length) {
             this.firstTeamName = '';
@@ -44,32 +76,14 @@ export default {
         else {
             const score1 = this.returnsScoreOrEmptyStringGivenBracketPosition(this.firstPosition)
             const score2 = this.returnsScoreOrEmptyStringGivenBracketPosition(this.secondPosition)
-            
-            this.firstPositionScore = score1.score;       
+
+            this.firstPositionScore = score1.score;
             this.secondPositionScore = score2.score;
         }
 
 
 
-        //first team
-        // ScoreService.getScoreByBracketPositionTeamIdTournamentId(this.firstPosition, this.firstTeam.teamId, this.tournamentId)
-        //     .then(response => {
-        //         if (response.status == 200){
-        //             this.firstPositionScore = response.data;
-        //         }
-        //     })
-        //     .catch(error => {
-        //         this.$store.commit('SET_NOTIFICATION', 'error in TournamentMatchUp component getting firstpositionscore');
-        //     });
-        // ScoreService.getScoreByBracketPositionTeamIdTournamentId(this.secondPosition, this.secondTeam.teamId, this.tournamentId)
-        // .then(response => {
-        //         if (response.status == 200){
-        //             this.secondPositionScore = response.data;
-        //         }
-        //     })
-        //     .catch(error => {
-        //         this.$store.commit('SET_NOTIFICATION', 'error in TournamentMatchUp component getting secondpositionscore');
-        //     });
+        
     }
 
 }
@@ -78,6 +92,9 @@ export default {
 
 <style scoped>
 
+input {
+    width: 15px;
+}
 .matchup {
     margin: 0;
     width: 100%;
@@ -120,5 +137,4 @@ export default {
     height: 60px;
     padding: 130px 0;
 }
-
 </style>

@@ -98,8 +98,9 @@ div img {
 
 #routerHolder {
   grid-area: router;
-  top:75px;
+  top:77px;
   position: relative;
+  padding: 0 10px;
 }
 
 
