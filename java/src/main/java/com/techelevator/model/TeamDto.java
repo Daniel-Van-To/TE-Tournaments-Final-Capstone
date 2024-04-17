@@ -16,10 +16,11 @@ public class TeamDto {
     private boolean acceptingMembers;
     //TODO add a list of members on the team
     private List<User> members;
+    private int maximumMembers;
 
     public TeamDto() { }
 
-    public TeamDto(int teamId, String teamName, int teamCaptainId, String gameName, boolean acceptingMembers, String username, List<User> members) {
+    public TeamDto(int teamId, String teamName, int teamCaptainId, String gameName, boolean acceptingMembers, String username, List<User> members, int maximumMembers) {
         this.teamId = teamId;
         this.teamName = teamName;
         this.teamCaptainId = teamCaptainId;
@@ -27,7 +28,16 @@ public class TeamDto {
         this.acceptingMembers = acceptingMembers;
         this.username = username;
         this.members = members;
+        this.maximumMembers = maximumMembers;
 
+    }
+
+    public int getMaximumMembers() {
+        return maximumMembers;
+    }
+
+    public void setMaximumMembers(int maximumMembers) {
+        this.maximumMembers = maximumMembers;
     }
 
     public List<User> getMembers() {

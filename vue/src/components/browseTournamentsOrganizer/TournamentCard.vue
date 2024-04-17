@@ -45,10 +45,6 @@ export default {
             this.$router.push({name: "tournament-details-view", 
             params: {tournamentId: this.tournament.tournamentId}});
         },
-        // findNumberOfParticipants() {
-        //     let participants = this.tournamentDto.participants;
-        //     this.numberOfParticipants = participants.length;
-        // }
     },
 
     created() {
