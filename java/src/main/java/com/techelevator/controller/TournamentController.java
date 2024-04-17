@@ -65,6 +65,24 @@ public class TournamentController {
             }
         }
     }
+
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(path ="/tournaments/{tournamentId}/update", method = RequestMethod.PUT)
+    public Tournament updateTournament(@RequestBody TournamentDto tournamentToUpdate, @PathVariable int tournamentId) {
+        Tournament returnTourney = null;
+        try {
+
+            returnTourney = tournamentDao.updateTournament(tournamentToUpdate, tournamentId);
+
+        }
+
+        catch(DaoException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+
+        return returnTourney;
+    }
+
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(path= "/browse-tournaments", method = RequestMethod.GET)
     public List<Tournament> browseTournaments() {

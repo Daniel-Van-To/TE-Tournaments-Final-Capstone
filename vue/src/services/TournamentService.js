@@ -32,5 +32,16 @@ export default {
         // }
         return axios.put(`/tournament/${request.tournamentId}`, request)
     },
+
+    updateTournament(tournament) {
+        //required fields:
+            //tournament_name
+            //entry_fee
+            //accepting_teams
+            //tournament_status
+            //maximum_participants
+
+        return axios.put(`/tournaments/${tournament.tournamentId}/update`, tournament)
+    }
     
 }

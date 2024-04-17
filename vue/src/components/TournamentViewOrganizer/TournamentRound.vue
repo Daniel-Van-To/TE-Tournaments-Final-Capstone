@@ -4,10 +4,11 @@
             Round {{ this.round }}<br />
         </div>
         <TournamentMatchUp v-for="(matchup, index) in this.matchUps" v-bind:key="matchup[0].teamId"
-            v-bind:tournamentId="this.tournamentId" :firstTeam="matchup[0]" :secondTeam="matchup[1]"
+            v-bind:tournament="this.tournament" :firstTeam="matchup[0]" :secondTeam="matchup[1]"
             :firstPosition="startPosition + (2 * index)" :secondPosition="startPosition + (2 * index) + 1"
             :scores="this.scores"
-            :edit="edit" />
+            :edit="edit"
+            :round="round" />
 
 
     </div>
@@ -21,7 +22,7 @@ export default {
         "currentRound",
         "round",
         "teams",
-        "tournamentId",
+        "tournament",
         "startPosition",
         "scores",
         "edit",
@@ -119,6 +120,10 @@ export default {
 .split-two .round {
     margin: 0 0 0 2.5%;
 }
+
+/* .round {
+    width: 100px;
+} */
 
 .round-two :deep(.matchup) {
     margin: 0;

@@ -241,7 +241,7 @@ public class JdbcTournamentDao implements TournamentDao{
                     tournament.getAcceptingTeams(), tournament.getTournamentStatus(),
                     tournament.getMaximumParticipants(), tournamentId);
             if(numberOfRows == 0) {
-                throw new DaoException("Zero rows effected, expected atleast one");
+                throw new DaoException("Zero rows affected, expected atleast one");
             }
             else {
                 updatedTournament = getTournamentById(tournamentId);

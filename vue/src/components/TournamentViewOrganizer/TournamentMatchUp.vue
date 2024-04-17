@@ -7,6 +7,14 @@
             <span class="score"><input :disabled="inputDisabledSecond" v-model="secondPositionScore" type="text" /></span>
         </li>
     </ul>
+    <ul v-else-if="this.tournament.tournamentStatus == 's'" class="matchup">
+        <li class="team team-top">{{ this.round == 1 ? this.firstPosition : '' }}
+            <span class="score"></span>
+        </li>
+        <li class="team team-bottom">{{ this.round == 1 ? this.secondPosition : '' }}
+            <span class="score"></span>
+        </li>
+    </ul>
     <ul v-else class="matchup">
         <li class="team team-top">{{ firstTeamName }}
             <span class="score">{{ firstPositionScore }}</span>
@@ -23,6 +31,7 @@ import ScoreService from '../../services/ScoreService';
 export default {
 
     computed: {
+
         inputDisabledFirst() {
             if (this.firstTeamName === '') {
                 return true;
@@ -39,13 +48,14 @@ export default {
     },      
 
     props: [
-        "tournamentId",
+        "tournament",
         "firstPosition",
         "firstTeam",
         "secondPosition",
         "secondTeam",
         "scores",
         "edit",
+        "round",
     ],
 
     data() {
@@ -53,8 +63,8 @@ export default {
         return {
             firstPositionScore: "",
             secondPositionScore: "",
-            firstTeamName: this.firstTeam.teamName,
-            secondTeamName: this.secondTeam.teamName,
+            firstTeamName: '',
+            secondTeamName: '',
         }
     },
 
@@ -70,6 +80,8 @@ export default {
     beforeMount() {
         if (this.firstPosition > this.scores.length) {
             this.firstTeamName = '';
+        }
+        if (this.secondPosition > this.scores.length) {
             this.secondTeamName = '';
         }
 
@@ -96,6 +108,7 @@ input {
     width: 15px;
 }
 .matchup {
+    min-width: 125px;
     margin: 0;
     width: 100%;
     padding: 10px 0;

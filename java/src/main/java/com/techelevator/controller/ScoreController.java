@@ -6,10 +6,12 @@ import com.techelevator.dao.TeamDao;
 import com.techelevator.dao.UserDao;
 import com.techelevator.exception.DaoException;
 import com.techelevator.model.Score;
+import com.techelevator.model.TournamentDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -81,6 +83,22 @@ public class ScoreController {
         } catch(DaoException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
         }
+    }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @RequestMapping(path = "/tournaments/{tournamentId}/initializeScores", method = RequestMethod.POST)
+    public List<Score> initializeTournamentScores(@RequestBody List<Score> scores, @PathVariable int tournamentId) {
+
+        List<Score> newScores = new ArrayList<>();
+
+        try {
+            for (Score score : scores) {
+                newScores.add(scoreDao.addScore(score));
+            }
+        } catch (DaoException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+        }
+        return newScores;
     }
 
 }
