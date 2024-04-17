@@ -103,7 +103,26 @@ public class JdbcTeamDao implements TeamDao {
 
         return team;
     }
+    @Override
+    public List<Team> getAllTeams() {
+        List<Team> teams = new ArrayList<>();
+        String sql = "SELECT team_id, team_name, team_captain_id, game_name, accepting_members FROM team ORDER BY team_id ASC;";
 
+        try {
+
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
+            while (results.next()) {
+                teams.add(mapRowToTeam(results));
+            }
+
+        }
+        catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data integrity violation", e);
+        }
+        return teams;
+    }
     @Override
     public List<Team> getTeamsByAcceptingMembers() {
         List<Team> teams = new ArrayList<>();
@@ -226,7 +245,8 @@ public class JdbcTeamDao implements TeamDao {
         String sql = "UPDATE team SET team_name = ?, team_captain_id = ?, accepting_members = ? " +
                 "WHERE team_id = ?;";
         try{
-           int numberOfRows = jdbcTemplate.update(sql, team.getTeamName(), team.getTeamCaptainId(), team.isAcceptingMembers(), teamId);
+            boolean isFull = checkIfTeamIsFull(teamId);
+           int numberOfRows = jdbcTemplate.update(sql, team.getTeamName(), team.getTeamCaptainId(), isFull, teamId);
             if(numberOfRows == 0) {
                 throw new DaoException("Zero rows effected, expected atleast one");
             }
@@ -245,6 +265,18 @@ public class JdbcTeamDao implements TeamDao {
     public boolean checkIfUserIsTeamCaptain(int teamId, int userId) {
         Team captainTeam = getTeamById(teamId);
         return captainTeam.getTeamCaptainId() == userId;
+    }
+
+    @Override
+    public boolean checkIfTeamIsFull(int teamId) {
+        Team team = getTeamById(teamId);
+        Game teamGame = gameDao.getGameByGameName(team.getGameName());
+        List<User> teamMembers = getUsersOnTeam(teamId);
+        int size = teamMembers.size();
+        if(size == teamGame.getMaxPlayers()) {
+            return true;
+        }
+        return false;
     }
     public Team mapRowToTeam(SqlRowSet rowSet){
         Team team = new Team();

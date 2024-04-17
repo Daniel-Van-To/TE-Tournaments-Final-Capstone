@@ -71,6 +71,16 @@ public class TeamController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
         }
     }
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(path = "/teams/all", method = RequestMethod.GET)
+    public List<Team> getAllTeams() {
+        try {
+            return teamDao.getAllTeams();
+        }
+        catch (DaoException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+        }
+    }
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(path = "/teams/{teamId}", method = RequestMethod.GET)
@@ -181,6 +191,21 @@ public class TeamController {
         try {
             //TODO requires unit tests
             return teamDao.checkIfUserIsTeamCaptain(teamId, userId);
+        }
+        catch (DaoException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+        }
+        catch (NullPointerException e) {
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());
+        }
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(path = "/teams/{teamId}/full", method = RequestMethod.GET)
+    public boolean isTeamFull(@PathVariable int teamId) {
+
+        try {
+           return teamDao.checkIfTeamIsFull(teamId);
         }
         catch (DaoException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());

@@ -57,8 +57,8 @@ div {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-areas: 
-        "t_name t_game t_participants"
-        "t_name .      t_entry"
+        "t_name t_name t_participants"
+        "t_game .      t_entry"
     ;
     padding: 20px;
     border: 1px;

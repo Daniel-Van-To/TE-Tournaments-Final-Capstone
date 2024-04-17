@@ -1,8 +1,11 @@
 <template>
     <table>
         <thead>
-            <button class="btn btn-see-requests" v-if="isCaptain" v-on:click="pushToSeeTeamJoinRequestsView">See Join Requests</button>
-            <button class="btn btn-join-request" v-else v-on:click="submitRequest">Submit a Join Request</button>
+            <div v-if="this.fullTeam == false">
+                <button class="btn btn-see-requests" v-if="isCaptain" v-on:click="pushToSeeTeamJoinRequestsView">See Join Requests</button>
+                <button class="btn btn-join-request" v-else v-on:click="submitRequest">Submit a Join Request</button>
+            </div>
+            
             <tr>
                 <th>ID</th>
                 <th>Name</th>
@@ -32,7 +35,7 @@ export default {
                 userName: this.$store.state.user.username,      
             },
 
-            teamMemberCount: 1
+            fullTeam: false
         }
     },
 
@@ -41,7 +44,6 @@ export default {
     },
     
     methods: {
-
         submitRequest() {
             TeamService.sendJoinRequest(this.request)
             .then((response) => {
@@ -77,6 +79,13 @@ export default {
             this.$router.push({name: 'see-team-join-requests-view', params: {teamId: this.$route.params.teamId}});
         },
 
+    },
+    
+    created() {
+        TeamService.checkIfTeamIsFull(this.$route.params.teamId)
+        .then((response) => {
+            this.fullTeam = response.data;
+        })
     }
 };
 

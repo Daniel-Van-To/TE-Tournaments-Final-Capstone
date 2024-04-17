@@ -8,6 +8,7 @@ import java.util.List;
 public interface TeamDao {
 
     public Team createTeam(TeamDto newTeam);
+    public List<Team> getAllTeams();
 
     public Team getTeamById(int id);
 
@@ -21,5 +22,6 @@ public interface TeamDao {
     public Team updateTeam(TeamDto team, int teamId);
     public boolean checkIfUserIsTeamCaptain(int teamId, int userId);
     public List<Team> getTeamsUserIsCaptain(int userId);
+    public boolean checkIfTeamIsFull(int teamId);
 
 }
