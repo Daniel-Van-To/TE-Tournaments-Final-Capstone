@@ -24,7 +24,8 @@
                 <TournamentRound v-for="(round, index) in rounds" :key="index"
                     v-bind:teams="this.teamsByRound(index + 1)" v-bind:round="round"
                     v-bind:currentRound="currentRound" v-bind:tournamentId="tournament.tournamentId"
-                    v-bind:startPosition="this.calculateStartPosition(round)" v-bind:scores="scores" />
+                    v-bind:startPosition="this.calculateStartPosition(round)" v-bind:scores="scores"
+                    :edit="editMode" />
             </div>
         </div>
     </section>
@@ -189,11 +190,41 @@ export default {
     min-height: 100%;
     margin: 0;
 } */
+.hostContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    /* background-color: var(--maroonKindof); */
+    background-color: lightgrey;
+    border: 5px solid var(--maroonKindof);
+    color: black;
+    margin: 10px 0;
+}
+
+.hostContainer h3, 
+.hostContainer p ,
+.hostContainer div {
+    align-self: center;
+    background-color: lightgrey;
+}
+
+.hostButtonsContainer {
+    display: flex;
+    justify-content: space-around;
+}
+
+.hostButtonsContainer button {
+    margin: 0 50px;
+    margin-bottom: 20px;
+    padding: 10px 10px;
+    /* background-color: lightgrey; */
+}
 
 #bracket {
     /* overflow: hidden; */
-    background-color: #e1e1e1;
-    background-color: rgba(225, 225, 225, 0.9);
+    background-color: lightgrey;
+    border: 5px solid var(--maroonKindof);
     padding-top: 20px;
     font-size: 12px;
     padding: 40px 0;
