@@ -248,7 +248,7 @@ public class JdbcTeamDao implements TeamDao {
                 "WHERE team_id = ?;";
         try{
             boolean isFull = checkIfTeamIsFull(teamId);
-           int numberOfRows = jdbcTemplate.update(sql, team.getTeamName(), team.getTeamCaptainId(), isFull, teamId);
+           int numberOfRows = jdbcTemplate.update(sql, team.getTeamName(), team.getTeamCaptainId(), !isFull, teamId);
             if(numberOfRows == 0) {
                 throw new DaoException("Zero rows effected, expected atleast one");
             }
