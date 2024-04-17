@@ -147,6 +147,16 @@ public class TeamController {
                             "You already have a pending request to join this team");
                 }
             }
+//            Team checkMaxMembers = teamDao.getTeamById(teamId);
+//
+//            Game teamsGame = gameDao.getGameByGameName(checkMaxMembers.getGameName());
+//            if (requestTeamMembers.size() + 1 == teamsGame.getMaxPlayers()) {
+//                TeamDto useToUpdateAcceptingPlayers = new TeamDto();
+//                useToUpdateAcceptingPlayers.setAcceptingMembers(false);
+//                useToUpdateAcceptingPlayers.setTeamName(checkMaxMembers.getTeamName());
+//                useToUpdateAcceptingPlayers.setTeamCaptainId(checkMaxMembers.getTeamCaptainId());
+//                teamDao.updateTeam(useToUpdateAcceptingPlayers, teamId);
+//            }
 
                 return teamDao.addTeamJoinRequest(requestDto);
 

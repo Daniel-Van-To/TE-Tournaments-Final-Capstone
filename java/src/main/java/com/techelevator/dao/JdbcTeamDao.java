@@ -242,13 +242,12 @@ public class JdbcTeamDao implements TeamDao {
 
     @Override
     public Team updateTeam(TeamDto team, int teamId) {
-        //TODO have a meeting about if changing a game is ok
         Team updatedTeam = null;
         String sql = "UPDATE team SET team_name = ?, team_captain_id = ?, accepting_members = ? " +
                 "WHERE team_id = ?;";
         try{
-            boolean isFull = checkIfTeamIsFull(teamId);
-           int numberOfRows = jdbcTemplate.update(sql, team.getTeamName(), team.getTeamCaptainId(), !isFull, teamId);
+//            boolean isFull = checkIfTeamIsFull(teamId);
+            int numberOfRows = jdbcTemplate.update(sql, team.getTeamName(), team.getTeamCaptainId(), team.isAcceptingMembers(), teamId);
             if(numberOfRows == 0) {
                 throw new DaoException("Zero rows effected, expected atleast one");
             }
