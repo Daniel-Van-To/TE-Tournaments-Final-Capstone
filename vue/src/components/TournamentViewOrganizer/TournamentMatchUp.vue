@@ -23,6 +23,7 @@ import ScoreService from '../../services/ScoreService';
 export default {
 
     computed: {
+
         inputDisabledFirst() {
             if (this.firstTeamName === '') {
                 return true;
@@ -96,6 +97,7 @@ input {
     width: 15px;
 }
 .matchup {
+    min-width: 125px;
     margin: 0;
     width: 100%;
     padding: 10px 0;
