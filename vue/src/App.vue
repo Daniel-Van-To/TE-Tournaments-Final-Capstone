@@ -59,6 +59,7 @@ export default {
     "LSide  router  RSide"
   
     ;
+  font-family: 'Roboto Condensed', sans-serif;
 
 }
 
