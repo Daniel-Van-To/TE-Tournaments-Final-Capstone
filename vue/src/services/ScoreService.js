@@ -11,4 +11,8 @@ export default {
         return axios.get(`/tournaments/${tournamentId}/team/${teamId}/scores/${position}`);
     },
 
+    initializeTournamentScores(tournamentId, listOfScores) {
+        return axios.post(`/tournaments/${tournamentId}/initializeScores`, listOfScores);
+    }
+
 }

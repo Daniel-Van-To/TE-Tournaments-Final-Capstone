@@ -67,7 +67,8 @@ VALUES(0, 2, 'dummy tournament', 0, 'valorant', false, 'o',10);
 
 INSERT INTO tournament (host_id,tournament_name,entry_fee,game_name, accepting_teams, tournament_status, maximum_participants)
 VALUES (2, 'test tournament', 0, 'running', true, 'o',32),
-(3, 'test swimming tournament', 0, 'swimming', true, 'o', 8); -- tournament_id 2
+(3, 'test swimming tournament', 0, 'swimming', true, 'o', 8), -- tournament_id 2
+(3, 'test unstarted swimming tournament', 0, 'swimming', true, 's', 32); -- tournament_id 3
 
 
 INSERT INTO team_user (user_id, team_id)
@@ -99,7 +100,14 @@ VALUES (3, 1), --links 'raystar' to test tournament
 (8, 2),
 (9, 2),
 (10, 2),
-(11, 2);
+(11, 2),
+
+--links some teams to the unstarted test swimming tournament
+(5, 3),
+(6, 3),
+(10, 3),
+(11, 3),
+(8, 3); -- odd number :)
 
 
 INSERT INTO scores (tournament_id, team_id, bracket_position, score)
