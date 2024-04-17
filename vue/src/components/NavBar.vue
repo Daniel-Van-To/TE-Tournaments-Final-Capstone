@@ -1,6 +1,6 @@
 <template>
     <div class="nav-bar">
-        <img class="logo" src="../img/te-logo.png" v-on:click.prevent="home" />
+        <img class="logo" src="../img/logo3.jpg" v-on:click.prevent="home" />
         <div class="nav-links-bttns">
         
             <router-link class="links" v-bind:to="{name: 'home'}">Home</router-link>
@@ -62,13 +62,14 @@ export default {
     margin: none;
     padding: none;
     display: flex;
-    background-color: rgb(171, 174, 177);
+    background-color: #FAAAA9;
     /* justify-content: space-between; */
     height: fit-content;
 
 }
 
 .nav-links-bttns {
+    /* font-family: "Avenir", Helvetica, Arial, sans-serif; */
     display:flex;
     justify-content:right;
     align-items:center;
