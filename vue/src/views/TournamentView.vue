@@ -1,29 +1,38 @@
 <template>
+
     <div class="hostContainer" v-if="isTournamentHost"> 
         <h3>Welcome to your tournament, {{ this.$store.state.user.displayName }}!</h3>
         <p>As host, you can see requests to join this tournament, and you may enter scores by entering 'Edit Mode'.</p>
         <div class="hostButtonsContainer">
-            
+
             <button v-on:click="pushToSeeTournamentJoinRequestsView">
                 See Join Requests
             </button>
+
             <button @click="toggleEditMode">
                 Edit Mode
             </button>
         </div>
     </div>
+
     <button v-if="isNotTournamentHost" v-on:click="pushToSendTournamentJoinRequestView">
         Send Join Requests for {{ this.tournament.tournamentName }}
     </button>
+
     <section v-if="isLoading" class="loading">
         Loading...
     </section>
+
     <section v-else id="bracket">
         <div class="container">
+
+            <div v-if="isTournamentHost && isNotStarted" class="teamsForm">
+                <tournament-team-form :teams="teams" :size="tournament.maximumParticipants" :tournament="tournament"/>
+            </div>
             <div class="split split-one">
                 <TournamentRound v-for="(round, index) in rounds" :key="index"
                     v-bind:teams="this.teamsByRound(index + 1)" v-bind:round="round"
-                    v-bind:currentRound="currentRound" v-bind:tournamentId="tournament.tournamentId"
+                    v-bind:currentRound="currentRound" v-bind:tournament="tournament"
                     v-bind:startPosition="this.calculateStartPosition(round)" v-bind:scores="scores"
                     :edit="editMode" />
             </div>
@@ -37,19 +46,23 @@ import TournamentService from '../services/TournamentService';
 import ScoreService from '../services/ScoreService';
 
 import TournamentRound from '../components/TournamentViewOrganizer/TournamentRound.vue';
+import TournamentTeamForm from '../components/TournamentViewOrganizer/TournamentTeamForm.vue';
 
 export default {
 
-    components: { TournamentRound },
+    components: { TournamentRound, TournamentTeamForm },
 
     computed: {
 
+        isNotStarted() {
+            return this.scores.length == 0;
+        },
         isLoading() {
-            return this.isLoadingScores || this.isLoadingTournament;
+            return this.isLoadingScores || this.isLoadingTournament || this.isLoadingTournamentHost;
         },
         rounds() {
             let count = 0;
-            let iterator = this.teams.length;
+            let iterator = this.tournament.maximumParticipants;
             while (iterator > 1) {
                 iterator /= 2;
                 count++;
@@ -76,6 +89,7 @@ export default {
             scores: [],
             isLoadingScores: true,
             isLoadingTournament: true,
+            isLoadingTournamentHost: true,
             currentRound: '',
             editMode: false,
         }
@@ -95,7 +109,6 @@ export default {
             const start = this.calculateStartPosition(round);
             const finish = this.calculateStartPosition(round + 1);
 
-            
 
             //scores is ordered by bracket position, so we can iterate through.
             for (let i = (start); i < finish; i += 1) {
@@ -161,6 +174,7 @@ export default {
         TournamentService.checkUserForTournamentHost(this.$route.params.tournamentId, this.$store.state.user.id)
             .then(response => {
                 this.isCurrentUserTournamentHost = response.data;
+                this.isLoadingTournamentHost = false;
             })
             .catch(error => {
                 this.$store.commit("SET_NOTIFICATION", "isCurrentUserTournamentHost method in tournament view failed");
@@ -169,7 +183,12 @@ export default {
         ScoreService.getListOfScoresByTournamentId(this.$route.params.tournamentId)
             .then(response => {
                 if (response.status == 200) {
-                    this.scores = response.data;
+                    if (response.data.length == 0) {
+                        this.scores = [];
+                    }
+                    else {
+                        this.scores = response.data;
+                    }
                     this.isLoadingScores = false;
                 }
             })
@@ -190,6 +209,12 @@ export default {
     min-height: 100%;
     margin: 0;
 } */
+
+.teamsForm {
+    width:fit-content;
+    justify-content: center;
+    justify-self: center;
+}
 .hostContainer {
     display: flex;
     flex-direction: column;
@@ -237,7 +262,7 @@ export default {
     display: flex;
     flex-direction: row;
     min-height: fit-content;
-    justify-content: center;
+    justify-content: left;
 }
 
 .split {
@@ -338,9 +363,7 @@ We aren't using that section as of yet.
 
 /* adding round-details to TournamentRound.vue */
 .round-details {
-    font-family: 'Roboto Condensed', sans-serif;
     font-size: 13px;
-    color: #2C7399;
     text-transform: uppercase;
     text-align: center;
     height: 40px;
