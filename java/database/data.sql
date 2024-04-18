@@ -42,7 +42,9 @@ VALUES ('Reset Filter', 0),
 ('pole sports', 1),
 ('canoeing', 2),
 ('water polo', 7),
-('swimming', 1);
+('swimming', 1),
+('chess', 1),
+('kayaking', 1);
 
 --Dummy Team used for creating empty scores
 INSERT INTO team (team_id, team_captain_id, team_name, game_name, accepting_members)
@@ -60,7 +62,18 @@ VALUES (3, 'find pearls', 'running', false), --team_id 1
 (7, 'Chandras Champion', 'swimming', false), --team_id 8
 (8, 'Bens team', 'swimming', false), --team_id 9
 (9, 'Wet cats', 'swimming', false), --team_id 10
-(10, 'Wet bats', 'swimming', false); --team_id 11
+(10, 'Wet bats', 'swimming', false), --team_id 11
+
+-- kayaking test team for testing tournament initialization
+(3, 'Harrys Kayaking team', 'kayaking', false),
+(4, 'Daniels Kayaking team', 'kayaking', false),
+(5, 'Revathis Kayaking team', 'kayaking', false),
+(6, 'Silliesimps Kayaking team', 'kayaking', false),
+(7, 'Chandras Kayaking team', 'kayaking', false),
+(8, 'Bens Kayaking team', 'kayaking', false),
+(9, 'Catwomans Kayaking team', 'kayaking', false),
+(10, 'Batmans Kayaking team', 'kayaking', false);
+
 
 INSERT INTO tournament (tournament_id, host_id,tournament_name,entry_fee,game_name, accepting_teams, tournament_status, maximum_participants)
 VALUES(0, 2, 'dummy tournament', 0, 'valorant', false, 'o',10);
@@ -68,7 +81,8 @@ VALUES(0, 2, 'dummy tournament', 0, 'valorant', false, 'o',10);
 INSERT INTO tournament (host_id,tournament_name,entry_fee,game_name, accepting_teams, tournament_status, maximum_participants)
 VALUES (2, 'test tournament', 0, 'running', true, 'o',32),
 (3, 'test swimming tournament', 0, 'swimming', true, 'o', 8), -- tournament_id 2
-(3, 'test unstarted swimming tournament', 0, 'swimming', true, 's', 32); -- tournament_id 3
+(3, 'test unstarted swimming tournament', 0, 'swimming', true, 's', 32), -- tournament_id 3
+(3, 'test aboutToStart kayaking tournament', 0, 'kayaking', true, 's', 8);
 
 
 INSERT INTO team_user (user_id, team_id)
@@ -86,7 +100,19 @@ VALUES (3, 1), --links harry to 'find pearls'
 (7, 8), --links Chandra to 'Chandra's Champion'
 (8, 9),
 (9, 10),
-(10, 11);
+(10, 11),
+
+--linking everyone to their own kayaking team
+(3, 12),
+(4, 13),
+(5, 14),
+(6, 15),
+(7, 16),
+(8, 17),
+(9, 18),
+(10, 19);
+
+
 
 INSERT INTO team_tournament (team_id, tournament_id)
 VALUES (3, 1), --links 'raystar' to test tournament
@@ -107,8 +133,17 @@ VALUES (3, 1), --links 'raystar' to test tournament
 (6, 3),
 (10, 3),
 (11, 3),
-(8, 3); -- odd number :)
+(8, 3), -- odd number :)
 
+--linking kayaking teams to test kayaking tournament
+(12, 4),
+(13, 4),
+(14, 4),
+(15, 4),
+(16, 4),
+(17, 4),
+(18, 4),
+(19, 4);
 
 INSERT INTO scores (tournament_id, team_id, bracket_position, score)
 VALUES (2, 4, 1, 'L'),

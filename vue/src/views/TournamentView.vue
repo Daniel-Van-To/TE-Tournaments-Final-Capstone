@@ -114,7 +114,7 @@ export default {
             for (let i=(start); i<(finish); i+=1) {
                 const score = this.scores[i - 1];
 
-                if (score == undefined || score == null) {
+                if (score == undefined || score == null || score.teamId == '') {
                     this.currentRound = round;
                     teamsForThisRound.push({});
                 }

@@ -21,7 +21,7 @@ CREATE TABLE game (
 
 CREATE TABLE team (
     team_id SERIAL,
-    team_name varchar(50) NOT NULL UNIQUE,
+    team_name varchar(50) NOT NULL,
     team_captain_id integer NOT NULL,
     game_name varchar(50) NOT NULL,
     accepting_members boolean NOT NULL,

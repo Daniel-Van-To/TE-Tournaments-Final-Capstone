@@ -14,6 +14,7 @@
         <button class="input" @click.prevent="this.assignValues()">Assign Automatically</button>
         <button class="input" @click.prevent="this.savePositions()">Save</button>
         <input class="input" type="submit" @click.prevent="this.showWarning()"/>
+        {{ this.positions }}
         <div v-show="this.warn" class="warning">
             Warning!
             <br><br>
