@@ -1,11 +1,9 @@
 package com.techelevator.controller;
 
-import com.techelevator.dao.RequestDao;
-import com.techelevator.dao.ScoreDao;
-import com.techelevator.dao.TeamDao;
-import com.techelevator.dao.UserDao;
+import com.techelevator.dao.*;
 import com.techelevator.exception.DaoException;
 import com.techelevator.model.Score;
+import com.techelevator.model.Tournament;
 import com.techelevator.model.TournamentDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -20,14 +18,16 @@ public class ScoreController {
 
     private UserDao userDao;
     private TeamDao teamDao;
+    private TournamentDao tournamentDao;
     private RequestDao requestDao;
     private ScoreDao scoreDao;
 
-    public ScoreController(UserDao userDao, TeamDao teamDao, RequestDao requestDao, ScoreDao scoreDao) {
+    public ScoreController(UserDao userDao, TeamDao teamDao, RequestDao requestDao, ScoreDao scoreDao, TournamentDao tournamentDao) {
         this.userDao = userDao;
         this.teamDao = teamDao;
         this.requestDao = requestDao;
         this.scoreDao = scoreDao;
+        this.tournamentDao = tournamentDao;
     }
 
     @ResponseStatus(HttpStatus.CREATED)
@@ -107,4 +107,42 @@ public class ScoreController {
         return newScores;
     }
 
+
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(path = "/tournaments/{tournamentsId}/team/{teamId}/scores", method = RequestMethod.PUT)
+    public Score updateScoreById(@RequestBody Score scoreToUpdate, @PathVariable int scoreId) {
+        try {
+            return scoreDao.updateScore(scoreToUpdate,scoreId);
+
+        } catch(DaoException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+        }
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(path = "/tournaments/{tournamentsId}/team/{teamId}/scores", method = RequestMethod.GET)
+    public List<Score> getUpdatedPositionsIfRoundIsFinished(@PathVariable int tournamentsId, @PathVariable int teamId, @PathVariable int scoreId) {
+        try {
+            Tournament tournament = tournamentDao.getTournamentById(tournamentsId);
+            int maxTeams = tournament.getMaximumParticipants();
+            List<Score> scorePositions = scoreDao.getScoresByTournamentId(tournamentsId);
+            int startPosition = 0;
+            boolean updateToNextRound = false;
+
+            for(int i = 0; i < scorePositions.size(); i ++) {
+                String positionScore = scorePositions.get(i).getScore();
+                if(positionScore == null || positionScore.equals("")) {
+                    startPosition = i;
+                }
+            }
+
+            if(startPosition >= maxTeams) {
+
+            }
+            return null;
+
+        } catch(DaoException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+        }
+    }
 }
