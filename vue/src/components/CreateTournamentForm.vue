@@ -159,4 +159,10 @@ select.form-control {
   margin: 10px 20px 10px 10px;
 }
 
+* {
+  font-family: 'Roboto Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+}
+
 </style>

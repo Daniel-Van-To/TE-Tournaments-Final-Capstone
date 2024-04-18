@@ -6,11 +6,11 @@
       <h1>Create a team</h1>
       <form v-on:submit.prevent="submitForm" class="createTeamForm">
         <div class="teamFormField">
-            <label for="teamName">Team name: </label>
+            <label class="label" for="teamName">Team name: </label>
             <input id="teamName" type="text" class="formControl" v-model="team.teamName"/>
         </div> 
         <div class="teamFormField">
-          <label for="games">Game Name: </label>
+          <label class="label" for="games">Game Name: </label>
           <select class="games" v-model="this.team.gameName">  
               <option v-for="(game,index) in games" v-bind:value="game.name" v-bind:key="index">
                   {{ game.name }}
@@ -142,5 +142,21 @@ select.form-control {
   display: inline-block;
   margin: 10px 20px 10px 10px;
 }
+
+.teamName,
+.games,
+.label {
+  font-family: 'Roboto Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.btn-submit,
+.btn-cancel {
+  font-family: 'Roboto Condensed', sans-serif;
+  font-size: 14px;
+  font-weight: bold;
+}
+
 
 </style>
