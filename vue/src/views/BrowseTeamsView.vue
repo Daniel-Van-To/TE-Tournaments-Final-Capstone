@@ -2,12 +2,8 @@
   <div class="home">
     <h1>Browse Teams</h1>
       <div id="team-modifiers">
-          <div id="filter-header"><h4>Filter by Games</h4></div>
-          <div id="full-teams-header">
-              <h4 id="table-header" v-if="fullTeams">Hide Teams that are full?</h4>
-              <h4 v-else>Show Teams that are full?</h4>
-          </div>
           <div id="dropdown">
+              <label class="field-labels" for="game-filter">Filter by Games : </label>
               <select class="game-filter" v-model="this.gameFilter">  
                   <option v-for="(game,index) in games" v-bind:value="game.name" v-bind:key="index">
                       {{ game.name }}
@@ -15,6 +11,8 @@
                </select>
           </div>
           <div id="full-team-bttn">
+            <label class="field-labels" v-if="fullTeams">Hide Teams that are full: </label>
+              <label class="field-labels" v-else>Show Teams that are full: </label>
               <button id="hide-teams" v-if="fullTeams" v-on:click="toggleFullTeams()">Hide Them!</button>
               <button id="show-teams" v-else v-on:click="toggleFullTeams()">Show Them!</button>
           </div>
@@ -128,25 +126,20 @@ export default {
 </script>
 
 <style>
-  #team-modifiers {
-      display: grid;
-      grid-template-columns: 1rem 1 rem 1rem;
-      grid-template-areas:
-      "filter-header filter-header full-teams-header"
-      "filter        filter        full-teams-bttn";
+  .game-filter,
+  .field-labels{
+    padding-right: 20px;
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: bold;
   }
 
-  #filter-header {
-      grid-area: filter-header;
+  #hide-teams,
+  #show-teams,
+  #game-filter  {
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: bold;
   }
 
-  #full-teams-header {
-      grid-area: full-teams-header;
-  }
-  #dropdown {
-      grid-area: filter;
-  }
-  #full-team-bttn {
-      grid-area:full-teams-bttn;
-  }    
 </style>

@@ -1,9 +1,9 @@
 <template>
   <div class="home">
     <h1>Browse Tournaments</h1>
-    <button @click.prevent="pushToCreateTournamentView">Create A Tournament</button>
+    <button class="create-tournament-button" @click.prevent="pushToCreateTournamentView">Create A Tournament</button>
     <br><br/>
-    <label for="game-filter">Filter Tournaments by Game: </label>
+    <label class="filter-label" for="game-filter">Filter Tournaments by Game: </label>
     <select class="game-filter" v-model="this.gameFilter">  
       <option v-for="(game,index) in games" v-bind:value="game.name" v-bind:key="index">
           {{ game.name }}
@@ -98,6 +98,14 @@ export default {
   margin-bottom: 1rem;
 }
 
+.create-tournament-button,
+.filter-label,
+.game-filter
+{
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+}
 
 
 </style>

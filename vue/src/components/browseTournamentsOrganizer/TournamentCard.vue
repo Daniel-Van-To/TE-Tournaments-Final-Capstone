@@ -94,4 +94,12 @@ h3 {
     grid-area: t_participants;
 }
 
+.game-name,
+.entry-fee,
+.participants {
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+}
+
 </style>

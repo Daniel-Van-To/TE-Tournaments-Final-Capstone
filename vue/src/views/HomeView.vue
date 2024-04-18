@@ -2,10 +2,11 @@
   <div class="home">
     <h1>Home</h1>
     <!-- <slide-show/> -->
-    <vueper-slides fade :touchable="false">
+    <vueper-slides fade :touchable="false" slide-content-outside="bottom">
       <vueper-slide 
       v-for="(slide,i) in slides"
-      v-on:click="pushToBrowseTournaments" 
+      :content="slide.content"
+      :link="slide.link"
       :key="i" 
       :title="slide.title"
       :image="slide.image"/>
@@ -34,7 +35,8 @@ export default {
         {
           title: 'Slide #1',
           content: 'Slide 1 content',
-          image: '/florian-cordier-zOTpWmLyxdU-unsplash.jpg'
+          image: '/florian-cordier-zOTpWmLyxdU-unsplash.jpg',
+          link: 'http://127.0.0.1:5173/browse-tournaments'
         },
         {
           title: 'Slide #2',
@@ -77,8 +79,21 @@ export default {
 </script>
 
 <style>
-  h1 {
-    align-self: center;
+  .vueperslide__content-wrapper {
+    display: flex;
+    justify-content: center;
+  }
+  .vueperslide__title {
+    padding-right: 20px;
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+  }
+  .vueperslide__content {
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+
   }
 </style>
 
