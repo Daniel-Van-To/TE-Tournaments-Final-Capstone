@@ -104,4 +104,15 @@ public class ScoreController {
         return newScores;
     }
 
+
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(path = "/tournaments/{tournamentsId}/team/{teamId}/scores", method = RequestMethod.PUT)
+    public Score updateScoreById(@RequestBody Score scoreToUpdate, @PathVariable int scoreId) {
+        try {
+            return scoreDao.updateScore(scoreToUpdate,scoreId);
+
+        } catch(DaoException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+        }
+    }
 }
