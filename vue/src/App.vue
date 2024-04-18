@@ -40,6 +40,7 @@ export default {
 </script>
 
 <style>
+
 :root {
   --pinkish: #FAAAA9;
   --darkGreen: #245032;
@@ -110,7 +111,7 @@ body {
 }
 #capstone-app{
   /* font-family: "Avenir", Helvetica, Arial, sans-serif; */
-  margin: none;
+
   /* text-align: center; */
   /* color: #2c3e50; */
   /* max-width: 800px; */
