@@ -2,7 +2,7 @@
   <div class="home">
     <h1>Home</h1>
     <!-- <slide-show/> -->
-    <vueper-slides>
+    <vueper-slides fade :touchable="false">
       <vueper-slide 
       v-for="(slide,i) in slides"
       v-on:click="pushToBrowseTournaments" 
@@ -49,7 +49,7 @@ export default {
         {
           title: 'Slide #4',
           content: 'Slide 4 content',
-          image: '/pexels-patrick-case-3628912.jpg'
+          image: '/cricket.jpg'
         },
         {
           title: 'Slide #5',
