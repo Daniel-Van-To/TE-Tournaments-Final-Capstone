@@ -120,26 +120,61 @@ public class ScoreController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @RequestMapping(path = "/tournaments/{tournamentsId}/team/{teamId}/scores", method = RequestMethod.GET)
-    public List<Score> getUpdatedPositionsIfRoundIsFinished(@PathVariable int tournamentsId, @PathVariable int teamId, @PathVariable int scoreId) {
+    @RequestMapping(path = "/tournaments/{tournamentsId}/team/{round}/update", method = RequestMethod.GET)
+    public List<Score> getUpdatedPositionsIfRoundIsFinished(@PathVariable int tournamentsId, @PathVariable int round, @PathVariable int scoreId) {
         try {
             Tournament tournament = tournamentDao.getTournamentById(tournamentsId);
             int maxTeams = tournament.getMaximumParticipants();
             List<Score> scorePositions = scoreDao.getScoresByTournamentId(tournamentsId);
             int startPosition = 0;
-            boolean updateToNextRound = false;
+            int startIndex = 0;
 
+
+            //Finds the first position with an empty score value
             for(int i = 0; i < scorePositions.size(); i ++) {
                 String positionScore = scorePositions.get(i).getScore();
                 if(positionScore == null || positionScore.equals("")) {
                     startPosition = i;
+                    break;
                 }
             }
 
-            if(startPosition >= maxTeams) {
+            int nextRoundEndPosition = maxTeams;
+            int nextRoundStartPosition = maxTeams;
+            int roundModifier = maxTeams;
 
+//            //Finds the End Position of the next Round
+//            for(int i = 0; i < round; i ++) {
+//                nextRoundEndPosition = nextRoundEndPosition + (roundModifier/2);
+//                roundModifier /= 2;
+//            }
+//            roundModifier = maxTeams;
+
+            //Finds the Start Position of the next Round
+            for(int i = 1; i < round; i ++) {
+                nextRoundStartPosition = nextRoundStartPosition + (roundModifier/2);
+                roundModifier /= 2;
             }
-            return null;
+
+            //Checks to see if the first position with an empty score occurs before the Start Position of the next Round
+            if(startPosition < nextRoundStartPosition) {
+                return scoreDao.getScoresByTournamentId(tournamentsId);
+            }
+
+            roundModifier = maxTeams;
+            //Find the start index
+            for(int i = 1; i < round; i ++) {
+                startIndex += roundModifier;
+                roundModifier /= 2;
+            }
+
+
+            if(startPosition == nextRoundStartPosition) {
+                //Call method to move the winners of the previous round to the next Round
+                return scoreDao.moveWinnersToNextRound(scorePositions, startIndex, startPosition, tournament.getTournamentId());
+            }
+
+            return scoreDao.getScoresByTournamentId(tournamentsId);
 
         } catch(DaoException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
