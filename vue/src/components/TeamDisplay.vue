@@ -107,8 +107,6 @@ tr:nth-child(even) {
 }
 
 .btn {
-  display: inline-block;
-  font-weight: 400;
   color: #212529;
   text-align: center;
   vertical-align: middle;
@@ -120,6 +118,9 @@ tr:nth-child(even) {
   line-height: 1.5;
   border-radius: .25rem;
   cursor: pointer;
+
+  font-family: 'Roboto Condensed', sans-serif;
+  font-weight: bold;
 }
 
 .btn-join-request {
@@ -129,9 +130,18 @@ tr:nth-child(even) {
   text-decoration: none;
   padding: 6px 12px;
   cursor: pointer;
+  font-family: 'Roboto Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: bold;
 }
 
 thead {
     justify-items: center;
+}
+
+* {
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: bold;
 }
 </style>

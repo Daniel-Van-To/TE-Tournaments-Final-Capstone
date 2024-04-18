@@ -16,8 +16,8 @@
                 <h4 class="loggedIn">Hello, {{this.$store.state.user.username}}</h4>
             </span>
             <span v-else class="nav-bar-buttons">
-                <input type="button" value="Register" v-on:click.prevent="register">
-                <input type="button" value="Log In" v-on:click.prevent="logIn">
+                <input class="loggedOut" type="button" value="Register" v-on:click.prevent="register">
+                <input class="loggedOut" type="button" value="Log In" v-on:click.prevent="logIn">
             </span>
         </div>
     </div>
@@ -74,6 +74,11 @@ export default {
     justify-content:right;
     align-items:center;
     flex-grow: 1;
+
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    color: black;
 }
 
 input {
@@ -97,6 +102,7 @@ input {
     font-size: 15px;
     margin-right: 0.25rem;
     margin-left: 0.25rem;
+    border-radius: 5px;
 
 }
 
@@ -106,6 +112,10 @@ input {
     justify-content: space-between;
     margin-left: 1rem;
     margin-right: 1rem;
+
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: bold;
 
 }
 
@@ -129,6 +139,13 @@ span input {
     padding-left: 0.1rem;
     padding-right: 0.1rem;
     border: 1px solid black;
+}
+
+.loggedIn,
+.loggedOut {
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: bold;
 }
 
 .links:hover {
