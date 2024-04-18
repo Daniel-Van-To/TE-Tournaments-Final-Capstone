@@ -15,14 +15,12 @@
 </template>
 
 <script>
-import SlideShow from '../components/SlideShow.vue';
 import {VueperSlides, VueperSlide} from 'vueperslides';
 import 'vueperslides/dist/vueperslides.css';
 
 export default {
 
   components: {
-    // SlideShow,
     VueperSlides,
      VueperSlide
   },

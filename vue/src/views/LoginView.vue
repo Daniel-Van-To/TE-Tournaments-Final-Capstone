@@ -77,5 +77,15 @@ export default {
 
 label {
   margin-right: 0.5rem;
+  font-family: 'Roboto Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: bold;
 }
+
+button {
+  font-family: 'Roboto Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+}
+
 </style>
