@@ -86,6 +86,31 @@ public class JdbcScoreDao implements ScoreDao {
 
         return score;
     }
+
+    @Override
+    public Score updateScore(Score toUpdate, int scoreId) {
+        Score returnScore = null;
+        String sql = "UPDATE scores SET tournament_id = ?, team_id = ?, bracket_position = ?, score = ? WHERE score_id = ?;";
+
+        try {
+            int numRows = jdbcTemplate.update(sql, toUpdate.getTournamentId(), toUpdate.getTeamId(), toUpdate.getBracketPosition(), toUpdate.getScore(), scoreId);
+
+            if (numRows < 1) {
+                throw new DaoException("Zero rows affected, expected at least one");
+            }
+            returnScore = getScoresByScoreId(scoreId);
+
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data integrity violation", e);
+        }
+
+
+        return returnScore;
+    }
+
+
     @Override
     public List<Score> getScoresByTournamentId(int tournamentId) {
         List<Score> score = new ArrayList<>();
