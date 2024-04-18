@@ -64,11 +64,20 @@ export default {
                     teamId: this.positions[i],
                     score: '',
                 });
+                console.log(JSON.stringify(scoreList[i]));
                 }
             }
 
             ScoreService.initializeTournamentScores(this.tournament.tournamentId, scoreList)
-                .then()
+                .then( response => {
+                    if (response.status == 200 || response.status == 201) {
+                        this.$store.commit('SET_NOTIFICATION', 
+                        {
+                            message: 'Positions saved successfully',
+                            type: 'SUCCESS',
+                        })
+                    }
+                })
                 .catch(error => {
                     this.$store.commit('SET_NOTIFICATION', 'error saving scores: ' + error.message);
                 });

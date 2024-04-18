@@ -97,6 +97,9 @@ public class ScoreController {
                 if (toCheck != null) {
                     newScores.add(scoreDao.updateScore(scores.get(i), scores.get(i).getScoreId()));
                 }
+                else {
+                    newScores.add(scoreDao.addScore(scores.get(i)));
+                }
             }
         } catch (DaoException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());

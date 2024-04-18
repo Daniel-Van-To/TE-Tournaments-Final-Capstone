@@ -13,6 +13,6 @@ export default {
 
     initializeTournamentScores(tournamentId, listOfScores) {
         return axios.post(`/tournaments/${tournamentId}/initializeScores`, listOfScores);
-    }
+    },
 
 }
