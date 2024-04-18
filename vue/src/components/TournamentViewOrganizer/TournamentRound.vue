@@ -8,7 +8,8 @@
             :firstPosition="startPosition + (2 * index)" :secondPosition="startPosition + (2 * index) + 1"
             :scores="this.scores"
             :edit="edit"
-            :round="round" />
+            :round="round" 
+            />
 
 
     </div>

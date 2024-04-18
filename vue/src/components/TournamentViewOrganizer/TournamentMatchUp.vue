@@ -1,10 +1,10 @@
 <template>
     <ul v-if="edit" class="matchup">
         <li class="team team-top">{{ firstTeamName }}
-            <span class="score"><input :disabled="inputDisabledFirst" v-model="firstPositionScore" type="text" /></span>
+            <span class="score"><input :disabled="inputDisabledFirst" @focusout="this.updateScoreInServer()" v-model="firstPositionScore" type="text" /></span>
         </li>
         <li class="team team-bottom">{{ secondTeamName }}
-            <span class="score"><input :disabled="inputDisabledSecond" v-model="secondPositionScore" type="text" /></span>
+            <span class="score"><input :disabled="inputDisabledSecond" @focusout="this.updateScoreInServer()" v-model="secondPositionScore" type="text" /></span>
         </li>
     </ul>
     <ul v-else-if="this.tournament.tournamentStatus == 's'" class="matchup">
@@ -16,7 +16,7 @@
         </li>
     </ul>
     <ul v-else class="matchup">
-        <li class="team team-top">{{ firstTeamName }}
+        <li class="team team-top">{{ firstTeamName  }}
             <span class="score">{{ firstPositionScore }}</span>
         </li>
         <li class="team team-bottom">{{ secondTeamName }}
@@ -69,6 +69,11 @@ export default {
     },
 
     methods: {
+
+        updateScoreInServer() {
+            //fill this out to send individual scores to server.
+        },
+
         returnsScoreOrEmptyStringGivenBracketPosition(position) {
             if (this.scores.length < position) {
                 return '';
@@ -78,20 +83,24 @@ export default {
 
     },
     beforeMount() {
-        if (this.firstPosition > this.scores.length) {
-            this.firstTeamName = '';
-        }
-        if (this.secondPosition > this.scores.length) {
+        
+        if (this.firstTeam?.teamName == undefined || this.secondTeam?.teamName == undefined) {
             this.secondTeamName = '';
+            this.firstTeamName = '';
         }
 
         else {
-            const score1 = this.returnsScoreOrEmptyStringGivenBracketPosition(this.firstPosition)
-            const score2 = this.returnsScoreOrEmptyStringGivenBracketPosition(this.secondPosition)
-
-            this.firstPositionScore = score1.score;
-            this.secondPositionScore = score2.score;
+            this.firstTeamName = this.firstTeam.teamName;
+            this.secondTeamName = this.secondTeam.teamName;
         }
+
+
+        const score1 = this.returnsScoreOrEmptyStringGivenBracketPosition(this.firstPosition);
+        const score2 = this.returnsScoreOrEmptyStringGivenBracketPosition(this.secondPosition);
+
+        this.firstPositionScore = score1.score;
+        this.secondPositionScore = score2.score;
+        
 
 
 
