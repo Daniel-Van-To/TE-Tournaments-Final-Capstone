@@ -109,7 +109,7 @@ public class ScoreController {
 
 
     @ResponseStatus(HttpStatus.OK)
-    @RequestMapping(path = "/tournaments/{tournamentsId}/team/{teamId}/scores", method = RequestMethod.PUT)
+    @RequestMapping(path = "/tournaments/updateScore/{scoreId}", method = RequestMethod.PUT)
     public Score updateScoreById(@RequestBody Score scoreToUpdate, @PathVariable int scoreId) {
         try {
             return scoreDao.updateScore(scoreToUpdate,scoreId);

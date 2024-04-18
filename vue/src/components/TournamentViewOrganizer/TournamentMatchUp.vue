@@ -1,10 +1,10 @@
 <template>
     <ul v-if="edit" class="matchup">
         <li class="team team-top">{{ firstTeamName }}
-            <span class="score"><input :disabled="inputDisabledFirst" @focusout="this.updateScoreInServer()" v-model="firstPositionScore" type="text" /></span>
+            <span class="score"><input :disabled="inputDisabledFirst" @focusout="this.updateScoreInServer(1)" v-model="firstPositionScore" type="text" /></span>
         </li>
         <li class="team team-bottom">{{ secondTeamName }}
-            <span class="score"><input :disabled="inputDisabledSecond" @focusout="this.updateScoreInServer()" v-model="secondPositionScore" type="text" /></span>
+            <span class="score"><input :disabled="inputDisabledSecond" @focusout="this.updateScoreInServer(2)" v-model="secondPositionScore" type="text" /></span>
         </li>
     </ul>
     <ul v-else-if="this.tournament.tournamentStatus == 's'" class="matchup">
@@ -70,8 +70,44 @@ export default {
 
     methods: {
 
-        updateScoreInServer() {
-            //fill this out to send individual scores to server.
+        updateScoreInServer(num) {
+            let score = {
+                tournamentId: this.tournament.tournamentId,
+            }
+
+            if (num == 1) {
+                score.teamId = this.firstTeam.teamId;
+                score.bracketPosition = this.firstPosition;
+                score.score = this.firstPositionScore;
+                ScoreService.addScore(score)
+                    .then(response => {
+                        if (response.status == 201) {
+                            this.firstPositionScore = response.data.score;
+                        }
+                    })
+                    .catch(error => {
+                        this.$store.commit('SET_NOTIFICATION', 
+                        `error setting score 1 for bracket position ${this.firstPosition}. 
+                        error: ` + error.message);
+                    })
+            }
+            else {
+                score.teamId = this.secondTeam.teamId;
+                score.bracketPosition = this.secondPosition;
+                score.score = this.secondPositionScore;
+                ScoreService.addScore(score)
+                    .then(response => {
+                        if (response.status == 201) {
+                            this.secondPositionScore = response.data.score;
+                        }
+                    })
+                    .catch(error => {
+                        this.$store.commit('SET_NOTIFICATION', 
+                        `error setting score for bracket position ${this.secondPosition}. 
+                        error: ` + error.message);
+                    })
+
+            }
         },
 
         returnsScoreOrEmptyStringGivenBracketPosition(position) {

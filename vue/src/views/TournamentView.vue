@@ -18,16 +18,19 @@
     <button v-if="isNotTournamentHost" v-on:click="pushToSendTournamentJoinRequestView">
         Send Join Requests for {{ this.tournament.tournamentName }}
     </button>
-
+    <!-- {{ `JSON.stringify(scores): ${JSON.stringify(scores)}
+        this.calculateStartPosition(this.rounds + 1) -1: ${this.calculateStartPosition(this.rounds+1) -1}
+        this.scores.length: ${this.scores.length}` }} -->
     <section v-if="isLoading" class="loading">
         Loading...
     </section>
+
 
     <section v-else id="bracket">
         <div class="container">
 
             <div v-if="isTournamentHost && isNotStarted" class="teamsForm">
-                <tournament-team-form :teams="teams" :size="tournament.maximumParticipants" :tournament="tournament"/>
+                <tournament-team-form :teams="teams" :tournament="tournament" :totalPositions="this.calculateStartPosition(rounds+1)"/>
             </div>
             <div class="split split-one">
                 <TournamentRound v-for="(round, index) in rounds" :key="index"
@@ -55,7 +58,7 @@ export default {
     computed: {
 
         isNotStarted() {
-            return this.scores.length == 0;
+            return (this.scores.length <= this.calculateStartPosition(this.rounds+1)) && (this.tournament.tournamentStatus == 's');
         },
         isLoading() {
             return this.isLoadingScores || this.isLoadingTournament || this.isLoadingTournamentHost;
@@ -83,6 +86,7 @@ export default {
 
     data() {
         return {
+            // watchStore: this.$store.state.,
             teams: [],
             isCurrentUserTournamentHost: false,
             tournament: {},
@@ -195,7 +199,21 @@ export default {
             .catch(error => {
                 this.$store.commit('SET_NOTIFICATION', 'issue getting list of scores by tournamentId in TournamentView.');
             });
-    }
+    },
+
+    // updated() {
+    //     this.isLoadingScores = true;
+    //     ScoreService.getListOfScoresByTournamentId(this.tournament.tournamentId)
+    //         .then(response => {
+    //             if (response.status == 200) {
+    //                 this.scores = response.data;
+    //                 this.isLoadingScores = false;
+    //             }
+    //         })
+    //         .catch(error => {
+    //             this.$store.commit('SET_NOTIFICATION', 'error on updated() method: ' + error.message);
+    //         })
+    // },
 };
 </script>
 

@@ -15,4 +15,8 @@ export default {
         return axios.post(`/tournaments/${tournamentId}/initializeScores`, listOfScores);
     },
 
+    addScore(score) {
+        return axios.post(`/tournaments/addScore`, score)
+    }
+
 }

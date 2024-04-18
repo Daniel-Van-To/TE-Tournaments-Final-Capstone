@@ -1,10 +1,12 @@
 <template>
     <!-- <div>Loading...</div> -->
-    <form class="placeTeams">
+    <form v-if="notSubmitted" class="placeTeams">
         <div class="formTitle">Assign Teams</div>
-        <div v-for="position in size" :key="position" class="formField">
-            <label :for="this.returnInputId(position)">Bracket Position {{ position }}: {{ position > 9 ? " " : "" }} </label>
-            <select v-model="this.positions[position-1]" :id="this.returnInputId(position)" :name="this.returnInputId(position)">
+        <div v-for="position in this.tournament.maximumParticipants" :key="position" class="formField">
+            <label :for="this.returnInputId(position)">Bracket Position {{ `${position}${(10 > position) ? " " : ""}` }}:{{
+                position > 9 ? " " : "" }}</label>
+            <select v-model="this.positions[position - 1]" :id="this.returnInputId(position)"
+                :name="this.returnInputId(position)">
                 <option value="">-----</option>
                 <option v-for="team in teams" :key="team.teamId" :value="team.teamId">
                     {{ team.teamName }}
@@ -13,12 +15,11 @@
         </div>
         <button class="input" @click.prevent="this.assignValues()">Assign Automatically</button>
         <button class="input" @click.prevent="this.savePositions()">Save</button>
-        <input class="input" type="submit" @click.prevent="this.showWarning()"/>
-        {{ this.positions }}
+        <input class="input" type="submit" @click.prevent="this.showWarning()" />
         <div v-show="this.warn" class="warning">
             Warning!
             <br><br>
-            Once you submit, you will be unable to edit starting bracket position. 
+            Once you submit, you will be unable to edit starting bracket position.
             <br><br>
             Proceed?
             <span class="buttonHolder">
@@ -46,7 +47,7 @@ export default {
             }
             return true;
         }
-    },  
+    },
 
     methods: {
         returnInputId(position) {
@@ -59,23 +60,23 @@ export default {
             for (let i = 0; i < this.positions.length; i++) {
                 if (this.positions[i] != '') {
                     scoreList.push({
-                    tournamentId: this.tournament.tournamentId,
-                    bracketPosition: (i+1),
-                    teamId: this.positions[i],
-                    score: '',
-                });
-                console.log(JSON.stringify(scoreList[i]));
+                        tournamentId: this.tournament.tournamentId,
+                        bracketPosition: (i + 1),
+                        teamId: this.positions[i],
+                        score: '',
+                    });
+                    console.log(JSON.stringify(scoreList[i]));
                 }
             }
 
             ScoreService.initializeTournamentScores(this.tournament.tournamentId, scoreList)
-                .then( response => {
+                .then(response => {
                     if (response.status == 200 || response.status == 201) {
-                        this.$store.commit('SET_NOTIFICATION', 
-                        {
-                            message: 'Positions saved successfully',
-                            type: 'SUCCESS',
-                        })
+                        this.$store.commit('SET_NOTIFICATION',
+                            {
+                                message: 'Positions saved successfully',
+                                type: 'SUCCESS',
+                            })
                     }
                 })
                 .catch(error => {
@@ -97,14 +98,17 @@ export default {
             }
         },
 
+
         submit() {
             if (this.readyToStart) {
-              this.changeTournamentStatus();
-              this.initializeScores();
+                this.changeTournamentStatus();
+                this.initializeScores();
+                this.$router.push({name: 'browse-tournaments'})
             }
             else {
                 this.$store.commit('SET_NOTIFICATION', 'Insufficient teams - press save to hold current positions, or add more teams to the tournament.')
             }
+            
         },
 
         changeTournamentStatus() {
@@ -114,9 +118,10 @@ export default {
             TournamentService.updateTournament(tournamentToUpdate)
                 .then(response => {
                     if (response.status == 200) {
-                        this.$store.commit('SET_NOTIFICATION', 
-                        {message: 'success updating tournament status', type: 'success',}
-                    )}
+                        this.$store.commit('SET_NOTIFICATION',
+                            { message: 'success updating tournament status', type: 'success', }
+                        )
+                    }
                 })
                 .catch(error => {
                     this.$store.commit('SET_NOTIFICATION', 'error updating tournament status' + error.message);
@@ -125,45 +130,55 @@ export default {
 
         initializeScores() {
             //Score model:
-                //score_id
-                //tournament_id
-                //team_id
-                //bracket_position
-                //score
+            //score_id
+            //tournament_id
+            //team_id
+            //bracket_position
+            //score
 
             //create scores
             let scoresList = [];
-            for (let i = 0; i < this.positions.length; i++) {
-                scoresList.push( {
-                    tournamentId: this.tournament.tournamentId,
-                    bracketPosition: (i+1),
-                    teamId: this.positions[i],
-                    score: '',
-                })
+            for (let i = 0; i < this.totalPositions; i++) {
+                if (i < this.tournament.maximumParticipants) {
+                    scoresList.push({
+                        tournamentId: this.tournament.tournamentId,
+                        bracketPosition: (i + 1),
+                        teamId: this.positions[i],
+                        score: '',
+                    })
+                }
+                else {
+                    scoresList.push({
+                        tournamentId: this.tournament.tournamentId,
+                        bracketPosition: (i + 1),
+                        teamId: 0,
+                        score: '',
+                    })
+                }
             }
             ScoreService.initializeTournamentScores(this.tournament.tournamentId, scoresList)
                 // .then(response => {
                 //     if (response.data) {
-                        
+
                 //     }
                 // })
-                    .catch(error => {
-                        this.$store.commit('SET_NOTIFICATION', 'error initializing scores');
-                    });
+                .catch(error => {
+                    this.$store.commit('SET_NOTIFICATION', 'error initializing scores');
+                });
 
         },
 
         assignValues() {
-            for(let i = 0; i < this.teams.length; i++) {
+            for (let i = 0; i < this.teams.length; i++) {
                 this.positions[i] = this.teams[i].teamId;
             }
         }
-    },  
+    },
 
     props: [
         'teams',
-        'size',
         'tournament',
+        'totalPositions',
     ],
 
     data() {
@@ -173,12 +188,14 @@ export default {
             positions: [],
             warn: false,
             isLoadingScores: true,
+            notSubmitted: true,
+
         }
     },
 
     beforeMount() {
 
-        for(let i = 0; i < this.size; i++) {
+        for (let i = 0; i < this.teams.length; i++) {
             this.positions.push('');
         }
 
@@ -186,12 +203,12 @@ export default {
             .then(response => {
                 if (response.data) {
                     response.data.forEach((score) => {
-                        this.positions[score.bracketPosition-1] = score.teamId
+                        this.positions[score.bracketPosition - 1] = score.teamId
                     })
                 }
-                this.isLoadingScores=false;
+                this.isLoadingScores = false;
             })
-            .catch(error =>{
+            .catch(error => {
                 this.$store.commit('SET_NOTIFICATION', 'error loading existing tournament scores' + error.message);
             })
     }
@@ -202,13 +219,12 @@ export default {
 </script>
 
 <style scoped>
-
 form {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-content: center;
-    margin:0 10px 10px 10px;
+    margin: 0 10px 10px 10px;
     font-size: 14px;
     max-width: 250px;
 
