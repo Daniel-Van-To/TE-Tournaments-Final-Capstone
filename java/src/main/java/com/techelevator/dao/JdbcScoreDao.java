@@ -151,6 +151,50 @@ public class JdbcScoreDao implements ScoreDao {
         return score;
     }
 
+    @Override
+    public List<Score> moveWinnersToNextRound(List<Score> scores, int resultsRoundStart, int startUpdatePosition, int tournamentId) {
+        int updatePosition = startUpdatePosition;
+        for(int i = resultsRoundStart; i < startUpdatePosition; i+= 2){
+            String score1 = scores.get(i).getScore();
+            int intScore1 = -5;
+            String score2 = scores.get(i+1).getScore();
+            int intScore2 = -5;
+            char team1Score = '0';
+            char team2Score = '0';
+            Score winner = getScoreByPosition(tournamentId, updatePosition);
+
+            if(score1.equalsIgnoreCase("w") || score1.equalsIgnoreCase("l")) {
+                team1Score = score1.charAt(0);
+                team2Score = score2.charAt(0);
+            }
+            else {
+                intScore1 = Integer.parseInt(score1);
+                intScore2 = Integer.parseInt(score2);
+            }
+
+            if(intScore1 == -5) {
+                if(team1Score > team2Score) {
+                    winner.setTeamId(scores.get(i).getTeamId());
+                }
+                else {
+                    winner.setTeamId(scores.get(i+1).getTeamId());
+                }
+            }
+            else {
+                if(intScore1 > intScore2) {
+                    winner.setTeamId(scores.get(i).getTeamId());
+                }
+                else {
+                    winner.setTeamId(scores.get(i+1).getTeamId());
+                }
+            }
+            updateScore(winner, winner.getScoreId());
+            updatePosition++;
+        }
+
+        return getScoresByTournamentId(scores.get(0).getTournamentId());
+    }
+
 
     public Score mapRowToScore(SqlRowSet rowSet){
         Score score = new Score();
