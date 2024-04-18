@@ -111,7 +111,7 @@ export default {
 
 
             //scores is ordered by bracket position, so we can iterate through.
-            for (let i = (start); i < finish; i += 1) {
+            for (let i=(start); i<(finish); i+=1) {
                 const score = this.scores[i - 1];
 
                 if (score == undefined || score == null) {

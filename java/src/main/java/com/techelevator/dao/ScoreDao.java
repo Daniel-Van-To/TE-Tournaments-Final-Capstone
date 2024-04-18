@@ -12,5 +12,6 @@ public interface ScoreDao {
     public Score getScoreByPosition(int tournamentId, int position);
     public List<Score> getScoresByTournamentId(int tournamentId);
     public List<Score> getScoresByTeamId(int teamId);
+    public Score updateScore(Score toUpdate, int scoreId);
 
 }

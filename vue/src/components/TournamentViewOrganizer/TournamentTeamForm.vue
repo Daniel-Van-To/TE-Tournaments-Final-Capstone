@@ -1,5 +1,5 @@
 <template>
-    <div>Loading...</div>
+    <!-- <div>Loading...</div> -->
     <form class="placeTeams">
         <div class="formTitle">Assign Teams</div>
         <div v-for="position in size" :key="position" class="formField">
@@ -12,6 +12,7 @@
             </select>
         </div>
         <button class="input" @click.prevent="this.assignValues()">Assign Automatically</button>
+        <button class="input" @click.prevent="this.savePositions()">Save</button>
         <input class="input" type="submit" @click.prevent="this.showWarning()"/>
         <div v-show="this.warn" class="warning">
             Warning!
@@ -51,6 +52,28 @@ export default {
             return `team-${position}`;
         },
 
+        savePositions() {
+            let scoreList = [];
+
+            for (let i = 0; i < this.positions.length; i++) {
+                if (this.positions[i] != '') {
+                    scoreList.push({
+                    tournamentId: this.tournament.tournamentId,
+                    bracketPosition: (i+1),
+                    teamId: this.positions[i],
+                    score: '',
+                });
+                }
+            }
+
+            ScoreService.initializeTournamentScores(this.tournament.tournamentId, scoreList)
+                .then()
+                .catch(error => {
+                    this.$store.commit('SET_NOTIFICATION', 'error saving scores: ' + error.message);
+                });
+
+        },
+
         showWarning() {
             this.warn = true;
         },
@@ -67,8 +90,11 @@ export default {
         submit() {
             if (this.readyToStart) {
               this.changeTournamentStatus();
+              this.initializeScores();
             }
-            this.initializeScores();
+            else {
+                this.$store.commit('SET_NOTIFICATION', 'Insufficient teams - press save to hold current positions, or add more teams to the tournament.')
+            }
         },
 
         changeTournamentStatus() {

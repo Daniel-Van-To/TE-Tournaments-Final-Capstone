@@ -92,8 +92,11 @@ public class ScoreController {
         List<Score> newScores = new ArrayList<>();
 
         try {
-            for (Score score : scores) {
-                newScores.add(scoreDao.addScore(score));
+            for (int i = 0; i < scores.size(); i++) {
+                Score toCheck = scoreDao.getScoreByPosition(tournamentId, scores.get(i).getBracketPosition());
+                if (toCheck != null) {
+                    newScores.add(scoreDao.updateScore(scores.get(i), scores.get(i).getScoreId()));
+                }
             }
         } catch (DaoException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
