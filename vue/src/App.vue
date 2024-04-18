@@ -63,6 +63,8 @@ export default {
 }
 
 #notificationContainer {
+  position: fixed;
+  width: 100%;
   grid-area: notif;
   z-index: 3;
 }
@@ -105,17 +107,17 @@ div img {
   padding: 0 10px;
 }
 
-
 body {
   margin: 0 0 0 0;
+
 }
-#capstone-app{
+/* #capstone-app{ */
   /* font-family: "Avenir", Helvetica, Arial, sans-serif; */
 
   /* text-align: center; */
   /* color: #2c3e50; */
   /* max-width: 800px; */
   /* margin: 60px auto 0 auto;   */
-}
+/* } */
 
 </style>
