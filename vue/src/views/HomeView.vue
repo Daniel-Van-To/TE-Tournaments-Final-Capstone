@@ -17,8 +17,11 @@
       :duration="3000"/>
     </vueper-slides>
 
-    <div>
-      <h3 id="description">Beautifully organized tournament brackets that show head-to-head matchup between individual teams. The winners of each matchup move inward until only two remain at the root to play for the championship.</h3>
+    <div class="description">
+      <h3 >Beautifully organized tournament brackets that show head-to-head 
+        matchup between individual teams. The winners of each matchup move inward until only 
+        two remain at the root to play for the championship.</h3>
+      <h3 >Need to host tournaments? its time to explore Tourna-Mental!</h3>
     </div>
   </div>
 </template>
@@ -93,6 +96,7 @@ export default {
   .vueperslide__content-wrapper {
     display: flex;
     justify-content: center;
+
   }
   .vueperslide__title {
     padding-right: 20px;
@@ -120,8 +124,10 @@ export default {
     font-family: 'Roboto Condensed', sans-serif;
   }
 
-  #description {
-    border: 2px solid
+  .description {
+    border: 2px solid var(--purple);
+    border-radius:10px;
+    
   }
 
   #header {
@@ -136,6 +142,7 @@ export default {
     right: 0;
     overflow: hidden;
     z-index: 1;
+    border-radius:10px;
 
 }
 </style>

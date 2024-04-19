@@ -35,7 +35,8 @@ export default {
                 userName: this.$store.state.user.username,      
             },
 
-            fullTeam: false
+            fullTeam: false,
+            teamInfo: []
         }
     },
 
@@ -85,6 +86,11 @@ export default {
         TeamService.checkIfTeamIsFull(this.$route.params.teamId)
         .then((response) => {
             this.fullTeam = response.data;
+        });
+
+        TeamService.getTeamInfo(this.$route.params.teamId)
+        .then((response) => {
+            this.teamInfo = response.data;
         })
     }
 };
