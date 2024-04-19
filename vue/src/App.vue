@@ -42,12 +42,12 @@ export default {
 <style>
 
 :root {
-  --pinkish: #FAAAA9;
-  --darkGreen: #245032;
-  --brownGray: #BAA2A2;
-  --lightGreen: #AAFAC3;
-  --dullGreen: #82A58D;
-  --maroonKindof: #7A4D4C;
+  --lightGreen: #C1E62E;
+  --yellow: #E6C42E;
+  --purple: #291454;
+  --darkGreen: #485514;
+  --creme: #D4CA9D;
+  --redBrown: #7A4D4C;
 }
 
 #capstone-app {
@@ -105,6 +105,10 @@ div img {
   top:77px;
   position: relative;
   padding: 0 10px;
+  background-color: var(--creme);
+  border: 2px solid var(--purple);
+  min-height: 100vh;
+  height: auto;
 }
 
 body {

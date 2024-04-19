@@ -62,9 +62,10 @@ export default {
     margin: none;
     padding: none;
     display: flex;
-    background-color: var(--pinkish);
+    background-color: var(--darkGreen);
     /* justify-content: space-between; */
     height: fit-content;
+    border: 2px solid var(--purple);
 
 }
 
@@ -134,10 +135,7 @@ span input {
     color:black;
     background-color: white;
     align-self: center;
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem; 
-    padding-left: 0.1rem;
-    padding-right: 0.1rem;
+    padding: 0.5rem;
     border: 1px solid black;
 }
 

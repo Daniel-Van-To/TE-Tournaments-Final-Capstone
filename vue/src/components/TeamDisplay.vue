@@ -94,16 +94,19 @@ export default {
 <style scoped>
 table {
   margin: auto;
+
 }
 
 th, td {
   text-align: left;
   padding: 10px;
   vertical-align: top;
+  border: 1px solid var(--purple);
 }
 
 tr:nth-child(even) {
   background-color: rgb(238, 238, 238);
+  
 }
 
 .btn {
@@ -118,6 +121,7 @@ tr:nth-child(even) {
   line-height: 1.5;
   border-radius: .25rem;
   cursor: pointer;
+  border: 1px solid var(--purple);
 
   font-family: 'Roboto Condensed', sans-serif;
   font-weight: bold;
