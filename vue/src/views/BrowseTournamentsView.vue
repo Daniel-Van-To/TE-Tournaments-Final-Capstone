@@ -61,6 +61,10 @@ export default {
     },
     getParams() {
       this.gameFilter = this.$route.params.filter;
+
+      if(this.gameFilter == undefined) {
+        this.gameFilter = '';
+      }
     }
 
   },
