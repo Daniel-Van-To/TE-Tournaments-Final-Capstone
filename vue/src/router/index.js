@@ -81,7 +81,7 @@ const routes = [
   },
 
   {
-    path: "/browse-tournaments",
+    path: "/browse-tournaments/:filter?",
     name: "browse-tournaments",
     component: BrowseTournamentsView,
     meta: {
