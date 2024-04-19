@@ -32,6 +32,10 @@ export default {
 
     computed: {
 
+        padding() {
+            return ((this.round*80) - 60)/2
+        },
+
         inputDisabledFirst() {
             if (this.firstTeamName === '') {
                 return true;
@@ -182,6 +186,7 @@ input {
     white-space: nowrap;
     overflow: hidden;
     position: relative;
+    border: 1px solid var(--darkGreen)
 }
 
 .round-two .matchup {

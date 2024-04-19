@@ -1,6 +1,5 @@
 <template>
-
-    <div class="hostContainer" v-if="isTournamentHost"> 
+    <div class="hostContainer" v-if="isTournamentHost">
         <h3>Welcome to your tournament, {{ this.$store.state.user.displayName }}!</h3>
         <p>As host, you can see requests to join this tournament, and you may enter scores by entering 'Edit Mode'.</p>
         <div class="hostButtonsContainer">
@@ -30,15 +29,18 @@
         <div class="container">
 
             <div v-if="isTournamentHost && isNotStarted" class="teamsForm">
-                <tournament-team-form :teams="teams" :tournament="tournament" :totalPositions="this.calculateStartPosition(rounds+1)"/>
+                <tournament-team-form :teams="teams" :tournament="tournament"
+                    :totalPositions="this.calculateStartPosition(rounds + 1)" />
             </div>
             <div class="split split-one">
-                <TournamentRound v-for="(round, index) in rounds" :key="index"
-                    v-bind:teams="this.teamsByRound(round)" v-bind:round="round"
-                    v-bind:currentRound="currentRound" v-bind:tournament="tournament"
-                    v-bind:startPosition="this.calculateStartPosition(round)" v-bind:scores="scores"
-                    :edit="editMode" />
+                <TournamentRound v-for="(round, index) in rounds" :key="index" v-bind:teams="this.teamsByRound(round)"
+                    v-bind:round="round" v-bind:currentRound="currentRound + 1" v-bind:tournament="tournament"
+                    v-bind:startPosition="this.calculateStartPosition(round)" v-bind:scores="scores" :edit="editMode" />
             </div>
+
+        </div>
+        <div v-if="winnerWinnerChickenDinner" class="winnerHolder">
+            <h2>Winner: {{ this.getWinner()?.teamName }}!!</h2>
         </div>
     </section>
 </template>
@@ -57,6 +59,14 @@ export default {
 
     computed: {
 
+        winnerWinnerChickenDinner() {
+            const maxIndex = this.calculateStartPosition(this.rounds+1)-1;
+
+            if (this.scores[maxIndex] != undefined && this.scores[maxIndex] != '' ) {
+                return true;
+            }
+            return false;
+        },
         currentRound() {
 
             if (this.scores.length == 0) {
@@ -68,7 +78,6 @@ export default {
 
             for (let i = 0; i < this.scores.length; i++) {
                 const score = this.scores[i];
-                console.log(JSON.stringify(score));
 
                 if (score.score == null || score.score == undefined || score.score == '') {
                     console.log('returning round: ' + round)
@@ -77,14 +86,13 @@ export default {
                 if (i == interval) {
                     console.log(`incrementing. interval: ${interval} round: ${round}`)
                     round++;
-                    interval+= interval/2;
+                    interval += interval / 2;
                 }
             }
             return this.rounds;
         },
-
         isNotStarted() {
-            return (this.scores.length <= this.calculateStartPosition(this.rounds+1)) && (this.tournament.tournamentStatus == 's');
+            return (this.scores.length <= this.calculateStartPosition(this.rounds + 1)) && (this.tournament.tournamentStatus == 's');
         },
         isLoading() {
             return this.isLoadingScores || this.isLoadingTournament || this.isLoadingTournamentHost;
@@ -125,6 +133,19 @@ export default {
 
     methods: {
 
+        getWinner() {
+            const winnerScore = this.scores[this.calculateStartPosition(this.rounds + 1) - 1];
+
+            if (winnerScore?.teamId != undefined) {
+                for (let i = 0; i < this.teams.length; i++) {
+                    if (this.teams[i].teamId == winnerScore.teamId) {
+                        return this.teams[i];
+                    }
+                }
+            }
+
+        },
+
         toggleEditMode() {
             if (this.editMode) {
                 this.refreshScores();
@@ -137,7 +158,7 @@ export default {
         refreshScores() {
             this.isLoadingScores = true;
             ScoreService.moveRoundsAndGetUpdatedListOfScores(this.tournament.tournamentId, this.currentRound)
-                .then(response =>{
+                .then(response => {
                     if (response.status == 200) {
                         this.scores = response.data
                         this.isLoadingScores = false;
@@ -156,7 +177,7 @@ export default {
 
 
             //scores is ordered by bracket position, so we can iterate through.
-            for (let i=(start); i<(finish); i+=1) {
+            for (let i = (start); i < (finish); i += 1) {
                 const score = this.scores[i - 1];
 
                 if (score == undefined || score == null || score.teamId == '') {
@@ -166,7 +187,7 @@ export default {
                     for (let j = 0; j < this.teams.length; j++) {
                         const teamToCheck = this.teams[j];
 
-                        
+
 
                         if (score.teamId == teamToCheck.teamId) {
                             teamsForThisRound.push(this.teams[j]);
@@ -251,11 +272,22 @@ export default {
 
 <style scoped>
 
+.winnerHolder {
+    border: 2px solid var(--darkGreen);
+    background-color: var(--purple);
+    color: white;
+
+}
+
+.winnerHolder h2 {
+    padding: 0.5rem;
+}
 .teamsForm {
-    width:fit-content;
+    width: fit-content;
     justify-content: center;
     justify-self: center;
 }
+
 .hostContainer {
     display: flex;
     flex-direction: column;
@@ -263,13 +295,13 @@ export default {
     align-content: center;
     /* background-color: var(--maroonKindof); */
     background-color: lightgrey;
-    border: 5px solid var(--maroonKindof);
+    border: 2px solid var(--darkGreen);
     color: black;
     margin: 10px 0;
 }
 
-.hostContainer h3, 
-.hostContainer p ,
+.hostContainer h3,
+.hostContainer p,
 .hostContainer div {
     align-self: center;
     background-color: lightgrey;
@@ -290,11 +322,14 @@ export default {
 #bracket {
     /* overflow: hidden; */
     background-color: lightgrey;
-    border: 5px solid var(--maroonKindof);
+    border: 2px solid var(--darkGreen);
     padding-top: 20px;
     font-size: 12px;
     padding: 40px 0;
     height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .container {
@@ -302,8 +337,9 @@ export default {
     margin: 0 auto;
     display: flex;
     flex-direction: row;
-    min-height: fit-content;
+    /* min-height: 100vh; */
     justify-content: left;
+    align-content: center;
 }
 
 .split {
@@ -343,7 +379,7 @@ We aren't using that section as of yet.
     flex-direction: column;
     width: 95%;
     height: fit-content;
-    
+
 }
 
 /* .split-two {} */
@@ -400,6 +436,15 @@ We aren't using that section as of yet.
     margin: 0;
     height: 60px;
     padding: 130px 0;
+}
+
+.round-four :deep(.matchup) {
+    padding: 290px 0;
+
+}
+
+.round-five :deep(.matchup) {
+    padding: 610px 0;
 }
 
 /* adding round-details to TournamentRound.vue */

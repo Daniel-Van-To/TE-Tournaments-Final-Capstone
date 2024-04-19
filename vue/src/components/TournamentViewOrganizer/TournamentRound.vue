@@ -143,7 +143,7 @@ export default {
     font-size: 14px;
     font-weight: bold;
     color: black;
-    background-color: var(--pinkish);
+    background-color: var(--yellow);
     border: 2px solid var(--darkGreen);
     text-transform: uppercase;
     text-align: center;
