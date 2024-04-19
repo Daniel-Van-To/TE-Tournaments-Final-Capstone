@@ -2,7 +2,7 @@
   <div class="home">
     <div id="header">
       <h1>Welcome to Tourna-Mental!</h1>
-      <h3>A dynamic tournament hosting webpage where you can manage all your tournaments in one place. </h3>
+      <h3 class="home-view-text">A dynamic tournament hosting webpage where you can manage all your tournaments in one place. </h3>
     </div>
     
     <!-- <slide-show/> -->
@@ -18,10 +18,10 @@
     </vueper-slides>
 
     <div class="description">
-      <h3 >Beautifully organized tournament brackets that show head-to-head 
+      <h3 class="home-view-text">Beautifully organized tournament brackets that show head-to-head 
         matchup between individual teams. The winners of each matchup move inward until only 
         two remain at the root to play for the championship.</h3>
-      <h3 >Need to host tournaments? its time to explore Tourna-Mental!</h3>
+      <h3 class="home-view-text">Need to host tournaments? its time to explore Tourna-Mental!</h3>
     </div>
   </div>
 </template>
@@ -119,7 +119,7 @@ export default {
     
   }
 
-  h3 {
+  .home-view-text {
     text-align: center;
     font-family: 'Roboto Condensed', sans-serif;
   }

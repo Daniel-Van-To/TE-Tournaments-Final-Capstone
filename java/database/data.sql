@@ -24,8 +24,15 @@ VALUES ('silliesimps', 'harrys_alt_account', 'silly_boy_47@msn.com', '$2a$08$UkV
 --user id 8
 ('cat_attack', 'catwoman', 'leChat@catsrule.com', '$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER'),
 --user id 9
-('batman', 'Batman', 'iamthebatman@gmail.com', '$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER');
+('batman', 'Batman', 'iamthebatman@gmail.com', '$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER'),
 --user id 10
+('phil', 'PhillyD', 'phillyD@gmail.com', '$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER'), --User Id 11
+('jeff', 'Jeff the Man', 'jeff@gmail.com', '$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER'), --User Id 12
+('tommy', 'Tommy Thompson', 'iamthebatman@gmail.com', '$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER'), -- User Id 13
+('jimmy', 'Jimmy Neutron', 'iamthebatman@gmail.com', '$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER'), -- User Id 14
+('carl', 'Carl Wheezer', 'iamthebatman@gmail.com', '$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER'), -- User Id 15
+('sheen', 'Sheen Estevez', 'iamthebatman@gmail.com', '$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER'); -- User Id 16
+
 
 INSERT INTO game (game_name,max_players)
 VALUES ('Reset Filter', 0),
@@ -66,14 +73,22 @@ VALUES (3, 'find pearls', 'running', false), --team_id 1
 (10, 'Fast ''R Us', 'swimming', false), --team_id 11
 
 -- kayaking test team for testing tournament initialization
-(3, 'Harrys Kayaking team', 'kayaking', false),
-(4, 'Daniels Kayaking team', 'kayaking', false),
-(5, 'Revathis Kayaking team', 'kayaking', false),
-(6, 'Silliesimps Kayaking team', 'kayaking', false),
-(7, 'Chandras Kayaking team', 'kayaking', false),
-(8, 'Bens Kayaking team', 'kayaking', false),
-(9, 'Catwomans Kayaking team', 'kayaking', false),
-(10, 'Batmans Kayaking team', 'kayaking', false);
+(3, 'Harrys Kayaking team', 'kayaking', false),--team_id 12
+(4, 'Daniels Kayaking team', 'kayaking', false),--team_id 13
+(5, 'Revathis Kayaking team', 'kayaking', false),--team_id 14
+(6, 'Silliesimps Kayaking team', 'kayaking', false),--team_id 15
+(7, 'Chandras Kayaking team', 'kayaking', false),--team_id 16
+(8, 'Bens Kayaking team', 'kayaking', false),--team_id 17
+(9, 'Catwomans Kayaking team', 'kayaking', false),--team_id 18
+(10, 'Batmans Kayaking team', 'kayaking', false),--team_id 19
+
+-- cricket teams to flesh out the database
+(7, 'Chandras Cricket team', 'cricket', true),--team_id 20
+(8, 'Bens Cricket team', 'cricket', true),--team_id 21
+(9, 'Catwomans Cricket team', 'cricket', true),--team_id 22
+(10, 'Batmans Cricket team', 'cricket', true),--team_id 23
+(11, 'PhillyD''s Cricket Team', 'cricket', true);--team_id 24
+
 
 
 INSERT INTO tournament (tournament_id, host_id,tournament_name,entry_fee,game_name, accepting_teams, tournament_status, maximum_participants)
@@ -82,9 +97,37 @@ VALUES(0, 2, 'dummy tournament', 0, 'valorant', false, 'o',10);
 INSERT INTO tournament (host_id,tournament_name,entry_fee,game_name, accepting_teams, tournament_status, maximum_participants)
 VALUES (2, 'test tournament', 0, 'running', true, 'o',32),
 (3, 'Harry''s Swimming Tournament', 0, 'swimming', true, 'o', 8), -- tournament_id 2
-(3, 'test unstarted swimming tournament', 0, 'swimming', true, 's', 32), -- tournament_id 3
+(3, 'Fresh swimming tournament', 0, 'swimming', true, 's', 32), -- tournament_id 3
 (3, 'Really Awesome White-Water Kayaking Challenge', 0, 'kayaking', true, 's', 8),
-(3, 'Swimmer''s Paradise ft. Coolio Tournament', 0, 'swimming', true, 's', 8);
+(3, 'Swimmer''s Paradise ft. Coolio Tournament', 0, 'swimming', true, 's', 8),
+
+--CHESS
+(3, 'Harry''s Chess Bonanza', 0, 'chess', true,'s',16),
+(4, 'Big Chess Bonanza', 0, 'chess', true,'s', 16),
+(12, 'Bigger Chess Bonanza', 0, 'chess', true, 's', 8),
+(12, 'Biggest Chess Bonanza', 0, 'chess', true, 's', 8),
+
+-- SOCCER
+(4, 'Country Roads', 0, 'soccer', true, 's', 8),
+(13, 'Take Me Home', 0, 'soccer', true, 's', 8),
+(13, 'To the Place', 0, 'soccer', true, 's', 8),
+(13, 'I Belong', 0, 'soccer', true, 's', 8),
+(13, 'WEST VIRGINIA', 0, 'soccer', true, 's', 8),
+
+--BASEBALL
+(16, 'A Big Iron On His Hip!', 0, 'baseball', true, 's', 8),
+
+--CRICKET
+(14, 'COUNTRY ROADS', 0, 'cricket', true, 's', 8),
+(12, 'TAKE ME HOME', 0, 'cricket', true, 's', 8),
+(11, 'TO THE PLACE I BELONG', 0, 'cricket', true, 's', 8),
+
+
+--KAYAKING
+(5, 'I Don''t Want To Set The World On FIRE', 0, 'kayaking', true, 's', 8);
+
+
+
 
 
 INSERT INTO team_user (user_id, team_id)
@@ -104,6 +147,7 @@ VALUES (3, 1), --links harry to 'find pearls'
 (9, 10),
 (10, 11),
 
+
 --linking everyone to their own kayaking team
 (3, 12),
 (4, 13),
@@ -112,7 +156,12 @@ VALUES (3, 1), --links harry to 'find pearls'
 (7, 16),
 (8, 17),
 (9, 18),
-(10, 19);
+(10, 19),
+(7, 20),
+(8, 21),
+(9, 22),
+(10, 23),
+(11, 24);
 
 
 
