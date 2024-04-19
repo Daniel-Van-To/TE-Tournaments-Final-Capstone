@@ -61,10 +61,10 @@ div {
         "t_game .      t_entry"
     ;
     padding: 20px;
-    border: 1px;
     box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
     margin:0em;
     cursor: pointer;
+    border: 1px solid var(--purple);
 }
 
 

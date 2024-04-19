@@ -1,16 +1,25 @@
 <template>
   <div class="home">
-    <h1>Home</h1>
+    <div id="header">
+      <h1>Welcome to Tourna-Mental!</h1>
+      <h3>A dynamic tournament hosting webpage where you can manage all your tournaments in one place. </h3>
+    </div>
+    
     <!-- <slide-show/> -->
-    <vueper-slides fade :touchable="false" slide-content-outside="bottom">
+    <vueper-slides :touchable="false" slide-content-outside="bottom" autoplay>
       <vueper-slide 
       v-for="(slide,i) in slides"
       :content="slide.content"
       :link="slide.link"
       :key="i" 
       :title="slide.title"
-      :image="slide.image"/>
+      :image="slide.image"
+      :duration="3000"/>
     </vueper-slides>
+
+    <div>
+      <h3 id="description">Beautifully organized tournament brackets that show head-to-head matchup between individual teams. The winners of each matchup move inward until only two remain at the root to play for the championship.</h3>
+    </div>
   </div>
 </template>
 
@@ -31,30 +40,34 @@ export default {
       slideIndex: 0,
       slides: [
         {
-          title: 'Slide #1',
-          content: 'Slide 1 content',
+          // title: 'Slide #1',
+          content: 'Browse Chess Tournaments!',
           image: '/florian-cordier-zOTpWmLyxdU-unsplash.jpg',
-          link: 'http://127.0.0.1:5173/browse-tournaments/swimming'
+          link: 'http://127.0.0.1:5173/browse-tournaments/chess'
         },
         {
-          title: 'Slide #2',
-          content: 'Slide 2 content',
-          image: '/xavier-foucrier-UlGCxZVw078-unsplash.jpg'
+         // title: 'Browse Kayaking Tournaments in an Area Near You!',
+           content: 'Browse Kayaking Tournaments in an Area Near You!',
+          image: '/xavier-foucrier-UlGCxZVw078-unsplash.jpg',
+          link: 'http://127.0.0.1:5173/browse-tournaments/kayaking'
         },
         {
-          title: 'Slide #3',
-          content: 'Slide 3 content',
-          image: '/carouselFootball.jpg'
+         // title: 'Slide #3',
+          content: 'Come Take a Peek at Soccer Tournaments!',
+          image: '/carouselFootball.jpg',
+          link: 'http://127.0.0.1:5173/browse-tournaments/soccer'
         },
         {
-          title: 'Slide #4',
-          content: 'Slide 4 content',
-          image: '/cricket.jpg'
+          // title: 'Slide #4',
+          content: 'Browse our Cricket Tournaments Fun for All Ages!',
+          image: '/cricket.jpg',
+          link: 'http://127.0.0.1:5173/browse-tournaments/cricket'
         },
         {
-          title: 'Slide #5',
-          content: 'Slide 5 content',
-          image: '/josh-hemsley-e-f17L4EBBc-unsplash.jpg'
+          // title: 'Slide #5',
+          content: 'Browse Baseball Tournaments!',
+          image: '/josh-hemsley-e-f17L4EBBc-unsplash.jpg',
+          link: 'http://127.0.0.1:5173/browse-tournaments/baseball'
         },
         
       ]
@@ -89,10 +102,42 @@ export default {
   }
   .vueperslide__content {
     font-family: 'Roboto Condensed', sans-serif;
-    font-size: 14px;
+    font-size: 20px;
     font-weight: bold;
+    padding-bottom: 4rem;
+
 
   }
+
+  h1{
+    text-align: center;
+    font-family: 'Roboto Condensed', sans-serif;
+    
+  }
+
+  h3 {
+    text-align: center;
+    font-family: 'Roboto Condensed', sans-serif;
+  }
+
+  #description {
+    border: 2px solid
+  }
+
+  #header {
+    /* background-color: darkgrey; */
+  }
+
+  .vueperslides__track {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    left: 0;
+    right: 0;
+    overflow: hidden;
+    z-index: 1;
+
+}
 </style>
 
 
