@@ -1,9 +1,10 @@
 <template>
-    
+    <div class="container">
     <div class="card-container" v-if="this.team.teamId > 0" v-on:click="pushToTeamView">
         <h3>Team Name: {{ team.teamName }}</h3>
         <span class="game-name">Team Game: {{ team.gameName }}</span>
         <span class="participants">{{ numberOfTeamMembers }} / {{ teamDto.maximumMembers }} Team Members</span>
+    </div>
     </div>
 
 </template>
@@ -50,7 +51,8 @@ export default {
 <style scoped>
 
 div {
-    border: 4px solid pink;
+    /* border: 4px solid var(--purple); */
+    padding-bottom:20px;
 }
 
 .card-container {

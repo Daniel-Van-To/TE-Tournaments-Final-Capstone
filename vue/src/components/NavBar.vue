@@ -9,10 +9,10 @@
             <router-link class="links" v-if="isLoggedIn" v-bind:to="{name: 'teams'}">Browse Teams</router-link>
             <router-link class="links" v-if="isLoggedIn" v-bind:to="{name: 'create-team'}">Create a team</router-link>
             <router-link class="links" v-bind:to="{name: 'about-us'}">About Us</router-link>
-            <router-link class="links" v-bind:to="{name: 'faq'}">FAQ</router-link>
+            <!-- <router-link class="links" v-bind:to="{name: 'faq'}">FAQ</router-link> -->
 
             <span v-if="isLoggedIn" class="nav-bar-buttons">
-                <input class="loggedIn" type="button" value="Logout" v-on:click.prevent="logout">
+                <input class="loggedIn-bttn" type="button" value="Logout" v-on:click.prevent="logout">
                 <h4 class="loggedIn">Hello, {{this.$store.state.user.username}}</h4>
             </span>
             <span v-else class="nav-bar-buttons">
@@ -128,6 +128,11 @@ span input {
 .loggedIn {
     margin-left: 0.25rem;
     margin-right: 0.25rem;
+    color:white;
+}
+.loggedIn-bttn {
+    margin-left: 0.25rem;
+    margin-right: 0.25rem;
 }
 
 .links {
@@ -135,7 +140,7 @@ span input {
     color:black;
     background-color: white;
     align-self: center;
-    padding: 0.5rem;
+    padding: 0.75rem;
     border: 1px solid black;
 }
 
