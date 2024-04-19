@@ -87,7 +87,17 @@ VALUES (3, 'find pearls', 'running', false), --team_id 1
 (8, 'Bens Cricket team', 'cricket', true),--team_id 21
 (9, 'Catwomans Cricket team', 'cricket', true),--team_id 22
 (10, 'Batmans Cricket team', 'cricket', true),--team_id 23
-(11, 'PhillyD''s Cricket Team', 'cricket', true);--team_id 24
+(11, 'PhillyD''s Cricket Team', 'cricket', true),--team_id 24
+
+--More Swimming Teams for Harry's 16 person tournament
+(3, 'Billie Jean', 'swimming', false), --team_id 25
+(4, 'Dancing Queen', 'swimming', false), --team_id 26
+(5, 'Sweet Child O'' Mine', 'swimming', false), --team_id 27
+(6, 'Stairway to Heaven', 'swimming', false), --team_id 28
+(7, 'Bohemian Rhapsody', 'swimming', false), --team_id 29
+(8, 'Tank!', 'swimming', false), --team_id 30
+(9, 'Atom Bomb Baby', 'swimming', false), --team_id 31
+(10, 'Rocket 69', 'swimming', false); --team_id 32
 
 
 
@@ -98,33 +108,35 @@ INSERT INTO tournament (host_id,tournament_name,entry_fee,game_name, accepting_t
 VALUES (2, 'test tournament', 0, 'running', true, 'o',32),
 (3, 'Harry''s Swimming Tournament', 0, 'swimming', true, 'o', 8), -- tournament_id 2
 (3, 'Fresh swimming tournament', 0, 'swimming', true, 's', 32), -- tournament_id 3
-(3, 'Really Awesome White-Water Kayaking Challenge', 0, 'kayaking', true, 's', 8),
-(3, 'Swimmer''s Paradise ft. Coolio Tournament', 0, 'swimming', true, 's', 8),
+(3, 'Really Awesome White-Water Kayaking Challenge', 0, 'kayaking', true, 's', 8), -- tournament_id 4
+(3, 'Swimmer''s Paradise ft. Coolio Tournament', 0, 'swimming', true, 's', 8), -- tournament_id 5
 
 --CHESS
-(3, 'Harry''s Chess Bonanza', 0, 'chess', true,'s',16),
-(4, 'Big Chess Bonanza', 0, 'chess', true,'s', 16),
-(12, 'Bigger Chess Bonanza', 0, 'chess', true, 's', 8),
-(12, 'Biggest Chess Bonanza', 0, 'chess', true, 's', 8),
+(3, 'Harry''s Chess Bonanza', 0, 'chess', true,'s',16), -- tournament_id 6
+(4, 'Big Chess Bonanza', 0, 'chess', true,'s', 16), -- tournament_id 7
+(12, 'Bigger Chess Bonanza', 0, 'chess', true, 's', 8), -- tournament_id 8
+(12, 'Biggest Chess Bonanza', 0, 'chess', true, 's', 8), -- tournament_id 9
 
 -- SOCCER
-(4, 'Country Roads', 0, 'soccer', true, 's', 8),
-(13, 'Take Me Home', 0, 'soccer', true, 's', 8),
-(13, 'To the Place', 0, 'soccer', true, 's', 8),
-(13, 'I Belong', 0, 'soccer', true, 's', 8),
-(13, 'WEST VIRGINIA', 0, 'soccer', true, 's', 8),
+(4, 'Country Roads', 0, 'soccer', true, 's', 8), -- tournament_id 10
+(13, 'Take Me Home', 0, 'soccer', true, 's', 8), -- tournament_id 11
+(13, 'To the Place', 0, 'soccer', true, 's', 8), -- tournament_id 12
+(13, 'I Belong', 0, 'soccer', true, 's', 8), -- tournament_id 13
+(13, 'WEST VIRGINIA', 0, 'soccer', true, 's', 8), -- tournament_id 14
 
 --BASEBALL
-(16, 'A Big Iron On His Hip!', 0, 'baseball', true, 's', 8),
+(16, 'A Big Iron On His Hip!', 0, 'baseball', true, 's', 8), -- tournament_id 15
 
 --CRICKET
-(14, 'COUNTRY ROADS', 0, 'cricket', true, 's', 8),
-(12, 'TAKE ME HOME', 0, 'cricket', true, 's', 8),
-(11, 'TO THE PLACE I BELONG', 0, 'cricket', true, 's', 8),
+(14, 'COUNTRY ROADS', 0, 'cricket', true, 's', 8), -- tournament_id 16
+(12, 'TAKE ME HOME', 0, 'cricket', true, 's', 8), -- tournament_id 17
+(11, 'TO THE PLACE I BELONG', 0, 'cricket', true, 's', 8), -- tournament_id 18
 
 
 --KAYAKING
-(5, 'I Don''t Want To Set The World On FIRE', 0, 'kayaking', true, 's', 8);
+(5, 'I Don''t Want To Set The World On FIRE', 0, 'kayaking', true, 's', 8), -- tournament_id 19
+
+(3, 'BIG IRON', 0, 'swimming', true, 's', 16); -- tournament_id 20
 
 
 
@@ -202,7 +214,27 @@ VALUES (3, 1), --links 'raystar' to test tournament
 (7, 5),
 (8, 5),
 (9, 5),
-(10, 5);
+(10, 5),
+
+--linking 14 teams to this 16 person tournament for potential Demo
+(4, 20),
+(6, 20),
+(7, 20),
+(8, 20),
+(9, 20),
+(10, 20),
+(11, 20),
+(3, 20),
+(25, 20),
+(26, 20),
+(27, 20),
+(28, 20),
+(29, 20),
+(30, 20),
+(31, 20),
+(32, 20);
+
+
 
 
 INSERT INTO scores (tournament_id, team_id, bracket_position, score)
