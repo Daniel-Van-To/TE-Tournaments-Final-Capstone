@@ -128,9 +128,9 @@ VALUES (2, 'test tournament', 0, 'running', true, 'o',32),
 (16, 'A Big Iron On His Hip!', 0, 'baseball', true, 's', 8), -- tournament_id 15
 
 --CRICKET
-(14, 'COUNTRY ROADS', 0, 'cricket', true, 's', 8), -- tournament_id 16
-(12, 'TAKE ME HOME', 0, 'cricket', true, 's', 8), -- tournament_id 17
-(11, 'TO THE PLACE I BELONG', 0, 'cricket', true, 's', 8), -- tournament_id 18
+(14, 'EARTH', 0, 'cricket', true, 's', 8), -- tournament_id 16
+(12, 'WIND', 0, 'cricket', true, 's', 8), -- tournament_id 17
+(11, 'FIRE', 0, 'cricket', true, 's', 8), -- tournament_id 18
 
 
 --KAYAKING
