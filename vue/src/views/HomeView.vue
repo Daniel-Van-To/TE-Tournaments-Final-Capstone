@@ -13,8 +13,7 @@
       :link="slide.link"
       :key="i" 
       :title="slide.title"
-      :image="slide.image"
-      :duration="3000"/>
+      :image="slide.image"/>
     </vueper-slides>
 
     <div class="description">
