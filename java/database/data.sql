@@ -54,15 +54,16 @@ INSERT INTO team (team_captain_id, team_name, game_name, accepting_members)
 VALUES (3, 'find pearls', 'running', false), --team_id 1
 (4, 'pho 95', 'valorant', true), --team_id 2
 (5, 'raystar', 'running', false), --team_id 3
+
 --swimming teams for 8 person tourney
-(3, 'flying turtles', 'swimming', false), --team_id 4
-(4, 'pho 96', 'swimming', false), --team_id 5
+(3, 'Flying Turtle', 'swimming', false), --team_id 4
+(4, 'Pho 96', 'swimming', false), --team_id 5
 (5, 'Ray Stars', 'swimming', false), --team_id 6
-(6, 'Your Boy', 'swimming', false), --team_id 7
-(7, 'Chandras Champion', 'swimming', false), --team_id 8
-(8, 'Bens team', 'swimming', false), --team_id 9
-(9, 'Wet cats', 'swimming', false), --team_id 10
-(10, 'Wet bats', 'swimming', false), --team_id 11
+(6, 'Self Phelp', 'swimming', false), --team_id 7
+(7, 'Chandra''s Joy', 'swimming', false), --team_id 8
+(8, 'Ben''s team', 'swimming', false), --team_id 9
+(9, 'Scaly Croc', 'swimming', false), --team_id 10
+(10, 'Fast ''R Us', 'swimming', false), --team_id 11
 
 -- kayaking test team for testing tournament initialization
 (3, 'Harrys Kayaking team', 'kayaking', false),
@@ -80,9 +81,10 @@ VALUES(0, 2, 'dummy tournament', 0, 'valorant', false, 'o',10);
 
 INSERT INTO tournament (host_id,tournament_name,entry_fee,game_name, accepting_teams, tournament_status, maximum_participants)
 VALUES (2, 'test tournament', 0, 'running', true, 'o',32),
-(3, 'test swimming tournament', 0, 'swimming', true, 'o', 8), -- tournament_id 2
+(3, 'Harry''s Swimming Tournament', 0, 'swimming', true, 'o', 8), -- tournament_id 2
 (3, 'test unstarted swimming tournament', 0, 'swimming', true, 's', 32), -- tournament_id 3
-(3, 'test aboutToStart kayaking tournament', 0, 'kayaking', true, 's', 8);
+(3, 'Really Awesome White-Water Kayaking Challenge', 0, 'kayaking', true, 's', 8),
+(3, 'Swimmer''s Paradise ft. Coolio Tournament', 0, 'swimming', true, 's', 8);
 
 
 INSERT INTO team_user (user_id, team_id)
@@ -143,7 +145,16 @@ VALUES (3, 1), --links 'raystar' to test tournament
 (16, 4),
 (17, 4),
 (18, 4),
-(19, 4);
+(19, 4),
+
+--linking 6 teams to this 8 person tourney for Demo
+(4, 5),
+(6, 5),
+(7, 5),
+(8, 5),
+(9, 5),
+(10, 5);
+
 
 INSERT INTO scores (tournament_id, team_id, bracket_position, score)
 VALUES (2, 4, 1, 'L'),
@@ -158,7 +169,11 @@ VALUES (2, 4, 1, 'L'),
 (2, 5, 9, 'W'),
 (2, 6, 10, 'L'),
 (2, 8, 11, 'L'),
-(2, 11, 12, 'W'); -- END OF ROUND 2, championship left to swim
+(2, 11, 12, 'W'), -- END OF ROUND 2, championship left to swim
+
+(2, 0, 13, ''),
+(2, 0, 14, ''),
+(2, 0, 15, '');
 
 
 COMMIT TRANSACTION;
