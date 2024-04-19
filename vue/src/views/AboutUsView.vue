@@ -4,10 +4,14 @@
     <p></p>
     <div class="theHomies">
       <section class="oneOfUs">
-        <img>
+        <img src="../assets/images/Selected/headshot4 (1).jpg">
         <div class="reverser">
           <h1>Revathi Ajjarapu</h1>
-          <p> description </p>
+          <p> My objective has always been to become a software engineer. 
+            With a fair amount of gap in my career, which cannot keep me from being successful, 
+            I started my journey towards achieving my goal, by enrolling in a full-stack Java bootcamp at Tech Elevator. 
+            I am looking forward to get a job as a junior software engineer, where I can continue to learn endlessly, 
+            and build my career.</p>
         </div>
       </section>
       <section class="oneOfUs">
