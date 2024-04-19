@@ -2,6 +2,7 @@
     <h1>Join Requests for {{ }}</h1>
     <tournament-join-request v-for="request in requests" v-bind:key="request.requestId" 
     v-bind:request="request" />
+    <button v-on:click="previousPage()">Back</button>
 </template>
 
 
@@ -20,6 +21,12 @@ export default {
     data() {
         return {
             requests: [],
+        }
+    },
+
+    methods: {
+        previousPage() {
+            this.$router.push({name: 'tournament-details-view'});
         }
     },
 

@@ -20,7 +20,7 @@
 
         </tbody>
     </table>
-    {{ JSON.stringify(updatedRequest) }}
+    <!-- {{ JSON.stringify(updatedRequest) }} -->
 </template>
 
 <script>
