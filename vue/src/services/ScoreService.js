@@ -15,8 +15,14 @@ export default {
         return axios.post(`/tournaments/${tournamentId}/initializeScores`, listOfScores);
     },
 
-    addScore(score) {
-        return axios.post(`/tournaments/addScore`, score)
+    updateScore(score) {
+        return axios.put(`/tournaments/updateScore/${score.scoreId}`, score);
+    },
+
+    moveRoundsAndGetUpdatedListOfScores(tournamentId, round) {
+        return axios.get(`/tournaments/${tournamentId}/team/${round}/update`);
     }
+
+
 
 }

@@ -161,7 +161,7 @@ public class JdbcScoreDao implements ScoreDao {
             int intScore2 = -5;
             char team1Score = '0';
             char team2Score = '0';
-            Score winner = getScoreByPosition(tournamentId, updatePosition);
+            Score winner = getScoreByPosition(tournamentId, updatePosition+1); //TODO update position + 1
 
             if(score1.equalsIgnoreCase("w") || score1.equalsIgnoreCase("l")) {
                 team1Score = score1.charAt(0);

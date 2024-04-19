@@ -4,7 +4,6 @@ import com.techelevator.dao.*;
 import com.techelevator.exception.DaoException;
 import com.techelevator.model.Score;
 import com.techelevator.model.Tournament;
-import com.techelevator.model.TournamentDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -121,7 +120,7 @@ public class ScoreController {
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(path = "/tournaments/{tournamentsId}/team/{round}/update", method = RequestMethod.GET)
-    public List<Score> getUpdatedPositionsIfRoundIsFinished(@PathVariable int tournamentsId, @PathVariable int round, @PathVariable int scoreId) {
+    public List<Score> getUpdatedPositionsIfRoundIsFinished(@PathVariable int tournamentsId, @PathVariable int round) {
         try {
             Tournament tournament = tournamentDao.getTournamentById(tournamentsId);
             int maxTeams = tournament.getMaximumParticipants();

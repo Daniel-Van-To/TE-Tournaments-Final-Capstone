@@ -34,7 +34,7 @@
             </div>
             <div class="split split-one">
                 <TournamentRound v-for="(round, index) in rounds" :key="index"
-                    v-bind:teams="this.teamsByRound(index + 1)" v-bind:round="round"
+                    v-bind:teams="this.teamsByRound(round)" v-bind:round="round"
                     v-bind:currentRound="currentRound" v-bind:tournament="tournament"
                     v-bind:startPosition="this.calculateStartPosition(round)" v-bind:scores="scores"
                     :edit="editMode" />
@@ -56,6 +56,32 @@ export default {
     components: { TournamentRound, TournamentTeamForm },
 
     computed: {
+
+        currentRound() {
+
+            if (this.scores.length == 0) {
+                return 1;
+            }
+
+            let round = 1;
+            let interval = this.tournament.maximumParticipants;
+
+            for (let i = 0; i < this.scores.length; i++) {
+                const score = this.scores[i];
+                console.log(JSON.stringify(score));
+
+                if (score.score == null || score.score == undefined || score.score == '') {
+                    console.log('returning round: ' + round)
+                    return round;
+                }
+                if (i == interval) {
+                    console.log(`incrementing. interval: ${interval} round: ${round}`)
+                    round++;
+                    interval+= interval/2;
+                }
+            }
+            return this.rounds;
+        },
 
         isNotStarted() {
             return (this.scores.length <= this.calculateStartPosition(this.rounds+1)) && (this.tournament.tournamentStatus == 's');
@@ -86,7 +112,6 @@ export default {
 
     data() {
         return {
-            // watchStore: this.$store.state.,
             teams: [],
             isCurrentUserTournamentHost: false,
             tournament: {},
@@ -94,7 +119,6 @@ export default {
             isLoadingScores: true,
             isLoadingTournament: true,
             isLoadingTournamentHost: true,
-            currentRound: '',
             editMode: false,
         }
     },
@@ -103,15 +127,32 @@ export default {
 
         toggleEditMode() {
             if (this.editMode) {
+                this.refreshScores();
                 this.editMode = false;
             }
             else this.editMode = true;
 
         },
+
+        refreshScores() {
+            this.isLoadingScores = true;
+            ScoreService.moveRoundsAndGetUpdatedListOfScores(this.tournament.tournamentId, this.currentRound)
+                .then(response =>{
+                    if (response.status == 200) {
+                        this.scores = response.data
+                        this.isLoadingScores = false;
+                    }
+                })
+                .catch(error => {
+                    this.$store.commit('SET_NOTIFICATION', 'error refreshing scores when leaving edit mode. error:' + error.message);
+                })
+        },
+
         teamsByRound(round) {
             let teamsForThisRound = [];
             const start = this.calculateStartPosition(round);
             const finish = this.calculateStartPosition(round + 1);
+            console.log("in the mix")
 
 
             //scores is ordered by bracket position, so we can iterate through.
@@ -119,7 +160,6 @@ export default {
                 const score = this.scores[i - 1];
 
                 if (score == undefined || score == null || score.teamId == '') {
-                    this.currentRound = round;
                     teamsForThisRound.push({});
                 }
                 else {
@@ -138,6 +178,7 @@ export default {
             return teamsForThisRound;
 
         },
+
         calculateStartPosition(round) {
             let holder = 1;
             let iterator = round;
@@ -150,18 +191,21 @@ export default {
 
             return holder;
         },
+
         pushToSeeTournamentJoinRequestsView() {
             this.$router.push({
                 name: 'see-tournament-join-requests-view',
                 params: { tournamentId: this.tournament.tournamentId }
             });
         },
+
         pushToSendTournamentJoinRequestView() {
             this.$router.push({
                 name: 'send-tournament-join-request-view',
                 params: { tournamentId: this.tournament.tournamentId }
             });
         },
+
     },
 
     created() {
@@ -201,32 +245,11 @@ export default {
             });
     },
 
-    // updated() {
-    //     this.isLoadingScores = true;
-    //     ScoreService.getListOfScoresByTournamentId(this.tournament.tournamentId)
-    //         .then(response => {
-    //             if (response.status == 200) {
-    //                 this.scores = response.data;
-    //                 this.isLoadingScores = false;
-    //             }
-    //         })
-    //         .catch(error => {
-    //             this.$store.commit('SET_NOTIFICATION', 'error on updated() method: ' + error.message);
-    //         })
-    // },
+
 };
 </script>
 
 <style scoped>
-/* This refers to our sources html body - we will want our own fonts and such. 
-*/
-/* body {
-    font-family: 'Istok Web', sans-serif;
-    background: url("http://picjumbo.com/wp-content/uploads/HNCK2189-1300x866.jpg") no-repeat #000;
-    background-size: cover;
-    min-height: 100%;
-    margin: 0;
-} */
 
 .teamsForm {
     width:fit-content;

@@ -1,11 +1,11 @@
 <template>
     <ul v-if="edit" class="matchup">
         <li class="team team-top">{{ firstTeamName }}
-            <span class="score"><input :disabled="inputDisabledFirst" @focusout="this.updateScoreInServer(1)" v-model="firstPositionScore" type="text" /></span>
-        </li>
+            <span class="score"><input :disabled="inputDisabledFirst" @focusout="this.updateScoreInServer(1)" v-model="firstPositionScore.score" type="text" /></span>
+        </li> 
         <li class="team team-bottom">{{ secondTeamName }}
-            <span class="score"><input :disabled="inputDisabledSecond" @focusout="this.updateScoreInServer(2)" v-model="secondPositionScore" type="text" /></span>
-        </li>
+            <span class="score"><input :disabled="inputDisabledSecond" @focusout="this.updateScoreInServer(2)" v-model="secondPositionScore.score" type="text" /></span>
+        </li> 
     </ul>
     <ul v-else-if="this.tournament.tournamentStatus == 's'" class="matchup">
         <li class="team team-top">{{ this.round == 1 ? this.firstPosition : '' }}
@@ -17,10 +17,10 @@
     </ul>
     <ul v-else class="matchup">
         <li class="team team-top">{{ firstTeamName  }}
-            <span class="score">{{ firstPositionScore }}</span>
+            <span class="score">{{ firstPositionScore.score }}</span>
         </li>
         <li class="team team-bottom">{{ secondTeamName }}
-            <span class="score">{{ secondPositionScore }}</span>
+            <span class="score">{{ secondPositionScore.score }}</span>
         </li>
     </ul>
 </template>
@@ -71,15 +71,15 @@ export default {
     methods: {
 
         updateScoreInServer(num) {
-            let score = {
-                tournamentId: this.tournament.tournamentId,
-            }
+            // let score = {
+            //     tournamentId: this.tournament.tournamentId,
+            // }
 
             if (num == 1) {
-                score.teamId = this.firstTeam.teamId;
-                score.bracketPosition = this.firstPosition;
-                score.score = this.firstPositionScore;
-                ScoreService.addScore(score)
+                // score.teamId = this.firstTeam.teamId;
+                // score.bracketPosition = this.firstPosition;
+                // score.score = this.firstPositionScore;
+                ScoreService.updateScore(this.firstPositionScore)
                     .then(response => {
                         if (response.status == 201) {
                             this.firstPositionScore = response.data.score;
@@ -92,10 +92,10 @@ export default {
                     })
             }
             else {
-                score.teamId = this.secondTeam.teamId;
-                score.bracketPosition = this.secondPosition;
-                score.score = this.secondPositionScore;
-                ScoreService.addScore(score)
+                // score.teamId = this.secondTeam.teamId;
+                // score.bracketPosition = this.secondPosition;
+                // score.score = this.secondPositionScore;
+                ScoreService.updateScore(this.secondPositionScore)
                     .then(response => {
                         if (response.status == 201) {
                             this.secondPositionScore = response.data.score;
@@ -134,8 +134,8 @@ export default {
         const score1 = this.returnsScoreOrEmptyStringGivenBracketPosition(this.firstPosition);
         const score2 = this.returnsScoreOrEmptyStringGivenBracketPosition(this.secondPosition);
 
-        this.firstPositionScore = score1.score;
-        this.secondPositionScore = score2.score;
+        this.firstPositionScore = score1;
+        this.secondPositionScore = score2;
         
 
 
