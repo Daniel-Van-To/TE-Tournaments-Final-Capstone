@@ -34,7 +34,7 @@ export default {
           title: 'Slide #1',
           content: 'Slide 1 content',
           image: '/florian-cordier-zOTpWmLyxdU-unsplash.jpg',
-          link: 'http://127.0.0.1:5173/browse-tournaments'
+          link: 'http://127.0.0.1:5173/browse-tournaments/swimming'
         },
         {
           title: 'Slide #2',
